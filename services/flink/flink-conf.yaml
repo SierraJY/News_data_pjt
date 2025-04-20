@@ -1,0 +1,10 @@
+jobmanager.bind-host: 0.0.0.0
+rest.address: 0.0.0.0
+rest.bind-address: 0.0.0.0
+jobmanager.rpc.address: localhost
+taskmanager.numberOfTaskSlots: 4
+jobmanager.archive.fs.dir: file:///tmp/flink-history
+
+# ⬇️ 추가된 필수 메모리 설정
+jobmanager.memory.process.size: 1024m
+taskmanager.memory.process.size: 1024m

@@ -1,0 +1,120 @@
+services:
+  ubuntu-python:
+    build: 
+      context: ./
+      dockerfile: ./services/ubuntu-python/Dockerfile
+    container_name: ubuntu_python
+    working_dir: /opt/workspace
+    volumes:
+      - ubuntu_workspace:/opt/workspace
+      - type: bind
+        source: ./src/up_test_codes
+        target: /opt/workspace/up_test_codes
+      - type: bind
+        source: ./src/up_ingest_codes
+        target: /opt/workspace/up_ingest_codes
+    depends_on:
+      - postgres
+    tty: true
+
+  postgres:
+    build: ./services/postgres
+    container_name: postgres
+    environment:
+      POSTGRES_DB: news
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    build: 
+      context: ./
+      dockerfile: ./services/kafka/Dockerfile
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    working_dir: /opt/workspace
+    volumes:
+      - type: bind
+        source: ./src/kafka_producer
+        target: /opt/workspace/kafka_producer
+      - type: bind
+        source: ./src/kafka_test_codes
+        target: /opt/workspace/kafka_test_codes
+      - type: bind
+        source: ./src/up_ingest_codes/article_extractors.py
+        target: /opt/workspace/article_extractors.py
+      - type: bind
+        source: ./.env
+        target: /opt/workspace/.env
+    depends_on:
+      - zookeeper
+
+  flink:
+    build: 
+      context: ./
+      dockerfile: ./services/flink/Dockerfile
+    container_name: flink
+    ports:
+      - "8081:8081"
+    working_dir: /opt/workspace
+    volumes:
+      - type: bind
+        source: ./src/flink_test_codes
+        target: /opt/workspace/flink_test_codes
+      - type: bind
+        source: ./src/flink_consumer
+        target: /opt/workspace/flink_consumer
+      - type: bind
+        source: ./services/flink/config
+        target: /opt/flink/lib
+      - type: bind
+        source: ./.env
+        target: /opt/workspace/.env
+    environment:
+      - KAFKA_CONNECTOR_PATH=/opt/flink/lib/flink-sql-connector-kafka-3.3.0-1.20.jar
+    depends_on:
+      - kafka
+      - postgres
+    tty: true
+  
+  spark:
+    build:
+      context: ./
+      dockerfile: ./services/spark/Dockerfile
+    container_name: spark
+    ports:
+      - "8082:8082"  # Spark Master Web UI
+      - "4040:4040"  # Spark Application Web UI
+    working_dir: /opt/workspace
+    volumes:
+      - type: bind
+        source: ./src/spark_test_codes
+        target: /opt/workspace/spark_test_codes
+    environment:
+      - SPARK_MASTER_HOST=spark
+    tty: true
+
+volumes:
+  pgdata:
+  ubuntu_workspace:
