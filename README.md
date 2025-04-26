@@ -2,6 +2,17 @@
 
 이 프로젝트는 Docker 기반 데이터 엔지니어링 환경(News_DE_pjt)에서 뉴스 기사 데이터를 수집, 처리, 저장하는 파이프라인을 구현합니다.
 
+## 목차
+- [실행 흐름](#실행-흐름)
+- [주요 특징 및 기술 스택](#주요-특징-및-기술-스택)
+- [프로젝트 구조](#프로젝트-구조)
+- [컨테이너 구성](#컨테이너-구성)
+- [기능 설명](#기능-설명)
+- [설치 및 환경 설정](#설치-및-환경-설정)
+- [실행 방법](#실행-방법)
+- [데이터베이스 구조](#데이터베이스-구조)
+- [주의사항](#주의사항)
+
 ## 실행 흐름
 
 1. **수집 단계**: Kafka Producer가 RSS 피드에서 뉴스 데이터를 수집하고 BeautifulSoup으로 기사 본문을 추출하여 Kafka 토픽으로 전송
@@ -219,7 +230,7 @@ docker exec -it flink python /opt/workspace/flink_consumer/flink_consumer.py
   - 사용자 등록: http://localhost:8000/api/users/register/
 
 **Vue 프론트엔드**
-- 접속 URL: http://localhost:8080/
+- 접속 URL: http://localhost:3000/
 - 기능:
   - 뉴스 목록 조회
   - 뉴스 상세 보기
