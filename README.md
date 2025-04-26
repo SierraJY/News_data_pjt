@@ -7,7 +7,8 @@
 1. **수집 단계**: Kafka Producer가 RSS 피드에서 뉴스 데이터를 수집하고 BeautifulSoup으로 기사 본문을 추출하여 Kafka 토픽으로 전송
 2. **처리 단계**: Flink Consumer가 Kafka 토픽에서 데이터를 소비하고 Anthropic Claude API를 사용하여 텍스트 분석(카테고리 분류, 키워드 추출, 임베딩 생성)
 3. **저장 단계**: 처리된 데이터는 PostgreSQL에 저장되며, 임베딩 벡터는 pgvector 확장을 통해 벡터 형식으로 저장
-4. **확인 단계**: PostgreSQL 쿼리를 통해 저장된 데이터 확인 및 활용
+4. **시각화 단계**: Django와 Vue.js를 통해 데이터를 웹 인터페이스로 제공하고 사용자와 상호작용
+5. **확인 단계**: 웹 인터페이스 또는 PostgreSQL 쿼리를 통해 저장된 데이터 확인 및 활용
 
 ## 주요 특징 및 기술 스택
 
@@ -16,6 +17,9 @@
 - **Flink**: 실시간 스트림 처리 엔진으로 데이터 처리 및 변환
 - **PostgreSQL + pgvector**: 관계형 데이터베이스와 벡터 검색 기능
 - **Anthropic Claude API**: 텍스트 분석 및 처리(카테고리 분류, 키워드 추출)
+- **Django + DRF**: REST API 백엔드 및 데이터 모델링
+- **Vue.js**: 사용자 인터페이스 및 프론트엔드 구현
+- **JWT**: 토큰 기반 사용자 인증
 - **Python**: 크롤링, 데이터 처리, API 연동 등의 주요 로직 구현 언어
 - **BeautifulSoup**: 웹 크롤링과 HTML 파싱을 위한 라이브러리
 
@@ -137,16 +141,26 @@ services/flink/config/flink-sql-connector-kafka-3.3.0-1.20.jar
 Kafka 커넥터 JAR 파일은 다음 링크에서 다운로드할 수 있습니다:
 - https://repo1.maven.org/maven2/org/apache/flink/flink-sql-connector-kafka/3.3.0-1.20/flink-sql-connector-kafka-3.3.0-1.20.jar
 
-### 2. Anthropic Claude API 설정
+### 2. Anthropic Claude API 및 기타 설정
 
 Anthropic Claude API를 사용하려면 API 키가 필요합니다. Anthropic 웹사이트(https://www.anthropic.com/)에서 API 키를 발급받을 수 있습니다.
 
 `.env` 파일에 다음 내용을 설정합니다:
 
 ```
+# 데이터베이스 설정
 DB_USERNAME=<사용자명>
 DB_PASSWORD=<비밀번호>
+
+# API 키
 ANTHROPIC_API_KEY=<Anthropic API 키>
+
+# Django 설정
+DJANGO_SECRET_KEY=<Django 시크릿 키>
+JWT_SECRET_KEY=<JWT 시크릿 키>
+
+# 기타 설정
+DEBUG=True  # 개발 환경에서만 True로 설정
 ```
 
 ### 3. Python 패키지 설정
@@ -262,3 +276,36 @@ docker exec -it flink python /opt/workspace/flink_test_codes/flink_consumer_test
 - 임베딩 생성 시 해시 기반 간단한 방식을 사용하므로, 실제 프로덕션에서는 적절한 임베딩 서비스로 대체해야 합니다
 - Flink와 Kafka 연결에 필요한 JAR 파일이 올바르게 설치되어 있는지 반드시 확인해야 합니다
 - 대용량 처리 시 리소스 사용량에 주의해야 합니다
+
+## 데이터베이스 구조
+
+프로젝트는 다음과 같은 주요 테이블을 사용합니다:
+
+1. **news_article**: 수집된 뉴스 기사 정보를 저장
+   - `id`: 기사 ID (기본 키)
+   - `title`: 기사 제목
+   - `writer`: 작성자 정보
+   - `write_date`: 작성 날짜
+   - `category`: 기사 카테고리
+   - `content`: 기사 본문
+   - `url`: 원본 기사 URL
+   - `keywords`: 추출된 키워드 (JSON 형식)
+   - `embedding`: 텍스트 임베딩 벡터 (VECTOR 타입)
+
+2. **auth_user**: Django의 사용자 인증 시스템에 사용되는 기본 사용자 테이블
+
+3. **news_like**: 사용자가 좋아요 표시한 기사 정보
+   - `id`: 좋아요 ID (기본 키)
+   - `user_id`: 사용자 ID (외래 키)
+   - `news_id`: 기사 ID (외래 키)
+   - `created_at`: 좋아요 생성 시간
+
+4. **news_view**: 사용자의 기사 조회 기록
+   - `id`: 조회 ID (기본 키)
+   - `user_id`: 사용자 ID (외래 키)
+   - `news_id`: 기사 ID (외래 키)
+   - `viewed_at`: 조회 시간
+
+테이블 간의 관계:
+- `news_like`와 `news_view`는 `news_article`의 `id`를 외래 키로 참조
+- `news_like`와 `news_view`는 `auth_user`의 `id`를 외래 키로 참조
