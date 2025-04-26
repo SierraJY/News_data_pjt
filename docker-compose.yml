@@ -115,6 +115,52 @@ services:
       - SPARK_MASTER_HOST=spark
     tty: true
 
+  django:
+    build:
+      context: ./
+      dockerfile: ./services/django/Dockerfile
+    container_name: django
+    ports:
+      - "8000:8000"  # Django 백엔드 포트
+    volumes:
+      - type: bind
+        source: ./src/vue_django_codes/news_backend
+        target: /app
+      - type: bind
+        source: ./.env
+        target: /app/.env
+      - type: bind
+        source: ./services/django/local_settings.py
+        target: /app/news_backend/local_settings.py
+      - type: bind
+        source: ./services/django/setup.sh
+        target: /app/setup.sh
+    environment:
+      - DB_HOST=postgres
+      - DB_NAME=news
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+    depends_on:
+      - postgres
+  
+  vue:
+    build:
+      context: ./
+      dockerfile: ./services/vue/Dockerfile
+    container_name: vue
+    ports:
+      - "3000:3000"  # Vite 개발 서버 포트
+    volumes:
+      - type: bind
+        source: ./src/vue_django_codes/news_front
+        target: /app
+      - vue_node_modules:/app/node_modules
+    environment:
+      - VITE_BASE_URL=http://localhost:8000
+    depends_on:
+      - django
+
 volumes:
   pgdata:
   ubuntu_workspace:
+  vue_node_modules:

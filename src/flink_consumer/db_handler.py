@@ -40,6 +40,11 @@ def test_database_connection():
     try:
         conn = get_db_connection()
         if conn:
+            # PostgreSQL 데이터베이스에 연결하여 버전 정보를 조회하는 코드
+            # conn.cursor() 메서드는 데이터베이스 연결 객체로부터 커서 객체를 생성함
+            # 커서는 SQL 쿼리를 실행하고 결과를 가져오는 인터페이스 역할을 함
+            # with 구문을 사용하여 커서 리소스를 자동으로 관리(사용 후 자동 닫힘)
+            # SELECT version() 쿼리로 PostgreSQL 버전 정보를 조회하고 출력하여 연결 상태를 확인
             with conn.cursor() as cur:
                 cur.execute("SELECT version();")
                 version = cur.fetchone()

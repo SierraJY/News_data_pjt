@@ -30,7 +30,9 @@
 │   ├── ubuntu-python/    # Ubuntu Python 서비스 설정 (테스트 환경용)
 │   ├── kafka/            # Kafka 서비스 설정
 │   ├── flink/            # Flink 서비스 설정
-│   └── postgres/         # PostgreSQL 서비스 설정
+│   ├── postgres/         # PostgreSQL 서비스 설정
+│   ├── django/           # Django 백엔드 서비스 설정
+│   └── vue/              # Vue 프론트엔드 서비스 설정
 └── src/                   # 소스 코드 디렉토리
     ├── up_ingest_codes/   # 뉴스 기사 추출 함수 및 DB 직접 적재용 코드 (ubuntu-python 전용)
     │   ├── article_extractors.py  # 여러 뉴스 사이트에서 본문 크롤링하는 함수 모음
@@ -53,10 +55,19 @@
     │   ├── data/               # Spark 테스트용 데이터 파일
     │   └── src/                # Spark 예제 및 테스트 코드
     │       └── ... (기타 Spark 예제 코드)
-    └── flink_test_codes/       # Flink 테스트 코드 (DB 테스트, Flink 컨슈머 테스트)
-        ├── db_test.py          # 데이터베이스 연결 테스트
-        ├── flink_consumer_test.py  # Flink Kafka 컨슈머 연결 테스트
-        └── test1.py            # 기타 Flink 기능 테스트
+    ├── flink_test_codes/       # Flink 테스트 코드 (DB 테스트, Flink 컨슈머 테스트)
+    │   ├── db_test.py          # 데이터베이스 연결 테스트
+    │   ├── flink_consumer_test.py  # Flink Kafka 컨슈머 연결 테스트
+    │   └── test1.py            # 기타 Flink 기능 테스트
+    └── vue_django_codes/       # 웹 애플리케이션 프론트엔드 및 백엔드 코드
+        ├── news_front/         # Vue 기반 프론트엔드
+        │   ├── src/            # Vue 소스 코드
+        │   ├── public/         # 정적 파일
+        │   └── package.json    # 의존성 설정
+        └── news_backend/       # Django 기반 백엔드
+            ├── news/           # 뉴스 관련 앱 (API, 모델 등)
+            ├── users/          # 사용자 관련 앱 (인증, 권한 등)
+            └── news_backend/   # 프로젝트 설정
 ```
 
 ## 컨테이너 구성
@@ -81,6 +92,16 @@
 5. **spark**: 데이터 처리 및 분석 환경 (테스트 및 개발용)
    - spark_test_codes: Spark 관련 테스트 및 예제 코드
 
+6. **django**: 백엔드 API 서비스
+   - Django REST Framework 기반 API 제공
+   - 뉴스 기사 조회, 좋아요, 조회수 기록 등 기능 제공
+   - JWT 기반 사용자 인증 처리
+
+7. **vue**: 프론트엔드 웹 서비스
+   - Vue.js 기반 단일 페이지 애플리케이션(SPA)
+   - 반응형 디자인으로 뉴스 기사 조회 및 인터랙션 제공
+   - 사용자 로그인, 회원가입, 좋아요 기능 구현
+
 ## 기능 설명
 
 1. **뉴스 데이터 수집 (Kafka Producer)**
@@ -97,6 +118,12 @@
 3. **데이터 저장 (PostgreSQL)**
    - 처리된 데이터를 PostgreSQL 데이터베이스에 저장
    - pgvector 확장을 통한 벡터 데이터 저장
+
+4. **웹 인터페이스 제공 (Django + Vue)**
+   - 데이터베이스에 저장된 뉴스 기사를 웹 UI로 제공
+   - 사용자 기능 (로그인, 회원가입)
+   - 인터랙션 기능 (좋아요, 조회수 확인)
+   - 기사 상세 정보 및 목록 조회
 
 ## 설치 및 환경 설정
 
@@ -168,7 +195,24 @@ docker exec -it kafka python /opt/workspace/kafka_producer/news_producer.py
 docker exec -it flink python /opt/workspace/flink_consumer/flink_consumer.py
 ```
 
-### 3. 데이터 확인
+### 3. 웹 인터페이스 접속
+
+**Django 백엔드 API**
+- 기본 URL: http://localhost:8000/api/
+- 주요 엔드포인트:
+  - 뉴스 목록: http://localhost:8000/api/news/
+  - 사용자 로그인: http://localhost:8000/api/users/login/
+  - 사용자 등록: http://localhost:8000/api/users/register/
+
+**Vue 프론트엔드**
+- 접속 URL: http://localhost:8080/
+- 기능:
+  - 뉴스 목록 조회
+  - 뉴스 상세 보기
+  - 로그인 및 회원가입
+  - 좋아요 기능
+
+### 4. 데이터 확인
 
 PostgreSQL 데이터베이스에 접속하여 저장된 데이터를 확인합니다:
 
@@ -180,7 +224,7 @@ docker exec -it postgres psql -U ${DB_USERNAME} -d news
 SELECT id, title, category, writer FROM news_article LIMIT 10;
 ```
 
-### 4. 테스트 코드 실행
+### 5. 테스트 코드 실행
 
 각 컨테이너에는 기능 테스트를 위한 코드가 포함되어 있습니다:
 
