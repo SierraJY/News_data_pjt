@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y default-jdk && \
   echo 'export PATH=$JAVA_HOME/bin:$PATH' >> ~/.bashrc
 
 # Spark 설치
-ENV SPARK_VERSION=3.5.0
+ENV SPARK_VERSION=3.5.4
 ENV SPARK_HOME=/opt/spark
 
 RUN wget https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop3.tgz && \
