@@ -75,7 +75,7 @@
           </div>
           
           <!-- Chart.js의 Bar 컴포넌트를 활용한 가로 막대 차트 -->
-          <Bar v-else :data="keywordData" :options="barOptions" />
+          <Bar v-else :data="keywordData" :options="barOptions" class="keyword-chart" />
         </ContentBox>
       </div>
       
@@ -94,7 +94,7 @@
           </div>
           
           <!-- Chart.js의 Bar 컴포넌트를 활용한 세로 막대 차트 -->
-          <Bar v-else :data="readData" :options="readBarOptions" />
+          <Bar v-else :data="readData" :options="readBarOptions" class="weekly-chart" />
         </ContentBox>
 
         <!-- 좋아요 누른 기사 목록 컨테이너 -->
@@ -518,5 +518,15 @@ h1 {
   margin-bottom: 20px;
   font-size: 1.2rem;
   color: #0c3057;
+}
+
+.keyword-chart {
+  max-height: 80% ;
+  width: 85% ;
+}
+
+.weekly-chart {
+  max-height: 80%;
+  width: 85%;
 }
 </style>

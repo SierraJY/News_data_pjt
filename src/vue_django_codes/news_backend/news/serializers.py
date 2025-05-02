@@ -39,16 +39,28 @@ class DashboardSerializer(serializers.Serializer):
         for news in news_with_keywords:
             if news.keywords:
                 try:
-                    # JSON 형식인 경우
-                    keywords = json.loads(news.keywords.replace("'", "\""))
-                except:
-                    # 쉼표로 구분된 문자열인 경우
-                    keywords = [k.strip() for k in news.keywords.strip('[]').split(',')]
-                
-                keywords_counter.update(keywords)
+                    # 이미 리스트인 경우
+                    if isinstance(news.keywords, list):
+                        keywords = news.keywords
+                    # JSON 문자열인 경우
+                    elif isinstance(news.keywords, str):
+                        try:
+                            # JSON 형식으로 파싱 시도
+                            keywords = json.loads(news.keywords.replace("'", "\""))
+                        except:
+                            # 쉼표로 구분된 문자열인 경우
+                            keywords = [k.strip() for k in news.keywords.strip('[]').split(',')]
+                    else:
+                        # 다른 타입인 경우는 건너뜀
+                        continue
+                    
+                    keywords_counter.update(keywords)
+                except Exception as e:
+                    print(f"키워드 처리 오류: {e}, 타입: {type(news.keywords)}")
+                    continue
         
-        # 상위 10개 키워드 반환
-        return [{"keyword": kw, "count": count} for kw, count in keywords_counter.most_common(10)]
+        # 상위 8개 키워드 반환 (10개에서 8개로 변경)
+        return [{"keyword": kw, "count": count} for kw, count in keywords_counter.most_common(8)]
     
     def get_weekly_views(self, user):
         """최근 7일간 일별 조회수"""
