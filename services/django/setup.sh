@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # settings.py 파일이 존재하는지 확인
 if [ -f /app/news_backend/settings.py ]; then
     # local_settings 임포트 코드가 있는지 확인

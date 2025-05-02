@@ -1,0 +1,1348 @@
+[2025-05-02T06:49:28.867+0000] {manager.py:483} INFO - Processing files using up to 2 processes at a time 
+[2025-05-02T06:49:28.867+0000] {manager.py:484} INFO - Process each file at most once every 30 seconds
+[2025-05-02T06:49:28.867+0000] {manager.py:485} INFO - Checking for new files in /opt/airflow/dags every 300 seconds
+[2025-05-02T06:49:28.868+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T06:49:28.868+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T06:49:28.959+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run      Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  ----------  ----------------------
+/opt/airflow/dags/hello_world.py       68  0.02s             0           0                                                   0
+/opt/airflow/dags/spark_example.py     67  0.03s             0           0                                                   0
+================================================================================
+[2025-05-02T06:49:59.131+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                           PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py                           1           0  0.35s           2025-05-02T06:49:29                      45
+/opt/airflow/dags/hello_world.py                             1           0  0.34s           2025-05-02T06:49:29                      45
+================================================================================
+[2025-05-02T06:50:29.682+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     83  0.01s             1           0  0.06s           2025-05-02T06:49:59                      12
+/opt/airflow/dags/hello_world.py       84  0.00s             1           0  0.06s           2025-05-02T06:49:59                      12
+================================================================================
+[2025-05-02T06:50:59.955+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     91  0.01s             1           0  0.06s           2025-05-02T06:50:29                      12
+/opt/airflow/dags/hello_world.py       92  0.00s             1           0  0.05s           2025-05-02T06:50:29                      12
+================================================================================
+[2025-05-02T06:51:30.205+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     99  0.01s             1           0  0.06s           2025-05-02T06:51:00                      12
+/opt/airflow/dags/hello_world.py      100  0.00s             1           0  0.06s           2025-05-02T06:51:00                      12
+================================================================================
+[2025-05-02T06:52:00.454+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    107  0.01s             1           0  0.06s           2025-05-02T06:51:30                      12
+/opt/airflow/dags/hello_world.py      108  0.00s             1           0  0.05s           2025-05-02T06:51:30                      12
+================================================================================
+[2025-05-02T06:52:30.723+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    115  0.01s             1           0  0.06s           2025-05-02T06:52:00                      12
+/opt/airflow/dags/hello_world.py      116  0.00s             1           0  0.05s           2025-05-02T06:52:00                      12
+================================================================================
+[2025-05-02T06:53:00.990+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    123  0.01s             1           0  0.06s           2025-05-02T06:52:30                      12
+/opt/airflow/dags/hello_world.py      124  0.00s             1           0  0.05s           2025-05-02T06:52:30                      12
+================================================================================
+[2025-05-02T06:53:31.243+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    131  0.01s             1           0  0.06s           2025-05-02T06:53:01                      12
+/opt/airflow/dags/hello_world.py      132  0.00s             1           0  0.05s           2025-05-02T06:53:01                      12
+================================================================================
+[2025-05-02T06:53:32.780+0000] {manager.py:465} INFO - Exiting gracefully upon receiving signal 15
+[2025-05-02T06:54:36.515+0000] {manager.py:483} INFO - Processing files using up to 2 processes at a time 
+[2025-05-02T06:54:36.515+0000] {manager.py:484} INFO - Process each file at most once every 30 seconds
+[2025-05-02T06:54:36.515+0000] {manager.py:485} INFO - Checking for new files in /opt/airflow/dags every 300 seconds
+[2025-05-02T06:54:36.516+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T06:54:36.517+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T06:54:36.580+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run      Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  ----------  ----------------------
+/opt/airflow/dags/hello_world.py       68  0.02s             0           0                                                   0
+/opt/airflow/dags/spark_example.py     67  0.02s             0           0                                                   0
+================================================================================
+[2025-05-02T06:55:07.054+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     75  0.01s             1           0  0.29s           2025-05-02T06:54:36                      45
+/opt/airflow/dags/hello_world.py       76  0.00s             1           0  0.27s           2025-05-02T06:54:36                      45
+================================================================================
+[2025-05-02T06:55:37.270+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     83  0.01s             1           0  0.06s           2025-05-02T06:55:07                      12
+/opt/airflow/dags/hello_world.py       84  0.00s             1           0  0.06s           2025-05-02T06:55:07                      12
+================================================================================
+[2025-05-02T06:56:07.503+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    103  0.01s             1           0  0.07s           2025-05-02T06:55:37                      12
+/opt/airflow/dags/hello_world.py      104  0.00s             1           0  0.07s           2025-05-02T06:55:37                      12
+================================================================================
+[2025-05-02T06:56:37.803+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py      112  0.00s             1           0  0.07s           2025-05-02T06:56:07                      12
+/opt/airflow/dags/spark_example.py    111  0.01s             1           0  0.06s           2025-05-02T06:56:07                      12
+================================================================================
+[2025-05-02T06:57:08.031+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    119  0.01s             1           0  0.06s           2025-05-02T06:56:37                      12
+/opt/airflow/dags/hello_world.py      120  0.00s             1           0  0.05s           2025-05-02T06:56:37                      12
+================================================================================
+[2025-05-02T06:57:38.246+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    133  0.01s             1           0  0.06s           2025-05-02T06:57:08                      12
+/opt/airflow/dags/hello_world.py      134  0.00s             1           0  0.06s           2025-05-02T06:57:08                      12
+================================================================================
+[2025-05-02T06:58:08.472+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    141  0.01s             1           0  0.06s           2025-05-02T06:57:38                      12
+/opt/airflow/dags/hello_world.py      142  0.00s             1           0  0.06s           2025-05-02T06:57:38                      12
+================================================================================
+[2025-05-02T06:58:38.716+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    149  0.01s             1           0  0.07s           2025-05-02T06:58:08                      12
+/opt/airflow/dags/hello_world.py      150  0.00s             1           0  0.06s           2025-05-02T06:58:08                      12
+================================================================================
+[2025-05-02T06:59:08.937+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    157  0.01s             1           0  0.06s           2025-05-02T06:58:38                      12
+/opt/airflow/dags/hello_world.py      158  0.00s             1           0  0.05s           2025-05-02T06:58:38                      12
+================================================================================
+[2025-05-02T06:59:37.088+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T06:59:37.089+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T06:59:39.114+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    165  0.01s             1           0  0.06s           2025-05-02T06:59:08                      12
+/opt/airflow/dags/hello_world.py      166  0.00s             1           0  0.05s           2025-05-02T06:59:08                      12
+================================================================================
+[2025-05-02T07:00:09.329+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    172  0.01s             1           0  0.06s           2025-05-02T06:59:39                      12
+/opt/airflow/dags/hello_world.py      173  0.00s             1           0  0.06s           2025-05-02T06:59:39                      12
+================================================================================
+[2025-05-02T07:00:39.524+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    180  0.01s             1           0  0.06s           2025-05-02T07:00:09                      12
+/opt/airflow/dags/hello_world.py      181  0.00s             1           0  0.06s           2025-05-02T07:00:09                      12
+================================================================================
+[2025-05-02T07:01:09.752+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    188  0.01s             1           0  0.06s           2025-05-02T07:00:39                      12
+/opt/airflow/dags/hello_world.py      189  0.00s             1           0  0.06s           2025-05-02T07:00:39                      12
+================================================================================
+[2025-05-02T07:01:39.959+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    196  0.01s             1           0  0.07s           2025-05-02T07:01:09                      12
+/opt/airflow/dags/hello_world.py      197  0.00s             1           0  0.06s           2025-05-02T07:01:09                      12
+================================================================================
+[2025-05-02T07:02:10.180+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    204  0.01s             1           0  0.06s           2025-05-02T07:01:40                      12
+/opt/airflow/dags/hello_world.py      205  0.00s             1           0  0.05s           2025-05-02T07:01:40                      12
+================================================================================
+[2025-05-02T07:02:40.430+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    212  0.01s             1           0  0.06s           2025-05-02T07:02:10                      12
+/opt/airflow/dags/hello_world.py      213  0.00s             1           0  0.06s           2025-05-02T07:02:10                      12
+================================================================================
+[2025-05-02T07:03:10.666+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    220  0.01s             1           0  0.06s           2025-05-02T07:02:40                      12
+/opt/airflow/dags/hello_world.py      221  0.00s             1           0  0.06s           2025-05-02T07:02:40                      12
+================================================================================
+[2025-05-02T07:03:40.934+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    228  0.01s             1           0  0.06s           2025-05-02T07:03:10                      12
+/opt/airflow/dags/hello_world.py      229  0.00s             1           0  0.06s           2025-05-02T07:03:10                      12
+================================================================================
+[2025-05-02T07:04:11.169+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    236  0.01s             1           0  0.06s           2025-05-02T07:03:40                      12
+/opt/airflow/dags/hello_world.py      237  0.00s             1           0  0.05s           2025-05-02T07:03:40                      12
+================================================================================
+[2025-05-02T07:04:37.294+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T07:04:37.295+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T07:04:41.329+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    244  0.01s             1           0  0.06s           2025-05-02T07:04:11                      12
+/opt/airflow/dags/hello_world.py      245  0.00s             1           0  0.06s           2025-05-02T07:04:11                      12
+================================================================================
+[2025-05-02T07:05:11.591+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    252  0.01s             1           0  0.08s           2025-05-02T07:04:41                      12
+/opt/airflow/dags/hello_world.py      253  0.00s             1           0  0.07s           2025-05-02T07:04:41                      12
+================================================================================
+[2025-05-02T07:05:41.826+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    260  0.01s             1           0  0.07s           2025-05-02T07:05:11                      12
+/opt/airflow/dags/hello_world.py      261  0.00s             1           0  0.06s           2025-05-02T07:05:11                      12
+================================================================================
+[2025-05-02T07:06:10.344+0000] {manager.py:465} INFO - Exiting gracefully upon receiving signal 15
+[2025-05-02T07:14:53.664+0000] {manager.py:483} INFO - Processing files using up to 2 processes at a time 
+[2025-05-02T07:14:53.664+0000] {manager.py:484} INFO - Process each file at most once every 30 seconds
+[2025-05-02T07:14:53.664+0000] {manager.py:485} INFO - Checking for new files in /opt/airflow/dags every 300 seconds
+[2025-05-02T07:14:53.665+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T07:14:53.666+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T07:14:53.722+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run      Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  ----------  ----------------------
+/opt/airflow/dags/hello_world.py       68  0.01s             0           0                                                   0
+/opt/airflow/dags/spark_example.py     67  0.02s             0           0                                                   0
+================================================================================
+[2025-05-02T07:15:23.907+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                           PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py                           1           0  0.29s           2025-05-02T07:14:53                      45
+/opt/airflow/dags/hello_world.py                             1           0  0.29s           2025-05-02T07:14:53                      45
+================================================================================
+[2025-05-02T07:15:54.428+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     83  0.01s             1           0  0.06s           2025-05-02T07:15:24                      12
+/opt/airflow/dags/hello_world.py       84  0.00s             1           0  0.05s           2025-05-02T07:15:24                      12
+================================================================================
+[2025-05-02T07:16:24.669+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     91  0.01s             1           0  0.06s           2025-05-02T07:15:54                      12
+/opt/airflow/dags/hello_world.py       92  0.00s             1           0  0.05s           2025-05-02T07:15:54                      12
+================================================================================
+[2025-05-02T07:16:54.927+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     99  0.01s             1           0  0.06s           2025-05-02T07:16:24                      12
+/opt/airflow/dags/hello_world.py      100  0.00s             1           0  0.06s           2025-05-02T07:16:24                      12
+================================================================================
+[2025-05-02T07:17:25.171+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    107  0.01s             1           0  0.06s           2025-05-02T07:16:54                      12
+/opt/airflow/dags/hello_world.py      108  0.00s             1           0  0.05s           2025-05-02T07:16:54                      12
+================================================================================
+[2025-05-02T07:17:55.414+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    115  0.01s             1           0  0.06s           2025-05-02T07:17:25                      12
+/opt/airflow/dags/hello_world.py      116  0.00s             1           0  0.05s           2025-05-02T07:17:25                      12
+================================================================================
+[2025-05-02T07:18:16.827+0000] {manager.py:465} INFO - Exiting gracefully upon receiving signal 15
+[2025-05-02T07:22:24.564+0000] {manager.py:483} INFO - Processing files using up to 2 processes at a time 
+[2025-05-02T07:22:24.564+0000] {manager.py:484} INFO - Process each file at most once every 30 seconds
+[2025-05-02T07:22:24.565+0000] {manager.py:485} INFO - Checking for new files in /opt/airflow/dags every 300 seconds
+[2025-05-02T07:22:24.565+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T07:22:24.566+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T07:22:24.620+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run      Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  ----------  ----------------------
+/opt/airflow/dags/hello_world.py       68  0.01s             0           0                                                   0
+/opt/airflow/dags/spark_example.py     67  0.02s             0           0                                                   0
+================================================================================
+[2025-05-02T07:22:54.817+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                           PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py                           1           0  0.23s           2025-05-02T07:22:24                      45
+/opt/airflow/dags/hello_world.py                             1           0  0.22s           2025-05-02T07:22:24                      45
+================================================================================
+[2025-05-02T07:23:25.246+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     83  0.01s             1           0  0.06s           2025-05-02T07:22:55                      12
+/opt/airflow/dags/hello_world.py       84  0.00s             1           0  0.06s           2025-05-02T07:22:55                      12
+================================================================================
+[2025-05-02T07:23:55.484+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     91  0.01s             1           0  0.06s           2025-05-02T07:23:25                      12
+/opt/airflow/dags/hello_world.py       92  0.00s             1           0  0.05s           2025-05-02T07:23:25                      12
+================================================================================
+[2025-05-02T07:24:25.745+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     99  0.01s             1           0  0.06s           2025-05-02T07:23:55                      12
+/opt/airflow/dags/hello_world.py      100  0.00s             1           0  0.05s           2025-05-02T07:23:55                      12
+================================================================================
+[2025-05-02T07:24:55.997+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    107  0.01s             1           0  0.06s           2025-05-02T07:24:25                      12
+/opt/airflow/dags/hello_world.py      108  0.00s             1           0  0.06s           2025-05-02T07:24:25                      12
+================================================================================
+[2025-05-02T07:25:26.214+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    115  0.01s             1           0  0.06s           2025-05-02T07:24:56                      12
+/opt/airflow/dags/hello_world.py      116  0.00s             1           0  0.05s           2025-05-02T07:24:56                      12
+================================================================================
+[2025-05-02T07:25:56.457+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    123  0.01s             1           0  0.06s           2025-05-02T07:25:26                      12
+/opt/airflow/dags/hello_world.py      124  0.00s             1           0  0.05s           2025-05-02T07:25:26                      12
+================================================================================
+[2025-05-02T07:26:26.700+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    131  0.01s             1           0  0.06s           2025-05-02T07:25:56                      12
+/opt/airflow/dags/hello_world.py      132  0.00s             1           0  0.06s           2025-05-02T07:25:56                      12
+================================================================================
+[2025-05-02T07:26:56.951+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    139  0.01s             1           0  0.06s           2025-05-02T07:26:26                      12
+/opt/airflow/dags/hello_world.py      140  0.00s             1           0  0.05s           2025-05-02T07:26:26                      12
+================================================================================
+[2025-05-02T07:27:25.160+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T07:27:25.162+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T07:27:27.190+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    147  0.01s             1           0  0.06s           2025-05-02T07:26:57                      12
+/opt/airflow/dags/hello_world.py      148  0.00s             1           0  0.05s           2025-05-02T07:26:57                      12
+================================================================================
+[2025-05-02T07:27:57.425+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    155  0.01s             1           0  0.06s           2025-05-02T07:27:27                      12
+/opt/airflow/dags/hello_world.py      156  0.00s             1           0  0.05s           2025-05-02T07:27:27                      12
+================================================================================
+[2025-05-02T07:28:27.663+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    163  0.01s             1           0  0.06s           2025-05-02T07:27:57                      12
+/opt/airflow/dags/hello_world.py      164  0.00s             1           0  0.05s           2025-05-02T07:27:57                      12
+================================================================================
+[2025-05-02T07:28:57.962+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    171  0.01s             1           0  0.11s           2025-05-02T07:28:27                      12
+/opt/airflow/dags/hello_world.py      172  0.00s             1           0  0.05s           2025-05-02T07:28:27                      12
+================================================================================
+[2025-05-02T07:29:28.206+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    179  0.01s             1           0  0.06s           2025-05-02T07:28:58                      12
+/opt/airflow/dags/hello_world.py      180  0.00s             1           0  0.05s           2025-05-02T07:28:58                      12
+================================================================================
+[2025-05-02T07:29:58.458+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    187  0.01s             1           0  0.06s           2025-05-02T07:29:28                      12
+/opt/airflow/dags/hello_world.py      188  0.00s             1           0  0.06s           2025-05-02T07:29:28                      12
+================================================================================
+[2025-05-02T07:30:28.711+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    195  0.01s             1           0  0.06s           2025-05-02T07:29:58                      12
+/opt/airflow/dags/hello_world.py      196  0.00s             1           0  0.05s           2025-05-02T07:29:58                      12
+================================================================================
+[2025-05-02T07:30:41.374+0000] {manager.py:465} INFO - Exiting gracefully upon receiving signal 15
+[2025-05-02T07:31:43.078+0000] {manager.py:483} INFO - Processing files using up to 2 processes at a time 
+[2025-05-02T07:31:43.079+0000] {manager.py:484} INFO - Process each file at most once every 30 seconds
+[2025-05-02T07:31:43.079+0000] {manager.py:485} INFO - Checking for new files in /opt/airflow/dags every 300 seconds
+[2025-05-02T07:31:43.079+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T07:31:43.081+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T07:31:43.137+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run      Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  ----------  ----------------------
+/opt/airflow/dags/hello_world.py       68  0.01s             0           0                                                   0
+/opt/airflow/dags/spark_example.py     67  0.02s             0           0                                                   0
+================================================================================
+[2025-05-02T07:32:13.324+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                           PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py                           1           0  0.26s           2025-05-02T07:31:43                      45
+/opt/airflow/dags/hello_world.py                             1           0  0.25s           2025-05-02T07:31:43                      45
+================================================================================
+[2025-05-02T07:32:43.804+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     83  0.01s             1           0  0.06s           2025-05-02T07:32:13                      12
+/opt/airflow/dags/hello_world.py       84  0.00s             1           0  0.06s           2025-05-02T07:32:13                      12
+================================================================================
+[2025-05-02T07:33:14.049+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     91  0.01s             1           0  0.06s           2025-05-02T07:32:43                      12
+/opt/airflow/dags/hello_world.py       92  0.00s             1           0  0.06s           2025-05-02T07:32:43                      12
+================================================================================
+[2025-05-02T07:33:44.255+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     99  0.01s             1           0  0.06s           2025-05-02T07:33:14                      12
+/opt/airflow/dags/hello_world.py      100  0.00s             1           0  0.06s           2025-05-02T07:33:14                      12
+================================================================================
+[2025-05-02T07:34:14.517+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    107  0.01s             1           0  0.06s           2025-05-02T07:33:44                      12
+/opt/airflow/dags/hello_world.py      108  0.00s             1           0  0.05s           2025-05-02T07:33:44                      12
+================================================================================
+[2025-05-02T07:34:44.767+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    115  0.01s             1           0  0.06s           2025-05-02T07:34:14                      12
+/opt/airflow/dags/hello_world.py      116  0.00s             1           0  0.06s           2025-05-02T07:34:14                      12
+================================================================================
+[2025-05-02T07:35:15.079+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    123  0.01s             1           0  0.06s           2025-05-02T07:34:44                      12
+/opt/airflow/dags/hello_world.py      124  0.00s             1           0  0.06s           2025-05-02T07:34:44                      12
+================================================================================
+[2025-05-02T07:35:45.319+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    131  0.01s             1           0  0.06s           2025-05-02T07:35:15                      12
+/opt/airflow/dags/hello_world.py      132  0.00s             1           0  0.05s           2025-05-02T07:35:15                      12
+================================================================================
+[2025-05-02T07:36:15.539+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    139  0.01s             1           0  0.06s           2025-05-02T07:35:45                      12
+/opt/airflow/dags/hello_world.py      140  0.00s             1           0  0.05s           2025-05-02T07:35:45                      12
+================================================================================
+[2025-05-02T07:36:33.687+0000] {manager.py:465} INFO - Exiting gracefully upon receiving signal 15
+[2025-05-02T07:38:28.418+0000] {manager.py:483} INFO - Processing files using up to 2 processes at a time 
+[2025-05-02T07:38:28.419+0000] {manager.py:484} INFO - Process each file at most once every 30 seconds
+[2025-05-02T07:38:28.419+0000] {manager.py:485} INFO - Checking for new files in /opt/airflow/dags every 300 seconds
+[2025-05-02T07:38:28.419+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T07:38:28.420+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T07:38:28.470+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run      Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  ----------  ----------------------
+/opt/airflow/dags/hello_world.py       68  0.01s             0           0                                                   0
+/opt/airflow/dags/spark_example.py     67  0.02s             0           0                                                   0
+================================================================================
+[2025-05-02T07:38:58.647+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                           PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py                           1           0  0.24s           2025-05-02T07:38:28                      45
+/opt/airflow/dags/hello_world.py                             1           0  0.24s           2025-05-02T07:38:28                      45
+================================================================================
+[2025-05-02T07:39:29.127+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     82  0.01s             1           0  0.10s           2025-05-02T07:38:58                      12
+/opt/airflow/dags/hello_world.py       83  0.00s             1           0  0.10s           2025-05-02T07:38:58                      12
+================================================================================
+[2025-05-02T07:39:59.378+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     90  0.01s             1           0  0.06s           2025-05-02T07:39:29                      12
+/opt/airflow/dags/hello_world.py       91  0.00s             1           0  0.06s           2025-05-02T07:39:29                      12
+================================================================================
+[2025-05-02T07:40:29.604+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     98  0.01s             1           0  0.06s           2025-05-02T07:39:59                      12
+/opt/airflow/dags/hello_world.py       99  0.00s             1           0  0.05s           2025-05-02T07:39:59                      12
+================================================================================
+[2025-05-02T07:40:59.852+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    106  0.01s             1           0  0.06s           2025-05-02T07:40:29                      12
+/opt/airflow/dags/hello_world.py      107  0.00s             1           0  0.05s           2025-05-02T07:40:29                      12
+================================================================================
+[2025-05-02T07:41:30.073+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    114  0.01s             1           0  0.06s           2025-05-02T07:40:59                      12
+/opt/airflow/dags/hello_world.py      115  0.00s             1           0  0.05s           2025-05-02T07:40:59                      12
+================================================================================
+[2025-05-02T07:42:00.308+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    122  0.01s             1           0  0.06s           2025-05-02T07:41:30                      12
+/opt/airflow/dags/hello_world.py      123  0.00s             1           0  0.06s           2025-05-02T07:41:30                      12
+================================================================================
+[2025-05-02T07:42:30.548+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    130  0.01s             1           0  0.06s           2025-05-02T07:42:00                      12
+/opt/airflow/dags/hello_world.py      131  0.00s             1           0  0.06s           2025-05-02T07:42:00                      12
+================================================================================
+[2025-05-02T07:43:00.772+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    138  0.01s             1           0  0.06s           2025-05-02T07:42:30                      12
+/opt/airflow/dags/hello_world.py      139  0.00s             1           0  0.05s           2025-05-02T07:42:30                      12
+================================================================================
+[2025-05-02T07:43:28.925+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T07:43:28.928+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T07:43:31.017+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    146  0.01s             1           0  0.06s           2025-05-02T07:43:00                      12
+/opt/airflow/dags/hello_world.py      147  0.00s             1           0  0.06s           2025-05-02T07:43:00                      12
+================================================================================
+[2025-05-02T07:44:01.285+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    154  0.01s             1           0  0.06s           2025-05-02T07:43:31                      12
+/opt/airflow/dags/hello_world.py      155  0.00s             1           0  0.05s           2025-05-02T07:43:31                      12
+================================================================================
+[2025-05-02T07:44:31.500+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    162  0.01s             1           0  0.06s           2025-05-02T07:44:01                      12
+/opt/airflow/dags/hello_world.py      163  0.00s             1           0  0.05s           2025-05-02T07:44:01                      12
+================================================================================
+[2025-05-02T07:45:01.722+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    170  0.01s             1           0  0.06s           2025-05-02T07:44:31                      12
+/opt/airflow/dags/hello_world.py      171  0.00s             1           0  0.06s           2025-05-02T07:44:31                      12
+================================================================================
+[2025-05-02T07:45:14.644+0000] {manager.py:465} INFO - Exiting gracefully upon receiving signal 15
+[2025-05-02T07:46:56.351+0000] {manager.py:483} INFO - Processing files using up to 2 processes at a time 
+[2025-05-02T07:46:56.351+0000] {manager.py:484} INFO - Process each file at most once every 30 seconds
+[2025-05-02T07:46:56.352+0000] {manager.py:485} INFO - Checking for new files in /opt/airflow/dags every 300 seconds
+[2025-05-02T07:46:56.352+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T07:46:56.353+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T07:46:56.410+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run      Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  ----------  ----------------------
+/opt/airflow/dags/hello_world.py       68  0.01s             0           0                                                   0
+/opt/airflow/dags/spark_example.py     67  0.02s             0           0                                                   0
+================================================================================
+[2025-05-02T07:47:26.895+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     75  0.01s             1           0  0.28s           2025-05-02T07:46:56                      45
+/opt/airflow/dags/hello_world.py       76  0.00s             1           0  0.27s           2025-05-02T07:46:56                      45
+================================================================================
+[2025-05-02T07:47:57.144+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     83  0.01s             1           0  0.06s           2025-05-02T07:47:26                      12
+/opt/airflow/dags/hello_world.py       84  0.00s             1           0  0.06s           2025-05-02T07:47:26                      12
+================================================================================
+[2025-05-02T07:48:27.392+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     91  0.01s             1           0  0.06s           2025-05-02T07:47:57                      12
+/opt/airflow/dags/hello_world.py       92  0.00s             1           0  0.06s           2025-05-02T07:47:57                      12
+================================================================================
+[2025-05-02T07:48:57.593+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py     99  0.01s             1           0  0.06s           2025-05-02T07:48:27                      12
+/opt/airflow/dags/hello_world.py      100  0.00s             1           0  0.06s           2025-05-02T07:48:27                      12
+================================================================================
+[2025-05-02T07:49:27.795+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    107  0.01s             1           0  0.06s           2025-05-02T07:48:57                      12
+/opt/airflow/dags/hello_world.py      108  0.00s             1           0  0.06s           2025-05-02T07:48:57                      12
+================================================================================
+[2025-05-02T07:49:57.977+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    115  0.01s             1           0  0.06s           2025-05-02T07:49:27                      12
+/opt/airflow/dags/hello_world.py      116  0.00s             1           0  0.06s           2025-05-02T07:49:27                      12
+================================================================================
+[2025-05-02T07:50:28.175+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    123  0.01s             1           0  0.06s           2025-05-02T07:49:58                      12
+/opt/airflow/dags/hello_world.py      124  0.00s             1           0  0.06s           2025-05-02T07:49:58                      12
+================================================================================
+[2025-05-02T07:50:58.424+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    131  0.01s             1           0  0.06s           2025-05-02T07:50:28                      12
+/opt/airflow/dags/hello_world.py      132  0.00s             1           0  0.05s           2025-05-02T07:50:28                      12
+================================================================================
+[2025-05-02T07:51:28.824+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.81s           2025-05-02T07:50:59                      12
+/opt/airflow/dags/spark_example.py    139  0.00s             1           0  0.20s           2025-05-02T07:50:58                      12
+================================================================================
+[2025-05-02T07:51:57.090+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T07:51:57.092+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T07:51:59.120+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T07:51:29                      12
+/opt/airflow/dags/spark_example.py    147  0.00s             1           0  0.06s           2025-05-02T07:51:28                      12
+================================================================================
+[2025-05-02T07:52:29.408+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T07:52:00                      12
+/opt/airflow/dags/spark_example.py    155  0.00s             1           0  0.05s           2025-05-02T07:51:59                      12
+================================================================================
+[2025-05-02T07:52:59.665+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.11s           2025-05-02T07:52:30                      12
+/opt/airflow/dags/spark_example.py    163  0.00s             1           0  0.06s           2025-05-02T07:52:29                      12
+================================================================================
+[2025-05-02T07:53:29.950+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.07s           2025-05-02T07:53:00                      12
+/opt/airflow/dags/spark_example.py    171  0.00s             1           0  0.07s           2025-05-02T07:52:59                      12
+================================================================================
+[2025-05-02T07:54:00.185+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    179  0.00s             1           0  0.08s           2025-05-02T07:53:30                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.05s           2025-05-02T07:53:31                      12
+================================================================================
+[2025-05-02T07:54:30.454+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T07:54:01                      12
+/opt/airflow/dags/spark_example.py    187  0.00s             1           0  0.06s           2025-05-02T07:54:00                      12
+================================================================================
+[2025-05-02T07:55:00.791+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T07:54:31                      12
+/opt/airflow/dags/spark_example.py    200  0.00s             1           0  0.06s           2025-05-02T07:54:30                      12
+================================================================================
+[2025-05-02T07:55:31.114+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    208  0.01s             1           0  0.06s           2025-05-02T07:55:00                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T07:55:01                      12
+================================================================================
+[2025-05-02T07:56:01.416+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    216  0.00s             1           0  0.06s           2025-05-02T07:55:31                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T07:55:32                      12
+================================================================================
+[2025-05-02T07:56:31.685+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T07:56:02                      12
+/opt/airflow/dags/spark_example.py    224  0.00s             1           0  0.06s           2025-05-02T07:56:01                      12
+================================================================================
+[2025-05-02T07:56:57.884+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T07:56:57.887+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T07:57:01.976+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T07:56:32                      12
+/opt/airflow/dags/spark_example.py    232  0.00s             1           0  0.06s           2025-05-02T07:56:31                      12
+================================================================================
+[2025-05-02T07:57:32.279+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.07s           2025-05-02T07:57:03                      12
+/opt/airflow/dags/spark_example.py    240  0.00s             1           0  0.06s           2025-05-02T07:57:02                      12
+================================================================================
+[2025-05-02T07:58:02.599+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T07:57:33                      12
+/opt/airflow/dags/spark_example.py    248  0.00s             1           0  0.06s           2025-05-02T07:57:32                      12
+================================================================================
+[2025-05-02T07:58:32.890+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    256  0.00s             1           0  0.06s           2025-05-02T07:58:02                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T07:58:03                      12
+================================================================================
+[2025-05-02T07:59:03.171+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.07s           2025-05-02T07:58:33                      12
+/opt/airflow/dags/spark_example.py    264  0.00s             1           0  0.06s           2025-05-02T07:58:32                      12
+================================================================================
+[2025-05-02T07:59:33.420+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T07:59:04                      12
+/opt/airflow/dags/spark_example.py    272  0.00s             1           0  0.06s           2025-05-02T07:59:03                      12
+================================================================================
+[2025-05-02T08:00:03.698+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    280  0.00s             1           0  0.06s           2025-05-02T07:59:33                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T07:59:34                      12
+================================================================================
+[2025-05-02T08:00:33.987+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    288  0.00s             1           0  0.06s           2025-05-02T08:00:03                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:00:04                      12
+================================================================================
+[2025-05-02T08:01:04.268+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    296  0.01s             1           0  0.06s           2025-05-02T08:00:34                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:00:35                      12
+================================================================================
+[2025-05-02T08:01:34.591+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    304  0.00s             1           0  0.06s           2025-05-02T08:01:04                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:01:05                      12
+================================================================================
+[2025-05-02T08:01:58.791+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T08:01:58.792+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T08:02:04.916+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    312  0.00s             1           0  0.06s           2025-05-02T08:01:34                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.05s           2025-05-02T08:01:35                      12
+================================================================================
+[2025-05-02T08:02:35.193+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:02:05                      12
+/opt/airflow/dags/spark_example.py    320  0.00s             1           0  0.05s           2025-05-02T08:02:04                      12
+================================================================================
+[2025-05-02T08:03:05.494+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:02:36                      12
+/opt/airflow/dags/spark_example.py    328  0.00s             1           0  0.06s           2025-05-02T08:02:35                      12
+================================================================================
+[2025-05-02T08:03:35.812+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.07s           2025-05-02T08:03:06                      12
+/opt/airflow/dags/spark_example.py    336  0.00s             1           0  0.07s           2025-05-02T08:03:05                      12
+================================================================================
+[2025-05-02T08:04:06.098+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.07s           2025-05-02T08:03:36                      12
+/opt/airflow/dags/spark_example.py    348  0.00s             1           0  0.06s           2025-05-02T08:03:35                      12
+================================================================================
+[2025-05-02T08:04:36.356+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:04:07                      12
+/opt/airflow/dags/spark_example.py    356  0.00s             1           0  0.06s           2025-05-02T08:04:06                      12
+================================================================================
+[2025-05-02T08:05:06.658+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:04:37                      12
+/opt/airflow/dags/spark_example.py    364  0.00s             1           0  0.06s           2025-05-02T08:04:36                      12
+================================================================================
+[2025-05-02T08:05:36.992+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    372  0.00s             1           0  0.06s           2025-05-02T08:05:06                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:05:07                      12
+================================================================================
+[2025-05-02T08:06:07.282+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    380  0.00s             1           0  0.06s           2025-05-02T08:05:37                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:05:38                      12
+================================================================================
+[2025-05-02T08:06:37.559+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    388  0.00s             1           0  0.06s           2025-05-02T08:06:07                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:06:08                      12
+================================================================================
+[2025-05-02T08:06:59.732+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T08:06:59.732+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T08:07:07.872+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:06:38                      12
+/opt/airflow/dags/spark_example.py    396  0.00s             1           0  0.06s           2025-05-02T08:06:37                      12
+================================================================================
+[2025-05-02T08:07:38.167+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    404  0.00s             1           0  0.06s           2025-05-02T08:07:07                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:07:08                      12
+================================================================================
+[2025-05-02T08:08:08.444+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    412  0.00s             1           0  0.06s           2025-05-02T08:07:38                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:07:39                      12
+================================================================================
+[2025-05-02T08:08:38.752+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    420  0.00s             1           0  0.06s           2025-05-02T08:08:08                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:08:09                      12
+================================================================================
+[2025-05-02T08:09:08.952+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:08:39                      12
+/opt/airflow/dags/spark_example.py    428  0.00s             1           0  0.05s           2025-05-02T08:08:38                      12
+================================================================================
+[2025-05-02T08:09:39.212+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    436  0.01s             1           0  0.08s           2025-05-02T08:09:09                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:09:10                      12
+================================================================================
+[2025-05-02T08:10:09.511+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.08s           2025-05-02T08:09:40                      12
+/opt/airflow/dags/spark_example.py    444  0.00s             1           0  0.07s           2025-05-02T08:09:39                      12
+================================================================================
+[2025-05-02T08:10:39.782+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    452  0.00s             1           0  0.06s           2025-05-02T08:10:09                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:10:10                      12
+================================================================================
+[2025-05-02T08:11:10.101+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    460  0.00s             1           0  0.07s           2025-05-02T08:10:39                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.07s           2025-05-02T08:10:40                      12
+================================================================================
+[2025-05-02T08:11:40.390+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:11:11                      12
+/opt/airflow/dags/spark_example.py    468  0.00s             1           0  0.06s           2025-05-02T08:11:10                      12
+================================================================================
+[2025-05-02T08:12:00.551+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T08:12:00.555+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T08:12:10.687+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    476  0.00s             1           0  0.05s           2025-05-02T08:11:40                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.05s           2025-05-02T08:11:41                      12
+================================================================================
+[2025-05-02T08:12:40.998+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    484  0.00s             1           0  0.06s           2025-05-02T08:12:10                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:12:11                      12
+================================================================================
+[2025-05-02T08:13:11.294+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    492  0.00s             1           0  0.06s           2025-05-02T08:12:41                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.05s           2025-05-02T08:12:42                      12
+================================================================================
+[2025-05-02T08:13:41.570+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:13:12                      12
+/opt/airflow/dags/spark_example.py    500  0.01s             1           0  0.06s           2025-05-02T08:13:11                      12
+================================================================================
+[2025-05-02T08:14:11.864+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:13:42                      12
+/opt/airflow/dags/spark_example.py    508  0.00s             1           0  0.05s           2025-05-02T08:13:41                      12
+================================================================================
+[2025-05-02T08:14:42.151+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.05s           2025-05-02T08:14:12                      12
+/opt/airflow/dags/spark_example.py    516  0.00s             1           0  0.05s           2025-05-02T08:14:11                      12
+================================================================================
+[2025-05-02T08:15:12.431+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    524  0.00s             1           0  0.06s           2025-05-02T08:14:42                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:14:43                      12
+================================================================================
+[2025-05-02T08:15:42.707+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:15:13                      12
+/opt/airflow/dags/spark_example.py    532  0.00s             1           0  0.05s           2025-05-02T08:15:12                      12
+================================================================================
+[2025-05-02T08:16:13.000+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    540  0.00s             1           0  0.06s           2025-05-02T08:15:42                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:15:43                      12
+================================================================================
+[2025-05-02T08:16:43.268+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/spark_example.py    548  0.00s             1           0  0.06s           2025-05-02T08:16:13                      12
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:16:14                      12
+================================================================================
+[2025-05-02T08:17:01.404+0000] {manager.py:821} INFO - Searching for files in /opt/airflow/dags
+[2025-05-02T08:17:01.405+0000] {manager.py:824} INFO - There are 2 files in /opt/airflow/dags
+[2025-05-02T08:17:13.524+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:16:44                      12
+/opt/airflow/dags/spark_example.py    556  0.00s             1           0  0.06s           2025-05-02T08:16:43                      12
+================================================================================
+[2025-05-02T08:17:43.781+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.07s           2025-05-02T08:17:14                      12
+/opt/airflow/dags/spark_example.py    564  0.00s             1           0  0.06s           2025-05-02T08:17:13                      12
+================================================================================
+[2025-05-02T08:18:14.067+0000] {manager.py:997} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                             PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run               Last # of DB Queries
+----------------------------------  -----  ---------  --------  ----------  --------------  -------------------  ----------------------
+/opt/airflow/dags/hello_world.py                             1           0  0.06s           2025-05-02T08:17:44                      12
+/opt/airflow/dags/spark_example.py    572  0.00s             1           0  0.06s           2025-05-02T08:17:43                      12
+================================================================================
