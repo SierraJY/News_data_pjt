@@ -165,13 +165,6 @@ DB_PASSWORD=<비밀번호>
 
 # API 키
 ANTHROPIC_API_KEY=<Anthropic API 키>
-
-# Django 설정
-DJANGO_SECRET_KEY=<Django 시크릿 키>
-JWT_SECRET_KEY=<JWT 시크릿 키>
-
-# 기타 설정
-DEBUG=True  # 개발 환경에서만 True로 설정
 ```
 
 ### 3. Python 패키지 설정
