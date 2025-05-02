@@ -199,7 +199,12 @@ DB_PASSWORD=<비밀번호>
 
 # API 키
 ANTHROPIC_API_KEY=<Anthropic API 키>
+
+# Airflow 설정
+AIRFLOW_UID=$(id -u)  # 현재 사용자 ID를 Airflow 컨테이너 사용자 ID로 설정
 ```
+
+Airflow는 AIRFLOW_UID 환경 변수를 사용하여 컨테이너 내부의 사용자 ID를 설정합니다. 이 설정이 없으면 파일 권한 문제가 발생할 수 있습니다.
 
 ### 3. Python 패키지 설정
 
@@ -387,6 +392,7 @@ git lfs pull
    - DAG 파일은 src/batch/dags 디렉터리에 위치해야 합니다.
    - Spark과 통합 시 JAVA_HOME 환경 변수가 올바르게 설정되어 있어야 합니다 (docker-compose.yml의 x-airflow-common 설정 참조).
    - Airflow 로그는 src/batch/logs 디렉터리에서 확인할 수 있습니다.
+   - 반드시 `.env` 파일에 `AIRFLOW_UID=$(id -u)` 설정이 있어야 파일 권한 문제가 발생하지 않습니다.
 
 ## 데이터베이스 구조
 
