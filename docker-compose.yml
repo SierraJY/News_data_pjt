@@ -147,24 +147,24 @@ services:
     networks:
       - airflow
   
-  spark:
-    build:
-      context: ./
-      dockerfile: ./services/spark/Dockerfile
-    container_name: spark
-    ports:
-      - "8082:8082"  # Spark Master Web UI
-      - "4040:4040"  # Spark Application Web UI
-    working_dir: /opt/workspace
-    volumes:
-      - type: bind
-        source: ./src/spark_test_codes
-        target: /opt/workspace/spark_test_codes
-    environment:
-      - SPARK_MASTER_HOST=spark
-    tty: true
-    networks:
-      - airflow
+  # spark:
+  #   build:
+  #     context: ./
+  #     dockerfile: ./services/spark/Dockerfile
+  #   container_name: spark
+  #   ports:
+  #     - "8082:8082"  # Spark Master Web UI
+  #     - "4040:4040"  # Spark Application Web UI
+  #   working_dir: /opt/workspace
+  #   volumes:
+  #     - type: bind
+  #       source: ./src/spark_test_codes
+  #       target: /opt/workspace/spark_test_codes
+  #   environment:
+  #     - SPARK_MASTER_HOST=spark
+  #   tty: true
+  #   networks:
+  #     - airflow
 
   django:
     build:
@@ -264,45 +264,36 @@ services:
   spark-master:
     build:
       context: ./
-      dockerfile: ./services/spark/Dockerfile
+      dockerfile: ./services/spark_cluster/Dockerfile
     container_name: spark-master
     ports:
       - "8083:8080"  # Spark Master Web UI
       - "7077:7077"  # Spark Master 통신 포트
     environment:
       - SPARK_MODE=master
-      - SPARK_MASTER_HOST=spark-master
-      - SPARK_RPC_AUTHENTICATION_ENABLED=no
-      - SPARK_RPC_ENCRYPTION_ENABLED=no
-      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
-      - SPARK_SSL_ENABLED=no
     volumes:
-      - ./src/batch/dags/scripts:/opt/airflow/dags/scripts
-      - ./src/batch/data:/opt/airflow/data
-      - ./src/batch/output:/opt/airflow/output
-    tty: true
+      - ./src/batch/dags/scripts:/opt/bitnami/spark/scripts
+      - ./src/batch/data:/opt/bitnami/spark/data
+      - ./src/batch/output:/opt/bitnami/spark/output
     networks:
       - airflow
 
   spark-worker:
     build:
       context: ./
-      dockerfile: ./services/spark/Dockerfile
+      dockerfile: ./services/spark_cluster/Dockerfile
     container_name: spark-worker
     ports:
       - "8084:8081"  # Spark Worker Web UI
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
-      - SPARK_WORKER_MEMORY=2G
-      - SPARK_WORKER_CORES=2
     volumes:
-      - ./src/batch/dags/scripts:/opt/airflow/dags/scripts
-      - ./src/batch/data:/opt/airflow/data
-      - ./src/batch/output:/opt/airflow/output
+      - ./src/batch/dags/scripts:/opt/bitnami/spark/scripts
+      - ./src/batch/data:/opt/bitnami/spark/data
+      - ./src/batch/output:/opt/bitnami/spark/output
     depends_on:
       - spark-master
-    tty: true
     networks:
       - airflow
 

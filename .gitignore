@@ -1,6 +1,12 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos,windows,pycharm,visualstudiocode,venv
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,pycharm,visualstudiocode,venv
 
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+src/batch/logs/
+
 # env
 **/.env
 

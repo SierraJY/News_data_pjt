@@ -243,7 +243,6 @@ docker compose up --build
 
 ### 2. 데이터 수집 및 처리 파이프라인 실행
 
-**방법 1: Kafka-Flink 파이프라인 (권장)**
 ```bash
 # 카프카 컨테이너에서 프로듀서 실행
 docker exec -it kafka python /opt/workspace/kafka_producer/news_producer.py
@@ -252,7 +251,14 @@ docker exec -it kafka python /opt/workspace/kafka_producer/news_producer.py
 docker exec -it flink python /opt/workspace/flink_consumer/flink_consumer.py
 ```
 
-### 3. 웹 인터페이스 접속
+### 3. Airflow Spark 커넥션 설정
+
+Airflow에서 Spark 작업을 실행하기 위한 커넥션 추가(GUI(Admin > Connections)로도 가능):
+```bash
+docker exec -it airflow-webserver bash -c "airflow connections add spark_default --conn-type spark --conn-host spark-master --conn-port 7077 --conn-extra '{\"deploy-mode\": \"client\"}'"
+```
+
+### 4. 웹 인터페이스 접속
 
 **Django 백엔드 API**
 - 기본 URL: http://localhost:8000/api/
@@ -283,7 +289,7 @@ docker exec -it flink python /opt/workspace/flink_consumer/flink_consumer.py
 - 접속 URL: http://localhost:8085/
 - Spark 작업의 상태 및 성능 모니터링
 
-### 4. 데이터 확인
+### 5. 데이터 확인
 
 PostgreSQL 데이터베이스에 접속하여 저장된 데이터를 확인합니다:
 
@@ -295,7 +301,7 @@ docker exec -it postgres psql -U ${DB_USERNAME} -d news
 SELECT id, title, category, writer FROM news_article LIMIT 10;
 ```
 
-### 5. 테스트 코드 실행
+### 6. 테스트 코드 실행
 
 각 컨테이너에는 기능 테스트를 위한 코드가 포함되어 있습니다:
 
