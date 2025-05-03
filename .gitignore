@@ -6,6 +6,7 @@ __pycache__/
 *$py.class
 *.log
 src/batch/logs/
+src/batch/data/realtime/*.json
 
 # env
 **/.env

@@ -8,6 +8,7 @@ import os
 import sys
 import json
 import traceback
+from datetime import datetime
 from pyflink.datastream import StreamExecutionEnvironment
 from pyflink.common.serialization import SimpleStringSchema
 from pyflink.datastream.connectors import FlinkKafkaConsumer
@@ -50,6 +51,7 @@ class NewsProcessor(MapFunction):
             source = data.get('source', '')
             writer = data.get('writer', '')
             original_keywords = data.get('keywords', [])
+            write_date = data.get('write_date','')
             
             # 데이터 전처리 및 변환
             if content:
@@ -84,9 +86,30 @@ class NewsProcessor(MapFunction):
                     source=source,
                     writer=writer
                 )
-                
+
+                output_data = {
+                    "title":title,
+                    "content":preprocessed_content,
+                    "url":url,
+                    "original_category": original_category,
+                    "ai_category": ai_category,
+                    "keywords":keywords,
+                    "embedding":embedding, 
+                    "source":source,
+                    "writer":writer, 
+                    "publish_date":write_date
+
+                }
+
+                filename = f"news_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}.json"
+                filepath = os.path.join("/opt/batch/data/realtime", filename)
+                with open(filepath, 'w',encoding ='utf-8') as f:
+                    json.dump(output_data, f, ensure_ascii=False)
+
+                print(f"JSON 파일로 저장 완료: {filepath}")
                 print(f"[DEBUG] 저장 결과: {save_result}")
                 return f"Successfully processed: {title}"
+
             else:
                 print(f"[Skip] 내용 없음: {title}")
                 return f"Skipped (empty content): {title}"

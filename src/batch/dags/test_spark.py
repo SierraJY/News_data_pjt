@@ -17,11 +17,12 @@ default_args = {
 
 # DAG 정의
 dag = DAG(
-    'spark_test',
+    'test_spark',
     default_args=default_args,
     description='Spark 마스터-워커 테스트',
     schedule_interval=None,
     catchup=False,
+    tags=['example'],
 )
 
 # 1. Spark 마스터 웹 UI 연결 확인
@@ -130,7 +131,7 @@ EOL
 run_spark_job = SparkSubmitOperator(
     task_id='run_spark_job',
     # Airflow 컨테이너 내부 경로 사용
-    application='/opt/airflow/dags/scripts/simple_spark_test.py',
+    application='/opt/airflow/dags/scripts/test_simple_spark.py',
     conn_id='spark_default',
     verbose=True,
     conf={

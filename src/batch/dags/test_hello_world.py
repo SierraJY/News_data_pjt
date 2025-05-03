@@ -16,7 +16,7 @@ def hello_world_function():
     return "Hello World!"
 
 with DAG(
-    'hello_world',
+    'test_hello_world',
     default_args=default_args,
     description='A simple hello world DAG',
     schedule_interval=timedelta(days=1),

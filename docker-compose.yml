@@ -138,6 +138,9 @@ services:
       - type: bind
         source: ./.env
         target: /opt/workspace/.env
+      - type: bind
+        source: ./src/batch/data/realtime
+        target: /opt/batch/data/realtime
     environment:
       - KAFKA_CONNECTOR_PATH=/opt/flink/lib/flink-sql-connector-kafka-3.3.0-1.20.jar
     depends_on:
