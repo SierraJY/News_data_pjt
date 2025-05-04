@@ -41,11 +41,16 @@ ENV PATH="$JAVA_HOME/bin:/opt/spark/bin:${PATH}"
 ENV PYTHONPATH="${PYTHONPATH}:/opt/airflow"
 
 USER airflow
-# Python 패키지 설치
+# Python 패키지 설치 - Claude API 및 PDF 관련 패키지 추가
 RUN pip install --no-cache-dir \
     apache-airflow-providers-apache-spark \
     pyspark==3.5.4 \
-    matplotlib
+    matplotlib \
+    anthropic \
+    python-dotenv \
+    reportlab \
+    pillow \
+    tiktoken
 
 # 스크립트 추가
 COPY --chown=airflow:root services/airflow/setup.sh /opt/airflow/setup.sh

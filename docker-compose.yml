@@ -17,6 +17,7 @@ x-airflow-common: &airflow-common
     AIRFLOW__CORE__DEFAULT_TIMEZONE: Asia/Seoul
     AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: 'true'
     JAVA_HOME: /usr/lib/jvm/default-java
+    ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
   volumes:
     - ./src/batch/dags:/opt/airflow/dags
     - ./src/batch/logs:/opt/airflow/logs

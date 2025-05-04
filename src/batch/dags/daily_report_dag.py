@@ -2,7 +2,9 @@ import pendulum
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.bash import BashOperator
+from airflow.operators.python import PythonOperator
 from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
+from dags.scripts.generate_pdf_report import generate_pdf
 
 local_tz = pendulum.timezone("Asia/Seoul")
 
@@ -31,5 +33,14 @@ with DAG(
         conf={'spark.master': 'spark://spark-master:7077'}
     )
 
+    make_pdf_reports = PythonOperator(
+        task_id='make_pdf_reports',
+        python_callable=generate_pdf,
+        op_kwargs={
+            'date': '{{ ds }}',
+            'input_dir': '/opt/airflow/data/news_archive',
+            'output_dir': '/opt/airflow/data/daily_reports'
+        }
+    )
 
-    submit_spark_job
+    submit_spark_job >> make_pdf_reports
