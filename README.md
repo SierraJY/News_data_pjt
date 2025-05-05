@@ -68,19 +68,18 @@
 
 
 ## 주요 기술 스택
-
-- **Docker**: 모든 서비스를 컨테이너화하여 환경 일관성 유지
-- **Kafka**: 뉴스 데이터 스트리밍을 위한 메시지 브로커
-- **Flink**: 실시간 스트림 처리 엔진으로 데이터 처리 및 변환
-- **PostgreSQL + pgvector**: 관계형 데이터베이스와 벡터 검색 기능
-- **Anthropic Claude API**: 텍스트 분석 및 처리(카테고리 분류, 키워드 추출)
-- **Django + DRF**: REST API 백엔드 및 데이터 모델링
-- **Vue.js**: 사용자 인터페이스 및 프론트엔드 구현
-- **JWT**: 토큰 기반 사용자 인증
-- **Python**: 크롤링, 데이터 처리, API 연동 등의 주요 로직 구현 언어
-- **BeautifulSoup**: 웹 크롤링과 HTML 파싱을 위한 라이브러리
-- **Airflow**: 워크플로우 관리 및 작업 스케줄링 자동화
-- **Spark**: 대규모 데이터 처리 및 분석 엔진
+<div style="margin-bottom: 10px;">
+    <strong style="font-size: 16px;">📊 Data</strong><br><br>
+    <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white">
+    <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=flat&logo=scikit-learn&logoColor=white">
+    <img src="https://img.shields.io/badge/Apache%20Spark-E25A1C?style=flat&logo=apachespark&logoColor=white">
+    <img src="https://img.shields.io/badge/Apache%20Kafka-231F20?style=flat&logo=apachekafka&logoColor=white">
+    <img src="https://img.shields.io/badge/Apache%20Airflow-017CEE?style=flat&logo=apacheairflow&logoColor=white">
+    <img src="https://img.shields.io/badge/Apache%20Flink-E6526F?style=flat&logo=apacheflink&logoColor=white">
+    <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white">
+    <img src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=vuedotjs&logoColor=white">
+    <img src="https://img.shields.io/badge/Django-092E20?style=flat&logo=django&logoColor=white">
+</div>
 
 ## 프로젝트 구조
 
