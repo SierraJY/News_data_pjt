@@ -8,6 +8,7 @@ __pycache__/
 src/batch/logs/*
 !src/batch/logs/.gitkeep
 src/batch/data/realtime/*.json
+src/batch/data/news_archive/*.json
 
 # env
 **/.env

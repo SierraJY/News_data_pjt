@@ -165,10 +165,6 @@ def generate_pdf(date, input_dir, output_dir):
     """Claude API를 활용한 PDF 리포트 생성"""
     
     print(f"[INFO] PDF 리포트 생성 날짜: {date}")
-
-    # 테스트를 위해 날짜 하드코딩
-    date = "2025-05-03"  # 함수 내부에서 하드코딩
-    print(f"[DEBUG] 하드코딩된 날짜 사용: {date}")
     
     # 파일 경로 설정
     report_filename = f"{date}_report.json"

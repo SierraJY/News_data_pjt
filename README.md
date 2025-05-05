@@ -1,12 +1,6 @@
-# 뉴스 데이터 수집 및 처리 파이프라인
+# 뉴스 데이터 통합 파이프라인: 수집-분석-리포팅-시각화 시스템
 
-이 프로젝트는 Docker 기반 데이터 엔지니어링 환경에서 뉴스 기사 데이터를 수집, 처리, 저장하는 파이프라인을 구현합니다.
-
-<div style="display: flex; justify-content: space-between;">
-  <img src="README_img/SSAFYNEWS · 11.35pm · 05-02.jpeg" style="width: 48%;">
-  <img src="README_img/SSAFYNEWS.jpeg" style="width: 48%;">
-</div>
-
+이 프로젝트는 Docker 기반 데이터 엔지니어링 환경에서 뉴스 기사 데이터를 수집, 처리, 분석하고 자동화된 리포트를 생성하는 통합 파이프라인을 구현합니다.
 
 ## 목차
 - [주요 특징 및 기술 스택](#주요-특징-및-기술-스택)
@@ -18,6 +12,60 @@
 - [실행 방법](#실행-방법)
 - [환경 테스트](#테스트_코드_실행)
 - [주의사항](#주의사항)
+
+
+## 기능 설명
+<div style="display: flex; justify-content: space-between;">
+  <img src="README_img/news_list.png" style="width: 48%;">
+  <img src="README_img/news_dashboard.png" style="width: 48%;">
+</div>
+
+- **뉴스 데이터 수집 (Kafka Producer)**
+   - RSS 피드를 통해 여러 뉴스사의 기사 수집
+   - 수집된 데이터를 Kafka 토픽으로 전송
+
+- **웹 인터페이스 제공 (Django + Vue)**
+   - 데이터베이스에 저장된 뉴스 기사를 웹 UI로 제공
+   - 사용자 기능 (로그인, 회원가입)
+   - 인터랙션 기능 (좋아요, 조회수 확인)
+   - 기사 상세 정보 및 목록 조회
+
+<div style="display: flex; justify-content: space-between;">
+  <img src="README_img/airflow_dag.png" style="width: 48%;">
+  <img src="README_img/email_reports.png" style="width: 48%;">
+</div>
+<br>
+<div style="display: flex; justify-content: space-between;">
+  <img src="README_img/report_text.png" style="width: 48%;">
+  <img src="README_img/report_chart.png" style="width: 48%;">
+</div>
+
+- **데이터 처리 (Flink Consumer)**
+   - Kafka 토픽에서 데이터 수신
+   - Anthropic Claude API를 활용한 텍스트 분석:
+     - 키워드 추출
+     - 카테고리 자동 분류
+     - 텍스트 임베딩 생성 (해시 기반 임베딩 사용)
+
+- **배치 처리 (Airflow + Spark)**
+   - 정기적인 데이터 분석 및 가공 작업 수행
+   - 스케줄링된 워크플로우 관리
+   - Spark를 활용한 대용량 데이터 처리 및 분석
+   - 분석 결과 시각화 및 저장
+
+- **일일 뉴스 리포트 생성**:
+     - Spark 클러스터 활용 대량 뉴스 데이터 분석
+     - Claude API 활용 자연어 보고서 작성
+     - 데이터 시각화 그래프 자동 생성
+     - PDF 리포트 생성 및 이메일 자동 발송
+     - 처리 완료된 JSON 파일 자동 아카이브
+
+- **데이터 저장 (PostgreSQL)**
+   - 처리된 데이터를 PostgreSQL 데이터베이스에 저장
+   - pgvector 확장을 통한 벡터 데이터 저장
+
+
+
 
 ## 주요 기술 스택
 
@@ -127,35 +175,6 @@
    - Vue.js 기반 단일 페이지 애플리케이션(SPA)
    - 반응형 디자인으로 뉴스 기사 조회 및 인터랙션 제공
    - 사용자 로그인, 회원가입, 좋아요 기능 구현
-
-## 기능 설명
-
-1. **뉴스 데이터 수집 (Kafka Producer)**
-   - RSS 피드를 통해 여러 뉴스사의 기사 수집
-   - 수집된 데이터를 Kafka 토픽으로 전송
-
-2. **데이터 처리 (Flink Consumer)**
-   - Kafka 토픽에서 데이터 수신
-   - Anthropic Claude API를 활용한 텍스트 분석:
-     - 키워드 추출
-     - 카테고리 자동 분류
-     - 텍스트 임베딩 생성 (해시 기반 임베딩 사용)
-
-3. **배치 처리 (Airflow + Spark)**
-   - 정기적인 데이터 분석 및 가공 작업 수행
-   - 스케줄링된 워크플로우 관리
-   - Spark를 활용한 대용량 데이터 처리 및 분석
-   - 분석 결과 시각화 및 저장
-
-4. **데이터 저장 (PostgreSQL)**
-   - 처리된 데이터를 PostgreSQL 데이터베이스에 저장
-   - pgvector 확장을 통한 벡터 데이터 저장
-
-5. **웹 인터페이스 제공 (Django + Vue)**
-   - 데이터베이스에 저장된 뉴스 기사를 웹 UI로 제공
-   - 사용자 기능 (로그인, 회원가입)
-   - 인터랙션 기능 (좋아요, 조회수 확인)
-   - 기사 상세 정보 및 목록 조회
 
 ## env 파일 설정
 

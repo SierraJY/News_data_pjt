@@ -8,8 +8,6 @@ from pyspark.sql.functions import col, explode, when, length, substring, to_date
 from pyspark.sql.types import StructType, StructField, StringType, ArrayType, DoubleType
 
 def main(report_date_str):
-    report_date_str = "2025-05-03"
-    print(f"[DEBUG] 하드코딩된 날짜 사용: {report_date_str}")
 
     INPUT_PATH = "/opt/airflow/data/realtime/news_*.json"
     ARCHIVE_DIR = "/opt/airflow/data/daily_reports"

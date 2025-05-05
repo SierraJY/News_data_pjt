@@ -4,7 +4,9 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
+from airflow.operators.email import EmailOperator
 from dags.scripts.generate_pdf_report import generate_pdf
+from dags.scripts.move_json_files import move_json_files
 
 local_tz = pendulum.timezone("Asia/Seoul")
 
@@ -38,9 +40,29 @@ with DAG(
         python_callable=generate_pdf,
         op_kwargs={
             'date': '{{ ds }}',
-            'input_dir': '/opt/airflow/data/news_archive',
+            'input_dir': '/opt/airflow/data/daily_reports',
             'output_dir': '/opt/airflow/data/daily_reports'
         }
     )
+    
+    move_files = PythonOperator(
+        task_id='move_json_files',
+        python_callable=move_json_files,
+        provide_context=True
+    )
+    
+    send_email_report = EmailOperator(
+        task_id='send_email_report',
+        to='wndus51445@gmail.com',
+        subject='[뉴스 데이터] {{ ds }} 일일 뉴스 리포트',
+        html_content="""
+        <h3>{{ ds }} 일일 뉴스 리포트가 생성되었습니다.</h3>
+        <p>첨부된 PDF 파일에서 상세 내용을 확인해주세요.</p>
+        <p>감사합니다.</p>
+        """,
+        files=['/opt/airflow/data/daily_reports/{{ ds }}_report.pdf'],
+        mime_subtype='mixed'
+    )
 
-    submit_spark_job >> make_pdf_reports
+    # 태스크 의존성 설정: Spark 작업 -> PDF 생성 -> 파일 이동 -> 이메일 전송
+    submit_spark_job >> make_pdf_reports >> move_files >> send_email_report
