@@ -3,15 +3,28 @@
 이 프로젝트는 Docker 기반 데이터 엔지니어링 환경에서 뉴스 기사 데이터를 수집, 처리, 분석하고 자동화된 리포트를 생성하는 통합 파이프라인을 구현합니다.
 
 ## 목차
-- [주요 특징 및 기술 스택](#주요-특징-및-기술-스택)
+- [주요 특징 및 기술 스택](#주요-기술-스택)
+- [기능 설명](#기능-설명)
 - [프로젝트 구조](#프로젝트-구조)
 - [컨테이너 구성](#컨테이너-구성)
-- [기능 설명](#기능-설명)
 - [env 파일 설정](#env-파일-설정)
 - [Python 패키지 설정](#python-패키지-설정)
 - [실행 방법](#실행-방법)
 - [환경 테스트](#테스트_코드_실행)
 - [주의사항](#주의사항)
+
+## 주요 기술 스택
+<div style="margin-bottom: 10px;">
+    <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white">
+    <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=flat&logo=scikit-learn&logoColor=white">
+    <img src="https://img.shields.io/badge/Apache%20Spark-E25A1C?style=flat&logo=apachespark&logoColor=white">
+    <img src="https://img.shields.io/badge/Apache%20Kafka-231F20?style=flat&logo=apachekafka&logoColor=white">
+    <img src="https://img.shields.io/badge/Apache%20Airflow-017CEE?style=flat&logo=apacheairflow&logoColor=white">
+    <img src="https://img.shields.io/badge/Apache%20Flink-E6526F?style=flat&logo=apacheflink&logoColor=white">
+    <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white">
+    <img src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=vuedotjs&logoColor=white">
+    <img src="https://img.shields.io/badge/Django-092E20?style=flat&logo=django&logoColor=white">
+</div>
 
 
 ## 기능 설명
@@ -63,23 +76,6 @@
 - **데이터 저장 (PostgreSQL)**
    - 처리된 데이터를 PostgreSQL 데이터베이스에 저장
    - pgvector 확장을 통한 벡터 데이터 저장
-
-
-
-
-## 주요 기술 스택
-<div style="margin-bottom: 10px;">
-    <strong style="font-size: 16px;">📊 Data</strong><br><br>
-    <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white">
-    <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=flat&logo=scikit-learn&logoColor=white">
-    <img src="https://img.shields.io/badge/Apache%20Spark-E25A1C?style=flat&logo=apachespark&logoColor=white">
-    <img src="https://img.shields.io/badge/Apache%20Kafka-231F20?style=flat&logo=apachekafka&logoColor=white">
-    <img src="https://img.shields.io/badge/Apache%20Airflow-017CEE?style=flat&logo=apacheairflow&logoColor=white">
-    <img src="https://img.shields.io/badge/Apache%20Flink-E6526F?style=flat&logo=apacheflink&logoColor=white">
-    <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white">
-    <img src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=vuedotjs&logoColor=white">
-    <img src="https://img.shields.io/badge/Django-092E20?style=flat&logo=django&logoColor=white">
-</div>
 
 ## 프로젝트 구조
 
