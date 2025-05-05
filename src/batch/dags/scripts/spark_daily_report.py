@@ -10,7 +10,7 @@ from pyspark.sql.types import StructType, StructField, StringType, ArrayType, Do
 def main(report_date_str):
 
     INPUT_PATH = "/opt/airflow/data/realtime/news_*.json"
-    ARCHIVE_DIR = "/opt/airflow/data/daily_reports"
+    ARCHIVE_DIR = "/opt/airflow/output/daily_reports"
     os.makedirs(ARCHIVE_DIR, exist_ok=True)
 
     spark = SparkSession.builder \

@@ -40,8 +40,8 @@ with DAG(
         python_callable=generate_pdf,
         op_kwargs={
             'date': '{{ ds }}',
-            'input_dir': '/opt/airflow/data/daily_reports',
-            'output_dir': '/opt/airflow/data/daily_reports'
+            'input_dir': '/opt/airflow/output/daily_reports',
+            'output_dir': '/opt/airflow/output/daily_reports'
         }
     )
     
@@ -60,7 +60,7 @@ with DAG(
         <p>첨부된 PDF 파일에서 상세 내용을 확인해주세요.</p>
         <p>감사합니다.</p>
         """,
-        files=['/opt/airflow/data/daily_reports/{{ ds }}_report.pdf'],
+        files=['/opt/airflow/output/daily_reports/{{ ds }}_report.pdf'],
         mime_subtype='mixed'
     )
 

@@ -1,0 +1,335 @@
+{
+  "meta": {
+    "date": "2025-05-05",
+    "total_articles": 22,
+    "top_category": "경제",
+    "top_source": "khan",
+    "top_keyword": "신용거래융자"
+  },
+  "category_counts": [
+    {
+      "category": "경제",
+      "count": 12
+    },
+    {
+      "category": "사건사고",
+      "count": 3
+    },
+    {
+      "category": "산업",
+      "count": 2
+    },
+    {
+      "category": "IT_과학",
+      "count": 2
+    },
+    {
+      "category": "교육",
+      "count": 1
+    },
+    {
+      "category": "사회일반",
+      "count": 1
+    },
+    {
+      "category": "미분류",
+      "count": 1
+    }
+  ],
+  "original_category_counts": [
+    {
+      "category": "경제",
+      "count": 13
+    },
+    {
+      "category": "정치",
+      "count": 9
+    }
+  ],
+  "source_counts": [
+    {
+      "source": "khan",
+      "count": 22
+    }
+  ],
+  "keyword_counts": [
+    {
+      "keyword": "신용거래융자",
+      "count": 2
+    },
+    {
+      "keyword": "세종시",
+      "count": 2
+    },
+    {
+      "keyword": "SUV",
+      "count": 2
+    },
+    {
+      "keyword": "정치테마주",
+      "count": 2
+    },
+    {
+      "keyword": "조기대선",
+      "count": 2
+    },
+    {
+      "keyword": "토지거래허가구역",
+      "count": 2
+    },
+    {
+      "keyword": "어린이·청소년 주주",
+      "count": 2
+    },
+    {
+      "keyword": "삼성전자",
+      "count": 2
+    },
+    {
+      "keyword": "실거래가",
+      "count": 2
+    },
+    {
+      "keyword": "주가 부진",
+      "count": 2
+    },
+    {
+      "keyword": "쏘렌토",
+      "count": 2
+    },
+    {
+      "keyword": "투자경고종목",
+      "count": 2
+    },
+    {
+      "keyword": "기아",
+      "count": 2
+    },
+    {
+      "keyword": "시장경보제도",
+      "count": 2
+    },
+    {
+      "keyword": "아파트 거래량",
+      "count": 2
+    },
+    {
+      "keyword": "손실투자자",
+      "count": 2
+    },
+    {
+      "keyword": "현대차",
+      "count": 2
+    },
+    {
+      "keyword": "국민주",
+      "count": 2
+    },
+    {
+      "keyword": "아반떼",
+      "count": 2
+    },
+    {
+      "keyword": "서울시",
+      "count": 2
+    },
+    {
+      "keyword": "생산감소",
+      "count": 2
+    },
+    {
+      "keyword": "유심교체",
+      "count": 2
+    },
+    {
+      "keyword": "시멘트출하량",
+      "count": 2
+    },
+    {
+      "keyword": "건설기성",
+      "count": 2
+    },
+    {
+      "keyword": "유심보호서비스",
+      "count": 2
+    },
+    {
+      "keyword": "SK텔레콤",
+      "count": 2
+    },
+    {
+      "keyword": "건설수주",
+      "count": 2
+    },
+    {
+      "keyword": "건설업",
+      "count": 2
+    },
+    {
+      "keyword": "해킹",
+      "count": 2
+    },
+    {
+      "keyword": "현대그린푸드",
+      "count": 2
+    },
+    {
+      "keyword": "온라인 식품",
+      "count": 2
+    },
+    {
+      "keyword": "신선식품",
+      "count": 2
+    },
+    {
+      "keyword": "밀키트",
+      "count": 2
+    },
+    {
+      "keyword": "배송 경쟁",
+      "count": 2
+    },
+    {
+      "keyword": "콜드체인",
+      "count": 2
+    },
+    {
+      "keyword": "맛집",
+      "count": 2
+    },
+    {
+      "keyword": "전통시장",
+      "count": 2
+    },
+    {
+      "keyword": "네이버",
+      "count": 2
+    },
+    {
+      "keyword": "퀵커머스",
+      "count": 2
+    },
+    {
+      "keyword": "해경",
+      "count": 2
+    },
+    {
+      "keyword": "차량침수",
+      "count": 2
+    },
+    {
+      "keyword": "보트",
+      "count": 2
+    },
+    {
+      "keyword": "구조",
+      "count": 2
+    },
+    {
+      "keyword": "번호이동",
+      "count": 1
+    },
+    {
+      "keyword": "인천시교육청",
+      "count": 1
+    },
+    {
+      "keyword": "통화 스와프",
+      "count": 1
+    },
+    {
+      "keyword": "치앙마이 이니셔티브",
+      "count": 1
+    },
+    {
+      "keyword": "신청사",
+      "count": 1
+    },
+    {
+      "keyword": "2029년",
+      "count": 1
+    },
+    {
+      "keyword": "아세안+3",
+      "count": 1
+    },
+    {
+      "keyword": "WTO",
+      "count": 1
+    },
+    {
+      "keyword": "보호무역주의",
+      "count": 1
+    },
+    {
+      "keyword": "종합계획",
+      "count": 1
+    },
+    {
+      "keyword": "건립",
+      "count": 1
+    },
+    {
+      "keyword": "위약금",
+      "count": 1
+    },
+    {
+      "keyword": "거잠포선착장",
+      "count": 1
+    },
+    {
+      "keyword": "선착장",
+      "count": 1
+    },
+    {
+      "keyword": "반값 월세",
+      "count": 1
+    },
+    {
+      "keyword": "전북형 반할주택",
+      "count": 1
+    },
+    {
+      "keyword": "청년 신혼부부",
+      "count": 1
+    },
+    {
+      "keyword": "인구 감소 위기",
+      "count": 1
+    },
+    {
+      "keyword": "공공 임대주택",
+      "count": 1
+    },
+    {
+      "keyword": "자수",
+      "count": 1
+    },
+    {
+      "keyword": "옛 여자친구",
+      "count": 1
+    },
+    {
+      "keyword": "구속영장",
+      "count": 1
+    },
+    {
+      "keyword": "오피스텔",
+      "count": 1
+    },
+    {
+      "keyword": "살인",
+      "count": 1
+    }
+  ],
+  "length_distribution": [
+    {
+      "category": "중간 기사",
+      "count": 20
+    },
+    {
+      "category": "짧은 기사",
+      "count": 2
+    }
+  ]
+}
