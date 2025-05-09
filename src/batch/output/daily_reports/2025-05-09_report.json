@@ -1,216 +1,392 @@
 {
   "meta": {
     "date": "2025-05-09",
-    "total_articles": 30,
-    "top_category": "사회일반",
-    "top_source": "yna",
-    "top_keyword": " 기온"
+    "total_articles": 76,
+    "top_category": "사건사고",
+    "top_source": "khan",
+    "top_keyword": "영업이익"
   },
   "category_counts": [
     {
-      "category": "사회일반",
-      "count": 13
+      "category": "사건사고",
+      "count": 19
     },
     {
       "category": "경제",
-      "count": 7
+      "count": 17
     },
     {
-      "category": "IT_과학",
-      "count": 2
-    },
-    {
-      "category": "교육",
-      "count": 2
+      "category": "사회일반",
+      "count": 10
     },
     {
       "category": "산업",
-      "count": 2
-    },
-    {
-      "category": "건강",
-      "count": 1
-    },
-    {
-      "category": "사건사고",
-      "count": 1
+      "count": 9
     },
     {
       "category": "정치",
-      "count": 1
+      "count": 5
+    },
+    {
+      "category": "교육",
+      "count": 4
+    },
+    {
+      "category": "미분류",
+      "count": 3
     },
     {
       "category": "문화",
+      "count": 3
+    },
+    {
+      "category": "스포츠",
+      "count": 2
+    },
+    {
+      "category": "여행레저",
+      "count": 2
+    },
+    {
+      "category": "IT_과학",
+      "count": 1
+    },
+    {
+      "category": "여성복지",
       "count": 1
     }
   ],
   "original_category_counts": [
     {
-      "category": "경제",
-      "count": 13
-    },
-    {
       "category": "사회",
-      "count": 13
+      "count": 42
     },
     {
       "category": "정치",
-      "count": 4
+      "count": 17
+    },
+    {
+      "category": "경제",
+      "count": 17
     }
   ],
   "source_counts": [
     {
-      "source": "yna",
-      "count": 24
-    },
-    {
-      "source": "mk",
-      "count": 6
+      "source": "khan",
+      "count": 76
     }
   ],
   "keyword_counts": [
     {
-      "keyword": " 기온",
+      "keyword": "영업이익",
       "count": 6
     },
     {
-      "keyword": " 안전사고",
-      "count": 4
+      "keyword": "매출",
+      "count": 3
     },
     {
-      "keyword": " 눈",
-      "count": 4
-    },
-    {
-      "keyword": " 비",
-      "count": 4
-    },
-    {
-      "keyword": " 수도권",
+      "keyword": "실적",
       "count": 2
     },
     {
-      "keyword": "청년",
+      "keyword": " 상승세",
       "count": 2
     },
     {
-      "keyword": " 취업",
+      "keyword": " 식품위생법",
       "count": 2
     },
     {
-      "keyword": "날씨",
+      "keyword": " SK텔레콤",
       "count": 2
     },
     {
-      "keyword": "비",
+      "keyword": "타이어",
       "count": 2
     },
     {
-      "keyword": "봄날씨",
+      "keyword": " 조리기구",
       "count": 2
     },
     {
-      "keyword": " 저소득 한부모가정",
+      "keyword": "1분기",
       "count": 2
     },
     {
-      "keyword": "롯데장학재단",
+      "keyword": "의대",
       "count": 2
     },
     {
-      "keyword": " 강수량",
+      "keyword": "LG에너지솔루션",
       "count": 2
     },
     {
-      "keyword": " 일자리 양극화",
+      "keyword": "세종시",
+      "count": 2
+    },
+    {
+      "keyword": " 인재 양성",
+      "count": 2
+    },
+    {
+      "keyword": "백종원",
+      "count": 2
+    },
+    {
+      "keyword": " 산학협력센터",
+      "count": 2
+    },
+    {
+      "keyword": "김문수",
+      "count": 2
+    },
+    {
+      "keyword": " 기소",
+      "count": 2
+    },
+    {
+      "keyword": " 아파트값",
+      "count": 2
+    },
+    {
+      "keyword": "검찰",
+      "count": 2
+    },
+    {
+      "keyword": " 피해자",
+      "count": 2
+    },
+    {
+      "keyword": "관세",
+      "count": 2
+    },
+    {
+      "keyword": " 배터리",
+      "count": 2
+    },
+    {
+      "keyword": " 도시철도",
+      "count": 2
+    },
+    {
+      "keyword": "현대백화점그룹",
+      "count": 2
+    },
+    {
+      "keyword": " 더본코리아",
+      "count": 2
+    },
+    {
+      "keyword": " 전기차",
+      "count": 2
+    },
+    {
+      "keyword": " 위약금",
+      "count": 2
+    },
+    {
+      "keyword": " 노선도",
+      "count": 2
+    },
+    {
+      "keyword": "코웨이",
+      "count": 2
+    },
+    {
+      "keyword": " 충북",
+      "count": 2
+    },
+    {
+      "keyword": " 정부 판단",
+      "count": 2
+    },
+    {
+      "keyword": "대전시",
+      "count": 2
+    },
+    {
+      "keyword": " 경찰 수사",
+      "count": 2
+    },
+    {
+      "keyword": " 인스타그램",
+      "count": 2
+    },
+    {
+      "keyword": "글로벌",
+      "count": 2
+    },
+    {
+      "keyword": "현대차",
+      "count": 2
+    },
+    {
+      "keyword": " 재학생",
+      "count": 2
+    },
+    {
+      "keyword": " 피해사례",
+      "count": 2
+    },
+    {
+      "keyword": " 서울대학교",
+      "count": 2
+    },
+    {
+      "keyword": " 기아",
+      "count": 2
+    },
+    {
+      "keyword": " 폭행",
+      "count": 2
+    },
+    {
+      "keyword": "해킹",
+      "count": 2
+    },
+    {
+      "keyword": "면세점",
+      "count": 2
+    },
+    {
+      "keyword": " 운반선",
+      "count": 2
+    },
+    {
+      "keyword": " 매출",
+      "count": 2
+    },
+    {
+      "keyword": " 민관 협력",
+      "count": 2
+    },
+    {
+      "keyword": "대한항공",
+      "count": 2
+    },
+    {
+      "keyword": " 검찰",
+      "count": 2
+    },
+    {
+      "keyword": "자사주",
+      "count": 2
+    },
+    {
+      "keyword": " 미국 관세",
+      "count": 2
+    },
+    {
+      "keyword": " 임대주택",
+      "count": 2
+    },
+    {
+      "keyword": "모아주택",
+      "count": 2
+    },
+    {
+      "keyword": "경상수지",
+      "count": 2
+    },
+    {
+      "keyword": " 무기징역",
+      "count": 2
+    },
+    {
+      "keyword": " 수출",
+      "count": 2
+    },
+    {
+      "keyword": " 웨스트젯",
+      "count": 2
+    },
+    {
+      "keyword": " AI",
+      "count": 2
+    },
+    {
+      "keyword": "액화수소",
+      "count": 2
+    },
+    {
+      "keyword": " 경찰",
+      "count": 2
+    },
+    {
+      "keyword": " 흑자",
+      "count": 2
+    },
+    {
+      "keyword": " 커머스",
+      "count": 2
+    },
+    {
+      "keyword": " K-조선",
+      "count": 2
+    },
+    {
+      "keyword": " 반도체",
+      "count": 2
+    },
+    {
+      "keyword": "네이버",
+      "count": 2
+    },
+    {
+      "keyword": " 검색",
+      "count": 2
+    },
+    {
+      "keyword": "GS",
+      "count": 2
+    },
+    {
+      "keyword": " 항소심",
+      "count": 2
+    },
+    {
+      "keyword": " 종각역",
       "count": 1
     },
     {
-      "keyword": " 실업",
+      "keyword": " 여성 경제학",
       "count": 1
     },
     {
-      "keyword": " 일자리",
+      "keyword": "법원",
       "count": 1
     },
     {
-      "keyword": " 양극화",
+      "keyword": " 공범 체포",
       "count": 1
     },
     {
-      "keyword": " 성북구",
+      "keyword": " 사고",
       "count": 1
     },
     {
-      "keyword": "지수",
+      "keyword": " 스웨덴 유학",
       "count": 1
     },
     {
-      "keyword": " 해킹",
+      "keyword": " 주거지 보전사업",
       "count": 1
     },
     {
-      "keyword": "코스피",
+      "keyword": " 저출생고령화",
       "count": 1
     },
     {
-      "keyword": " 예방 활동",
+      "keyword": "클레마티스",
       "count": 1
     },
     {
-      "keyword": " 디지털 취약계층",
+      "keyword": " 철거",
       "count": 1
     },
     {
-      "keyword": "장 초반",
-      "count": 1
-    },
-    {
-      "keyword": "유심",
-      "count": 1
-    },
-    {
-      "keyword": "코스닥지수",
-      "count": 1
-    },
-    {
-      "keyword": "강보합세",
-      "count": 1
-    },
-    {
-      "keyword": " 봉사단",
-      "count": 1
-    },
-    {
-      "keyword": " 헌혈증",
-      "count": 1
-    },
-    {
-      "keyword": " 소아암",
-      "count": 1
-    },
-    {
-      "keyword": "국민건강보험공단",
-      "count": 1
-    },
-    {
-      "keyword": " 기증",
-      "count": 1
-    },
-    {
-      "keyword": "안전사고",
-      "count": 1
-    },
-    {
-      "keyword": "기온",
-      "count": 1
-    },
-    {
-      "keyword": "눈",
-      "count": 1
-    },
-    {
-      "keyword": " 학습격차",
+      "keyword": "백사마을",
       "count": 1
     },
     {
@@ -218,266 +394,102 @@
       "count": 1
     },
     {
-      "keyword": " 학습지",
+      "keyword": "해외쇼핑몰",
       "count": 1
     },
     {
-      "keyword": "아파트",
+      "keyword": " 서핑",
       "count": 1
     },
     {
-      "keyword": " 교육지원",
+      "keyword": " 분양",
       "count": 1
     },
     {
-      "keyword": "대피",
+      "keyword": "자사주취득",
       "count": 1
     },
     {
-      "keyword": "심정지",
+      "keyword": "하도급",
       "count": 1
     },
     {
-      "keyword": "광주",
+      "keyword": "자사주 매입",
       "count": 1
     },
     {
-      "keyword": " 영업이익",
+      "keyword": " 마약",
       "count": 1
     },
     {
-      "keyword": " 게임 흥행",
+      "keyword": "당근마켓",
       "count": 1
     },
     {
-      "keyword": "넷마블",
+      "keyword": "대선 후보",
       "count": 1
     },
     {
-      "keyword": " 어닝 서프라이즈",
+      "keyword": " 해킹",
       "count": 1
     },
     {
-      "keyword": " 투자 의견",
+      "keyword": "A씨",
       "count": 1
     },
     {
-      "keyword": "교통안전",
+      "keyword": "역전승",
       "count": 1
     },
     {
-      "keyword": "전남도",
+      "keyword": " 남성 서사",
       "count": 1
     },
     {
-      "keyword": "컨설팅",
+      "keyword": " 요트",
       "count": 1
     },
     {
-      "keyword": "고령운전자",
+      "keyword": " 개인정보",
       "count": 1
     },
     {
-      "keyword": "노인교통사고",
+      "keyword": " 체험 프로그램",
       "count": 1
     },
     {
-      "keyword": " 흐림",
+      "keyword": " 협박",
       "count": 1
     },
     {
-      "keyword": " 외환",
+      "keyword": "공조",
       "count": 1
     },
     {
-      "keyword": "환율",
+      "keyword": " 압수수색",
       "count": 1
     },
     {
-      "keyword": "기상청",
+      "keyword": " 뇌물",
       "count": 1
     },
     {
-      "keyword": " 일본 엔",
-      "count": 1
-    },
-    {
-      "keyword": " 봄 날씨",
-      "count": 1
-    },
-    {
-      "keyword": " 유로",
-      "count": 1
-    },
-    {
-      "keyword": " 미세먼지",
-      "count": 1
-    },
-    {
-      "keyword": " 미국 달러",
-      "count": 1
-    },
-    {
-      "keyword": " OTT",
-      "count": 1
-    },
-    {
-      "keyword": " 합병",
-      "count": 1
-    },
-    {
-      "keyword": " 흑산도",
-      "count": 1
-    },
-    {
-      "keyword": " 강풍주의보",
-      "count": 1
-    },
-    {
-      "keyword": " 메가박스",
-      "count": 1
-    },
-    {
-      "keyword": " 롯데컬처웍스",
-      "count": 1
-    },
-    {
-      "keyword": "강풍경보",
-      "count": 1
-    },
-    {
-      "keyword": " 홍도",
-      "count": 1
-    },
-    {
-      "keyword": " 기상청",
-      "count": 1
-    },
-    {
-      "keyword": "AMC엔터테인먼트",
-      "count": 1
-    },
-    {
-      "keyword": " 전라도",
-      "count": 1
-    },
-    {
-      "keyword": "국민의힘",
-      "count": 1
-    },
-    {
-      "keyword": " 대선 후보",
-      "count": 1
-    },
-    {
-      "keyword": " 팝업 레스토랑",
-      "count": 1
-    },
-    {
-      "keyword": "CJ제일제당",
-      "count": 1
-    },
-    {
-      "keyword": " 한식",
-      "count": 1
-    },
-    {
-      "keyword": " 권성동",
-      "count": 1
-    },
-    {
-      "keyword": " 퀴진케이",
-      "count": 1
-    },
-    {
-      "keyword": " 단일화",
-      "count": 1
-    },
-    {
-      "keyword": " 김문수",
-      "count": 1
-    },
-    {
-      "keyword": " 비전 2030",
-      "count": 1
-    },
-    {
-      "keyword": "사우디아라비아",
-      "count": 1
-    },
-    {
-      "keyword": " 디지털 인프라",
-      "count": 1
-    },
-    {
-      "keyword": " 투자협력",
-      "count": 1
-    },
-    {
-      "keyword": " 한-사우디 비즈니스 포럼",
-      "count": 1
-    },
-    {
-      "keyword": " A등급",
-      "count": 1
-    },
-    {
-      "keyword": " 안전요원",
-      "count": 1
-    },
-    {
-      "keyword": "대천해수욕장",
-      "count": 1
-    },
-    {
-      "keyword": " 개인정보 보호",
-      "count": 1
-    },
-    {
-      "keyword": " 보령시",
-      "count": 1
-    },
-    {
-      "keyword": "소비자원",
-      "count": 1
-    },
-    {
-      "keyword": " 사기",
-      "count": 1
-    },
-    {
-      "keyword": " 해외쇼핑몰",
-      "count": 1
-    },
-    {
-      "keyword": " 피해",
-      "count": 1
-    },
-    {
-      "keyword": " 브랜드",
-      "count": 1
-    },
-    {
-      "keyword": " 카카오톡",
-      "count": 1
-    },
-    {
-      "keyword": " 저작권",
-      "count": 1
-    },
-    {
-      "keyword": " 전재",
+      "keyword": " 독립운동",
       "count": 1
     }
   ],
   "length_distribution": [
     {
+      "category": "긴 기사",
+      "count": 3
+    },
+    {
       "category": "중간 기사",
-      "count": 21
+      "count": 67
     },
     {
       "category": "짧은 기사",
-      "count": 9
+      "count": 6
     }
   ]
 }

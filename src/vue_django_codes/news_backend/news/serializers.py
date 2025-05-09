@@ -115,3 +115,12 @@ class DashboardSerializer(serializers.Serializer):
             'url': news.url,
             'like_count': Like.objects.filter(news=news).count()
         } for news in liked_news]
+
+
+class RecommendNewsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = News
+        fields = [
+            'id', 'title', 'writer', 'write_date',
+            'category', 'url', 'content', 'keywords'
+        ]
