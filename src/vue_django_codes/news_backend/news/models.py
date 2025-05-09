@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from pgvector.django import VectorField
 # Create your models here.
 
 class News(models.Model):
@@ -11,7 +12,7 @@ class News(models.Model):
     content = models.TextField()
     url = models.CharField(max_length = 200)
     keywords = models.TextField(null = True, blank = True)
-    embedding = models.TextField(null = True, blank = True)
+    embedding = VectorField(dimensions=1536, null=True, blank=True)
     class Meta:
         db_table = 'news_article'
         managed = False # django가 이 테이블을 관리하지 않도록 설정 

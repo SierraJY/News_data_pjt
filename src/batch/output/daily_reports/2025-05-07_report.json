@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "date": "2025-05-07",
+    "total_articles": 3,
+    "top_category": "사건사고",
+    "top_source": "khan",
+    "top_keyword": "환율 급락"
+  },
+  "category_counts": [
+    {
+      "category": "사건사고",
+      "count": 1
+    },
+    {
+      "category": "경제",
+      "count": 1
+    },
+    {
+      "category": "산업",
+      "count": 1
+    }
+  ],
+  "original_category_counts": [
+    {
+      "category": "경제",
+      "count": 3
+    }
+  ],
+  "source_counts": [
+    {
+      "source": "khan",
+      "count": 3
+    }
+  ],
+  "keyword_counts": [
+    {
+      "keyword": "환율 급락",
+      "count": 1
+    },
+    {
+      "keyword": "대마초",
+      "count": 1
+    },
+    {
+      "keyword": "밀수입",
+      "count": 1
+    },
+    {
+      "keyword": "위안화",
+      "count": 1
+    },
+    {
+      "keyword": "태국인",
+      "count": 1
+    },
+    {
+      "keyword": "삼성전자",
+      "count": 1
+    },
+    {
+      "keyword": "인천공항세관",
+      "count": 1
+    },
+    {
+      "keyword": "건망고",
+      "count": 1
+    },
+    {
+      "keyword": "오디오",
+      "count": 1
+    },
+    {
+      "keyword": "하만",
+      "count": 1
+    },
+    {
+      "keyword": "바워스앤윌킨스",
+      "count": 1
+    },
+    {
+      "keyword": "원·달러 환율",
+      "count": 1
+    },
+    {
+      "keyword": "미·중 무역 협상",
+      "count": 1
+    },
+    {
+      "keyword": "경기 부진",
+      "count": 1
+    },
+    {
+      "keyword": "인수합병",
+      "count": 1
+    }
+  ],
+  "length_distribution": [
+    {
+      "category": "중간 기사",
+      "count": 2
+    },
+    {
+      "category": "짧은 기사",
+      "count": 1
+    }
+  ]
+}

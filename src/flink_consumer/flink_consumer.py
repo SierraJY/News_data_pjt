@@ -20,7 +20,7 @@ sys.path.append('/opt/workspace')
 
 # 로컬 모듈 임포트 (현재 디렉터리에서 임포트)
 from db_handler import save_to_postgresql, test_database_connection
-from preprocess import (
+from preprocess_openai import (
     preprocess_content,
     transform_extract_keywords,
     transform_to_embedding,

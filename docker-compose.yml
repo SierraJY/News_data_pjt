@@ -126,37 +126,36 @@ services:
       - airflow
 
   flink:
-    build: 
-      context: ./
-      dockerfile: ./services/flink/Dockerfile
-    container_name: flink
-    ports:
-      - "8081:8081"
-    working_dir: /opt/workspace
-    volumes:
-      - type: bind
-        source: ./src/flink_test_codes
-        target: /opt/workspace/flink_test_codes
-      - type: bind
-        source: ./src/flink_consumer
-        target: /opt/workspace/flink_consumer
-      - type: bind
-        source: ./services/flink/config
-        target: /opt/flink/lib
-      - type: bind
-        source: ./.env
-        target: /opt/workspace/.env
-      - type: bind
-        source: ./src/batch/data/realtime
-        target: /opt/batch/data/realtime
-    environment:
-      - KAFKA_CONNECTOR_PATH=/opt/flink/lib/flink-sql-connector-kafka-3.3.0-1.20.jar
-    depends_on:
-      - kafka
-      - postgres
-    tty: true
-    networks:
-      - airflow
+      build: 
+        context: ./
+        dockerfile: ./services/flink/Dockerfile
+      container_name: flink
+      ports:
+        - "8081:8081"
+      working_dir: /opt/workspace
+      volumes:
+        - type: bind
+          source: ./src/flink_test_codes
+          target: /opt/workspace/flink_test_codes
+        - type: bind
+          source: ./src/flink_consumer
+          target: /opt/workspace/flink_consumer
+        - type: bind
+          source: ./services/flink/config
+          target: /opt/flink/lib
+        - type: bind
+          source: ./src/batch/data/realtime
+          target: /opt/batch/data/realtime
+      env_file:
+        - ./.env  # 환경 변수 파일로 사용
+      environment:
+        - KAFKA_CONNECTOR_PATH=/opt/flink/lib/flink-sql-connector-kafka-3.3.0-1.20.jar
+      depends_on:
+        - kafka
+        - postgres
+      tty: true
+      networks:
+        - airflow
   
   # spark:
   #   build:
@@ -183,20 +182,20 @@ services:
       dockerfile: ./services/django/Dockerfile
     container_name: django
     ports:
-      - "8000:8000"  # Django 백엔드 포트
+      - "8000:8000"
     volumes:
       - type: bind
         source: ./src/vue_django_codes/news_backend
         target: /app
-      - type: bind
-        source: ./.env
-        target: /app/.env
+      # .env 파일 마운트 부분 제거
       - type: bind
         source: ./services/django/local_settings.py
         target: /app/news_backend/local_settings.py
       - type: bind
         source: ./services/django/setup.sh
         target: /app/setup.sh
+    env_file:
+      - ./.env  # 환경 변수 파일로 사용
     environment:
       - DB_HOST=postgres
       - DB_NAME=news

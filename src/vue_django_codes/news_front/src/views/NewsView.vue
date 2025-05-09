@@ -46,7 +46,7 @@
       <div class="news__box__title-container">
         <!-- 정렬 옵션 선택 드롭다운 -->
         <div class="filters__container">
-          <select class="filters" v-model="sortBy">
+          <select class="filters" v-model="sortBy" @change="handleSortChange">
             <option value="latest">최신순</option>
             <option value="recommend">추천순</option>
           </select>
@@ -80,9 +80,14 @@ import StateButton from "@/common/StateButton.vue";
 import { tabs } from "@/assets/data/tabs";
 // axios 임포트
 import axios from 'axios';
+// 인증 스토어 임포트
+import { useAuthStore } from '@/stores/auth';
 
 // API 기본 URL 설정
 const API_BASE_URL = 'http://127.0.0.1:8000';
+
+// 인증 스토어 불러오기
+const authStore = useAuthStore();
 
 // 페이지당 표시할 뉴스 개수
 const itemsPerPage = 10;
@@ -110,6 +115,62 @@ const fetchNews = async () => {
   }
 };
 
+// 코사인 유사도 기반 추천 뉴스 가져오기 함수
+const fetchRecommendedNews = async () => {
+  loading.value = true;
+  error.value = null;
+  
+  try {
+    // 인증 스토어에서 토큰 가져오기
+    if (!authStore.isAuthenticated) {
+      error.value = '로그인이 필요한 서비스입니다.';
+      originalNewsList.value = [];
+      loading.value = false;
+      return;
+    }
+    
+    console.log('인증 토큰:', authStore.accessToken); // 토큰 확인
+    
+    // 인증 헤더 설정 (스토어의 setAuthHeader 메서드가 이미 호출됨)
+    const response = await axios.get(`${API_BASE_URL}/api/news/recommend/`);
+    originalNewsList.value = response.data;
+  } catch (err) {
+    console.error('추천 뉴스 데이터를 가져오는 중 오류 발생:', err);
+    console.error('오류 응답:', err.response); // 전체 응답 로깅
+    console.error('오류 상태:', err.response?.status);
+    console.error('오류 데이터:', err.response?.data);
+    
+    // 서버에서 반환한 오류 메시지가 있으면 그대로 표시
+    if (err.response && err.response.data && err.response.data.error) {
+      error.value = err.response.data.error;
+    } else if (err.response && err.response.status === 401) {
+      error.value = '로그인이 필요한 서비스입니다.';
+      // 토큰이 만료되었을 수 있으므로 로그아웃 처리
+      authStore.logout();
+    } else if (err.response && err.response.status === 400) {
+      error.value = '추천을 위한 좋아요 데이터가 부족합니다. 먼저 몇 개의 기사에 좋아요를 눌러주세요.';
+    } else {
+      error.value = '추천 뉴스 데이터를 가져오는 중 오류가 발생했습니다: ' + (err.message || '알 수 없는 오류');
+    }
+    
+    // 오류 발생 시 일반 뉴스 목록을 가져오지 않고 오류 메시지만 표시
+    originalNewsList.value = [];
+  } finally {
+    loading.value = false;
+  }
+};
+
+// 정렬 방식 변경 처리 함수
+const handleSortChange = async () => {
+  if (sortBy.value === 'recommend') {
+    // 추천순 선택 시 코사인 유사도 기반 추천 API 호출
+    await fetchRecommendedNews();
+  } else {
+    // 최신순 선택 시 일반 뉴스 목록 API 호출
+    await fetchNews();
+  }
+};
+
 // 컴포넌트 마운트 시 데이터 가져오기
 onMounted(() => {
   fetchNews();
@@ -126,18 +187,13 @@ const filteredNewsList = computed(() => {
     filteredNews = filteredNews.filter(news => news.category === activeTab.value);
   }
   
-  // 정렬 기준에 따라 정렬
-  filteredNews.sort((a, b) => {
-    if (sortBy.value === 'latest') {
+  // 최신순 정렬일 경우에만 여기서 정렬 (추천순은 API에서 정렬된 결과를 사용)
+  if (sortBy.value === 'latest') {
+    filteredNews.sort((a, b) => {
       // 최신순 정렬 - 날짜 기준
       return new Date(b.write_date) - new Date(a.write_date);
-    } else {
-      // 추천순 정렬 - 좋아요 수 기준 (API 응답 구조에 맞게 조정 필요)
-      const scoreA = a.like_count || 0;
-      const scoreB = b.like_count || 0;
-      return scoreB - scoreA;
-    }
-  });
+    });
+  }
   
   return filteredNews;
 });

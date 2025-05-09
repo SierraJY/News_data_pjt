@@ -173,6 +173,9 @@ pyvenv.cfg
 .venv
 pip-selfcheck.json
 
+# .cursor 디렉토리 무시
+.cursor/
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json

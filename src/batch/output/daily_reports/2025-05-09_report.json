@@ -1,0 +1,483 @@
+{
+  "meta": {
+    "date": "2025-05-09",
+    "total_articles": 30,
+    "top_category": "사회일반",
+    "top_source": "yna",
+    "top_keyword": " 기온"
+  },
+  "category_counts": [
+    {
+      "category": "사회일반",
+      "count": 13
+    },
+    {
+      "category": "경제",
+      "count": 7
+    },
+    {
+      "category": "IT_과학",
+      "count": 2
+    },
+    {
+      "category": "교육",
+      "count": 2
+    },
+    {
+      "category": "산업",
+      "count": 2
+    },
+    {
+      "category": "건강",
+      "count": 1
+    },
+    {
+      "category": "사건사고",
+      "count": 1
+    },
+    {
+      "category": "정치",
+      "count": 1
+    },
+    {
+      "category": "문화",
+      "count": 1
+    }
+  ],
+  "original_category_counts": [
+    {
+      "category": "경제",
+      "count": 13
+    },
+    {
+      "category": "사회",
+      "count": 13
+    },
+    {
+      "category": "정치",
+      "count": 4
+    }
+  ],
+  "source_counts": [
+    {
+      "source": "yna",
+      "count": 24
+    },
+    {
+      "source": "mk",
+      "count": 6
+    }
+  ],
+  "keyword_counts": [
+    {
+      "keyword": " 기온",
+      "count": 6
+    },
+    {
+      "keyword": " 안전사고",
+      "count": 4
+    },
+    {
+      "keyword": " 눈",
+      "count": 4
+    },
+    {
+      "keyword": " 비",
+      "count": 4
+    },
+    {
+      "keyword": " 수도권",
+      "count": 2
+    },
+    {
+      "keyword": "청년",
+      "count": 2
+    },
+    {
+      "keyword": " 취업",
+      "count": 2
+    },
+    {
+      "keyword": "날씨",
+      "count": 2
+    },
+    {
+      "keyword": "비",
+      "count": 2
+    },
+    {
+      "keyword": "봄날씨",
+      "count": 2
+    },
+    {
+      "keyword": " 저소득 한부모가정",
+      "count": 2
+    },
+    {
+      "keyword": "롯데장학재단",
+      "count": 2
+    },
+    {
+      "keyword": " 강수량",
+      "count": 2
+    },
+    {
+      "keyword": " 일자리 양극화",
+      "count": 1
+    },
+    {
+      "keyword": " 실업",
+      "count": 1
+    },
+    {
+      "keyword": " 일자리",
+      "count": 1
+    },
+    {
+      "keyword": " 양극화",
+      "count": 1
+    },
+    {
+      "keyword": " 성북구",
+      "count": 1
+    },
+    {
+      "keyword": "지수",
+      "count": 1
+    },
+    {
+      "keyword": " 해킹",
+      "count": 1
+    },
+    {
+      "keyword": "코스피",
+      "count": 1
+    },
+    {
+      "keyword": " 예방 활동",
+      "count": 1
+    },
+    {
+      "keyword": " 디지털 취약계층",
+      "count": 1
+    },
+    {
+      "keyword": "장 초반",
+      "count": 1
+    },
+    {
+      "keyword": "유심",
+      "count": 1
+    },
+    {
+      "keyword": "코스닥지수",
+      "count": 1
+    },
+    {
+      "keyword": "강보합세",
+      "count": 1
+    },
+    {
+      "keyword": " 봉사단",
+      "count": 1
+    },
+    {
+      "keyword": " 헌혈증",
+      "count": 1
+    },
+    {
+      "keyword": " 소아암",
+      "count": 1
+    },
+    {
+      "keyword": "국민건강보험공단",
+      "count": 1
+    },
+    {
+      "keyword": " 기증",
+      "count": 1
+    },
+    {
+      "keyword": "안전사고",
+      "count": 1
+    },
+    {
+      "keyword": "기온",
+      "count": 1
+    },
+    {
+      "keyword": "눈",
+      "count": 1
+    },
+    {
+      "keyword": " 학습격차",
+      "count": 1
+    },
+    {
+      "keyword": "화재",
+      "count": 1
+    },
+    {
+      "keyword": " 학습지",
+      "count": 1
+    },
+    {
+      "keyword": "아파트",
+      "count": 1
+    },
+    {
+      "keyword": " 교육지원",
+      "count": 1
+    },
+    {
+      "keyword": "대피",
+      "count": 1
+    },
+    {
+      "keyword": "심정지",
+      "count": 1
+    },
+    {
+      "keyword": "광주",
+      "count": 1
+    },
+    {
+      "keyword": " 영업이익",
+      "count": 1
+    },
+    {
+      "keyword": " 게임 흥행",
+      "count": 1
+    },
+    {
+      "keyword": "넷마블",
+      "count": 1
+    },
+    {
+      "keyword": " 어닝 서프라이즈",
+      "count": 1
+    },
+    {
+      "keyword": " 투자 의견",
+      "count": 1
+    },
+    {
+      "keyword": "교통안전",
+      "count": 1
+    },
+    {
+      "keyword": "전남도",
+      "count": 1
+    },
+    {
+      "keyword": "컨설팅",
+      "count": 1
+    },
+    {
+      "keyword": "고령운전자",
+      "count": 1
+    },
+    {
+      "keyword": "노인교통사고",
+      "count": 1
+    },
+    {
+      "keyword": " 흐림",
+      "count": 1
+    },
+    {
+      "keyword": " 외환",
+      "count": 1
+    },
+    {
+      "keyword": "환율",
+      "count": 1
+    },
+    {
+      "keyword": "기상청",
+      "count": 1
+    },
+    {
+      "keyword": " 일본 엔",
+      "count": 1
+    },
+    {
+      "keyword": " 봄 날씨",
+      "count": 1
+    },
+    {
+      "keyword": " 유로",
+      "count": 1
+    },
+    {
+      "keyword": " 미세먼지",
+      "count": 1
+    },
+    {
+      "keyword": " 미국 달러",
+      "count": 1
+    },
+    {
+      "keyword": " OTT",
+      "count": 1
+    },
+    {
+      "keyword": " 합병",
+      "count": 1
+    },
+    {
+      "keyword": " 흑산도",
+      "count": 1
+    },
+    {
+      "keyword": " 강풍주의보",
+      "count": 1
+    },
+    {
+      "keyword": " 메가박스",
+      "count": 1
+    },
+    {
+      "keyword": " 롯데컬처웍스",
+      "count": 1
+    },
+    {
+      "keyword": "강풍경보",
+      "count": 1
+    },
+    {
+      "keyword": " 홍도",
+      "count": 1
+    },
+    {
+      "keyword": " 기상청",
+      "count": 1
+    },
+    {
+      "keyword": "AMC엔터테인먼트",
+      "count": 1
+    },
+    {
+      "keyword": " 전라도",
+      "count": 1
+    },
+    {
+      "keyword": "국민의힘",
+      "count": 1
+    },
+    {
+      "keyword": " 대선 후보",
+      "count": 1
+    },
+    {
+      "keyword": " 팝업 레스토랑",
+      "count": 1
+    },
+    {
+      "keyword": "CJ제일제당",
+      "count": 1
+    },
+    {
+      "keyword": " 한식",
+      "count": 1
+    },
+    {
+      "keyword": " 권성동",
+      "count": 1
+    },
+    {
+      "keyword": " 퀴진케이",
+      "count": 1
+    },
+    {
+      "keyword": " 단일화",
+      "count": 1
+    },
+    {
+      "keyword": " 김문수",
+      "count": 1
+    },
+    {
+      "keyword": " 비전 2030",
+      "count": 1
+    },
+    {
+      "keyword": "사우디아라비아",
+      "count": 1
+    },
+    {
+      "keyword": " 디지털 인프라",
+      "count": 1
+    },
+    {
+      "keyword": " 투자협력",
+      "count": 1
+    },
+    {
+      "keyword": " 한-사우디 비즈니스 포럼",
+      "count": 1
+    },
+    {
+      "keyword": " A등급",
+      "count": 1
+    },
+    {
+      "keyword": " 안전요원",
+      "count": 1
+    },
+    {
+      "keyword": "대천해수욕장",
+      "count": 1
+    },
+    {
+      "keyword": " 개인정보 보호",
+      "count": 1
+    },
+    {
+      "keyword": " 보령시",
+      "count": 1
+    },
+    {
+      "keyword": "소비자원",
+      "count": 1
+    },
+    {
+      "keyword": " 사기",
+      "count": 1
+    },
+    {
+      "keyword": " 해외쇼핑몰",
+      "count": 1
+    },
+    {
+      "keyword": " 피해",
+      "count": 1
+    },
+    {
+      "keyword": " 브랜드",
+      "count": 1
+    },
+    {
+      "keyword": " 카카오톡",
+      "count": 1
+    },
+    {
+      "keyword": " 저작권",
+      "count": 1
+    },
+    {
+      "keyword": " 전재",
+      "count": 1
+    }
+  ],
+  "length_distribution": [
+    {
+      "category": "중간 기사",
+      "count": 21
+    },
+    {
+      "category": "짧은 기사",
+      "count": 9
+    }
+  ]
+}

@@ -194,6 +194,19 @@ const parseKeywords = (keywords) => {
   return [];
 };
 
+// 관련 뉴스 데이터를 가져오는 함수 (벡터 유사도 기반)
+const fetchRelatedNews = async (newsId) => {
+  try {
+    // 새로운 관련 기사 API 사용
+    const response = await axios.get(`${API_BASE_URL}/api/news/${newsId}/related/`);
+    relatedNews.value = response.data;
+  } catch (err) {
+    console.error('관련 뉴스를 가져오는 중 오류 발생:', err);
+    // 관련 뉴스 가져오기에 실패해도 기본 뉴스 표시에는 영향 없도록 처리
+    relatedNews.value = [];
+  }
+};
+
 // ID로 뉴스 데이터를 가져오는 함수 (API 호출)
 const fetchNewsById = async (id) => {
   loading.value = true;
@@ -209,8 +222,8 @@ const fetchNewsById = async (id) => {
     // 좋아요 수 설정 (API 응답 구조에 따라 조정 필요)
     likeCount.value = response.data.like_count || 0;
     
-    // 같은 카테고리의 다른 뉴스 가져오기
-    fetchRelatedNews(response.data.category, id);
+    // 관련 기사 가져오기 (수정된 함수 호출)
+    fetchRelatedNews(id);
     
     // 로그인한 경우 조회 기록 추가 및 좋아요 상태 확인
     if (authStore.isAuthenticated) {
@@ -222,23 +235,6 @@ const fetchNewsById = async (id) => {
     error.value = '뉴스 데이터를 가져오는 중 오류가 발생했습니다.';
   } finally {
     loading.value = false;
-  }
-};
-
-// 관련 뉴스 데이터를 가져오는 함수 (같은 카테고리의 다른 뉴스)
-const fetchRelatedNews = async (category, currentId) => {
-  try {
-    // 카테고리 기반으로 관련 뉴스 가져오기 (필터링은 프론트에서 처리)
-    const response = await axios.get(`${API_BASE_URL}/api/news/`);
-    
-    // 현재 뉴스를 제외한 같은 카테고리의 뉴스만 필터링 (최대 3개)
-    relatedNews.value = response.data
-      .filter(item => item.category === category && item.id !== parseInt(currentId))
-      .slice(0, 3);
-  } catch (err) {
-    console.error('관련 뉴스를 가져오는 중 오류 발생:', err);
-    // 관련 뉴스 가져오기에 실패해도 기본 뉴스 표시에는 영향 없도록 처리
-    relatedNews.value = [];
   }
 };
 
