@@ -10,6 +10,8 @@ src/batch/logs/*
 src/batch/data/realtime/*.json
 src/batch/data/news_archive/*.json
 
+src/logstash/data/*
+
 # env
 **/.env
 

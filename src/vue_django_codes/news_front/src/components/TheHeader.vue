@@ -12,6 +12,22 @@
         <RouterLink to="/dashboard" class="nav-link">대시보드</RouterLink>
       </nav>
       
+      <!-- 검색창 -->
+      <div class="header__search">
+        <form @submit.prevent="handleSearch" class="search-form">
+          <input 
+            v-model="searchQuery" 
+            type="text" 
+            placeholder="뉴스 검색..." 
+            class="search-input"
+            @keydown.enter="handleSearch"
+          />
+          <button type="submit" class="search-btn">
+            🔍
+          </button>
+        </form>
+      </div>
+      
       <!-- 인증 관련 버튼 -->
       <div class="header__auth">
         <template v-if="isAuthenticated">
@@ -29,11 +45,16 @@
 
 <script setup>
 import { useAuthStore } from '@/stores/auth';
-import { computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed, ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
+const route = useRoute();
 const authStore = useAuthStore();
+const searchQuery = ref('');
+
+// 현재 URL에서 검색어 가져오기
+searchQuery.value = route.query.search || '';
 
 // 인증 상태
 const isAuthenticated = computed(() => authStore.isAuthenticated);
@@ -43,6 +64,19 @@ const user = computed(() => authStore.user);
 function handleLogout() {
   authStore.logout();
   router.push('/login');
+}
+
+// 검색 처리
+function handleSearch() {
+  if (searchQuery.value.trim()) {
+    router.push({
+      path: '/news',
+      query: { search: searchQuery.value.trim() }
+    });
+  } else {
+    // 검색어가 비어있으면 쿼리 파라미터 제거
+    router.push({ path: '/news' });
+  }
 }
 </script>
 
@@ -80,6 +114,43 @@ function handleLogout() {
       &:hover, &.router-link-active {
         color: #0c3057;
       }
+    }
+  }
+  
+  &__search {
+    flex: 1;
+    max-width: 300px;
+    margin: 0 20px;
+    
+    .search-form {
+      display: flex;
+      position: relative;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 8px 40px 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      
+      &:focus {
+        border-color: #0c3057;
+      }
+    }
+    
+    .search-btn {
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 5px;
     }
   }
   
@@ -132,9 +203,11 @@ function handleLogout() {
       gap: 15px;
     }
     
-    &__nav, &__auth {
+    &__nav, &__search, &__auth {
       width: 100%;
+      max-width: 100%;
       justify-content: center;
+      margin: 5px 0;
     }
   }
 }

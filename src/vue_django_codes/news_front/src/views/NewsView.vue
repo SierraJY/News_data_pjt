@@ -31,8 +31,13 @@
 
     <ContentBox v-else class="news__box">
       <div class="news__box__title-container">
+        <!-- 검색 결과 표시 -->
+        <div v-if="searchQuery" class="search-result-text">
+          <span class="search-highlight">"{{ searchQuery }}"</span>에 대한 검색 결과 ({{ originalNewsList.length }}건)
+        </div>
+        
         <!-- 추천순 문구 -->
-        <div v-if="sortBy === 'recommend' && authStore.user?.username" class="recommend-text">
+        <div v-else-if="sortBy === 'recommend' && authStore.user?.username" class="recommend-text">
           <span class="username-highlight">{{ authStore.user.username }}</span>님에게 추천하는 뉴스 목록이에요
         </div>
 
@@ -51,6 +56,10 @@
           :news="news"
         />
       </div>
+      
+      <div v-if="newsList.length === 0 && !loading" class="no-results">
+        검색 결과가 없습니다.
+      </div>
 
       <PaginationButton v-model="currentPage" :totalPages="totalPages" />
     </ContentBox>
@@ -66,14 +75,39 @@ import StateButton from "@/common/StateButton.vue";
 import { tabs } from "@/assets/data/tabs";
 import axios from 'axios';
 import { useAuthStore } from '@/stores/auth';
+import { useRoute, useRouter } from 'vue-router';
 
 const API_BASE_URL = 'http://127.0.0.1:8000';
 const authStore = useAuthStore();
+const route = useRoute();
+const router = useRouter();
 const itemsPerPage = 10;
 
 const originalNewsList = ref([]);
 const loading = ref(true);
 const error = ref(null);
+const searchQuery = ref('');
+
+// URL에서 검색어 가져오기
+onMounted(() => {
+  if (route.query.search) {
+    searchQuery.value = route.query.search;
+    fetchSearchResults(searchQuery.value);
+  } else {
+    fetchNews();
+  }
+});
+
+// URL 쿼리 파라미터 변경 감지
+watch(() => route.query.search, (newQuery) => {
+  if (newQuery) {
+    searchQuery.value = newQuery;
+    fetchSearchResults(searchQuery.value);
+  } else {
+    searchQuery.value = '';
+    fetchNews();
+  }
+});
 
 const fetchNews = async () => {
   loading.value = true;
@@ -85,6 +119,24 @@ const fetchNews = async () => {
   } catch (err) {
     console.error('뉴스 데이터를 가져오는 중 오류 발생:', err);
     error.value = '뉴스 데이터를 가져오는 중 오류가 발생했습니다.';
+  } finally {
+    loading.value = false;
+  }
+};
+
+const fetchSearchResults = async (query) => {
+  loading.value = true;
+  error.value = null;
+  
+  try {
+    const response = await axios.get(`${API_BASE_URL}/api/news/search/`, {
+      params: { query }
+    });
+    originalNewsList.value = response.data.results || [];
+  } catch (err) {
+    console.error('검색 중 오류 발생:', err);
+    error.value = '검색 중 오류가 발생했습니다: ' + (err.response?.data?.error || err.message);
+    originalNewsList.value = [];
   } finally {
     loading.value = false;
   }
@@ -124,6 +176,12 @@ const fetchRecommendedNews = async () => {
 };
 
 const handleSortChange = async () => {
+  if (searchQuery.value) {
+    // 검색 중에는 정렬 변경 시 검색 쿼리 제거
+    searchQuery.value = '';
+    router.replace({ query: {} });
+  }
+  
   if (sortBy.value === 'recommend') {
     await fetchRecommendedNews();
   } else {
@@ -131,17 +189,13 @@ const handleSortChange = async () => {
   }
 };
 
-onMounted(() => {
-  fetchNews();
-});
-
 const filteredNewsList = computed(() => {
   if (!originalNewsList.value.length) return [];
   let filteredNews = [...originalNewsList.value];
   if (activeTab.value !== 'all') {
     filteredNews = filteredNews.filter(news => news.category === activeTab.value);
   }
-  if (sortBy.value === 'latest') {
+  if (sortBy.value === 'latest' && !searchQuery.value) {
     filteredNews.sort((a, b) => new Date(b.write_date) - new Date(a.write_date));
   }
   return filteredNews;
@@ -206,6 +260,13 @@ watch(totalPages, (newValue) => {
     text-align: center;
     margin: 50px 0;
   }
+  
+  .no-results {
+    text-align: center;
+    margin: 30px 0;
+    font-size: 16px;
+    color: #666;
+  }
 
   &__box {
     padding: 30px !important;
@@ -216,10 +277,15 @@ watch(totalPages, (newValue) => {
       align-items: center;
       justify-content: space-between;
 
-      .recommend-text {
+      .recommend-text, .search-result-text {
         font-size: 18px;
         font-weight: 600;
         margin-left: 5px;
+      }
+      
+      .search-highlight {
+        color: #0c3057;
+        font-weight: bold;
       }
 
       .username-highlight {

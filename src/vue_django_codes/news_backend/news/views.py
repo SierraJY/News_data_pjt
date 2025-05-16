@@ -10,6 +10,12 @@ from rest_framework.permissions import IsAuthenticated
 from pgvector.django import CosineDistance
 from django.db.models import F
 from .serializers import RecommendNewsSerializer
+from elasticsearch import Elasticsearch
+import os
+from django.conf import settings
+
+# Elasticsearch 클라이언트 설정
+es = Elasticsearch(["http://es01:9200"])
 
 # Create your views here.
 class NewsViewSet(viewsets.ModelViewSet):
@@ -28,6 +34,56 @@ class NewsViewSet(viewsets.ModelViewSet):
         return News.objects.annotate(like_count=Count('like')).only(
             'id', 'title', 'writer', 'write_date', 'category', 'content', 'url'
         )
+
+    @action(detail=False, methods=['get'], url_path='search')
+    def search(self, request):
+        """
+        Elasticsearch를 사용하여 뉴스를 검색합니다.
+        query 파라미터로 검색어를 받습니다.
+        """
+        query = request.query_params.get('query', '')
+        
+        if not query:
+            return Response({"error": "검색어를 입력해주세요."}, status=400)
+            
+        try:
+            # Elasticsearch 검색 쿼리 구성
+            search_query = {
+                "query": {
+                    "multi_match": {
+                        "query": query,
+                        "fields": ["title^3", "content^2", "category", "keywords"],
+                        "fuzziness": "AUTO"
+                    }
+                },
+                "size": 50  # 최대 50개 결과 반환
+            }
+            
+            # Elasticsearch 검색 실행
+            search_results = es.search(index="news", body=search_query)
+            
+            # 검색 결과에서 ID 추출
+            news_ids = [int(hit["_id"]) for hit in search_results["hits"]["hits"]]
+            
+            if not news_ids:
+                return Response({"results": [], "count": 0})
+                
+            # 추출한 ID로 Django ORM에서 뉴스 데이터 가져오기
+            # 검색 결과의 순서를 유지하기 위해 Case/When 사용
+            from django.db.models import Case, When
+            preserved_order = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(news_ids)])
+            news_results = News.objects.filter(id__in=news_ids).order_by(preserved_order)
+            
+            # 시리얼라이저로 결과 변환
+            serializer = self.get_serializer(news_results, many=True)
+            
+            return Response({
+                "results": serializer.data,
+                "count": len(serializer.data)
+            })
+            
+        except Exception as e:
+            return Response({"error": f"검색 중 오류가 발생했습니다: {str(e)}"}, status=500)
 
     @action(detail=True, methods=['post'], url_path='like')
     def like(self, request, pk=None):

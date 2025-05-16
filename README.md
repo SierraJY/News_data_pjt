@@ -24,6 +24,7 @@
     <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white">
     <img src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=vuedotjs&logoColor=white">
     <img src="https://img.shields.io/badge/Django-092E20?style=flat&logo=django&logoColor=white">
+    <img src="https://img.shields.io/badge/Elasticsearch-005571?style=flat&logo=elasticsearch&logoColor=white">
 </div>
 
 
@@ -77,6 +78,34 @@
    - 처리된 데이터를 PostgreSQL 데이터베이스에 저장
    - pgvector 확장을 통한 벡터 데이터 저장
 
+<div style="display: flex; justify-content: space-between;">
+  <img src="README_img/search.png" style="width: 48%;">
+  <img src="README_img/index_for_search.png" style="width: 48%;">
+</div>
+
+- **검색 기능 (Elasticsearch + Logstash)**
+   - PostgreSQL 데이터를 Logstash를 통해 Elasticsearch로 이관
+   - 뉴스 제목, 내용, 카테고리, 키워드 기반 전문 검색
+   - 검색 결과 관련도 순 정렬
+   - Django REST API를 통한 검색 엔드포인트 제공
+   - Vue.js 프론트엔드에서 실시간 검색 인터페이스 제공
+
+
+<div style="display: flex; justify-content: space-between;">
+  <img src="README_img/kibana1.png" style="width: 48%;">
+  <img src="README_img/kibana2.png" style="width: 48%;">
+</div>
+
+- **데이터 인사이트 및 시각화 (Kibana)**
+   - Elasticsearch 데이터 기반 실시간 대시보드 구성
+   - 뉴스 카테고리별 분포 및 트렌드 시각화
+   - 키워드 빈도 분석 및 워드클라우드 제공
+   - 사용자 검색 패턴 분석 및 모니터링
+   - 커스텀 대시보드를 통한 뉴스 데이터 인사이트 도출
+
+
+
+
 ## 프로젝트 구조
 
 ```
@@ -113,6 +142,8 @@
     │   ├── data/          # 배치 처리용 데이터 파일
     │   └── output/        # 배치 처리 결과 출력 파일
     ├── flink_test_codes/  # Flink 테스트 코드 (DB 테스트, Flink 컨슈머 테스트)
+    ├── logstash/          # Logstash 설정 및 스크립트
+    │   └── data/          # Logstash 데이터 디렉토리
     └── vue_django_codes/  # 웹 애플리케이션 프론트엔드 및 백엔드 코드
         ├── news_front/    # Vue 기반 프론트엔드
         │   ├── src/       # Vue 소스 코드
@@ -170,6 +201,21 @@
    - Vue.js 기반 단일 페이지 애플리케이션(SPA)
    - 반응형 디자인으로 뉴스 기사 조회 및 인터랙션 제공
    - 사용자 로그인, 회원가입, 좋아요 기능 구현
+
+10. **elasticsearch**: 검색 엔진 서비스
+   - 뉴스 데이터 색인 및 전문 검색 기능 제공
+   - 관련도 기반 검색 결과 제공
+   - 분산 검색 및 분석 기능 지원
+
+11. **logstash**: 데이터 수집 및 변환 서비스
+   - PostgreSQL에서 Elasticsearch로 데이터 이관
+   - 데이터 변환 및 전처리 파이프라인 제공
+   - 스케줄링된 데이터 동기화 작업 수행
+
+12. **kibana**: 데이터 시각화 및 분석 서비스
+   - Elasticsearch 데이터 기반 대시보드 제공
+   - 뉴스 데이터 분석 및 시각화 도구
+   - 사용자 검색 패턴 및 행동 분석
 
 ## env 파일 설정
 
@@ -269,6 +315,14 @@ docker exec -it airflow-webserver bash -c "airflow connections add spark_default
 **Spark UI**
 - 접속 URL: http://localhost:8085/
 - Spark 작업의 상태 및 성능 모니터링
+
+**Kibana**
+- 접속 URL: http://localhost:5601/
+- 기능:
+  - Elasticsearch 데이터 탐색 및 시각화
+  - 뉴스 데이터 분석 대시보드
+  - 검색 패턴 및 사용자 행동 분석
+  - 커스텀 시각화 및 리포트 생성
 
 ### 5. 데이터 확인
 
