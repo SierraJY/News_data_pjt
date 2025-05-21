@@ -285,6 +285,11 @@ Airflow에서 Spark 작업을 실행하기 위한 커넥션 추가(GUI(Admin > C
 docker exec -it airflow-webserver bash -c "airflow connections add spark_default --conn-type spark --conn-host spark-master --conn-port 7077 --conn-extra '{\"deploy-mode\": \"client\"}'"
 ```
 
+### 4. Airflow Hadoop 커넥션 설정
+```bash
+docker exec -it airflow-webserver bash -c "airflow connections add hdfs_default --conn-type hdfs --conn-host namenode --conn-port 9000 --conn-extra '{\"use_sasl\": false}'"
+```
+
 ### 4. 웹 인터페이스 접속
 
 **Django 백엔드 API**

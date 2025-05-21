@@ -1,4 +1,5 @@
 import pendulum
+import os
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.bash import BashOperator
@@ -45,7 +46,8 @@ with DAG(
         }
     )
     
-    move_files = PythonOperator(
+    # 파일을 HDFS로 이동하는 작업 
+    move_files_to_hdfs = PythonOperator(
         task_id='move_json_files',
         python_callable=move_json_files,
         provide_context=True
@@ -65,4 +67,4 @@ with DAG(
     )
 
     # 태스크 의존성 설정: Spark 작업 -> PDF 생성 -> 파일 이동 -> 이메일 전송
-    submit_spark_job >> make_pdf_reports >> move_files >> send_email_report
+    submit_spark_job >> make_pdf_reports >> move_files_to_hdfs >> send_email_report
