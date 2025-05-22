@@ -6,6 +6,9 @@
   <div class="chatbot-container">
     <h3 class="chatbot-title">
       <span class="chatbot-icon">🤖</span> 뉴스 AI 챗봇
+      <button class="reset-button" @click="resetChat" v-if="authStore.isAuthenticated">
+        <span class="reset-icon">🔄</span> 대화 초기화
+      </button>
     </h3>
     
     <div class="chat-messages" ref="chatMessagesRef">
@@ -63,11 +66,24 @@
         전송
       </button>
     </div>
+    
+    <!-- 로그인 유도 메시지 -->
+    <div v-if="!authStore.isAuthenticated" class="login-prompt">
+      <p>로그인하시면 대화 내용이 저장되어 더 자연스러운 대화가 가능합니다.</p>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, watch, nextTick } from 'vue';
+import axios from 'axios';
+import { useAuthStore } from '@/stores/auth';
+
+// 인증 스토어
+const authStore = useAuthStore();
+
+// API 기본 URL
+const API_BASE_URL = 'http://127.0.0.1:8000';
 
 // 컴포넌트 props 정의
 const props = defineProps({
@@ -110,15 +126,55 @@ const sendMessage = async () => {
   await scrollToBottom();
   
   try {
-    // 백엔드 연동 부분 (현재는 모의 응답)
-    // 실제 구현 시 axios를 사용하여 백엔드 API 호출
-    await simulateResponse(userQuery);
-  } catch (error) {
-    console.error('챗봇 응답 처리 중 오류 발생:', error);
-    // 오류 메시지 표시
+    let response;
+    
+    // 로그인 여부에 따라 다른 API 호출
+    if (authStore.isAuthenticated) {
+      // 로그인 사용자: 세션 기반 챗봇 API 호출
+      response = await axios.post(
+        `${API_BASE_URL}/api/news/chatbot/`,
+        {
+          article_id: props.news.id,
+          question: userQuery
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authStore.accessToken}`
+          }
+        }
+      );
+    } else {
+      // 비로그인 사용자: 익명 챗봇 API 호출
+      response = await axios.post(
+        `${API_BASE_URL}/api/news/chatbot/anonymous/`,
+        {
+          title: props.news.title,
+          writer: props.news.writer,
+          write_date: props.news.write_date,
+          content: props.news.content,
+          question: userQuery
+        }
+      );
+    }
+    
+    // 응답 메시지 추가
     messages.value.push({
       role: 'assistant',
-      content: '죄송합니다. 응답을 처리하는 중에 오류가 발생했습니다.'
+      content: response.data.response
+    });
+  } catch (error) {
+    console.error('챗봇 응답 처리 중 오류 발생:', error);
+    
+    // API 오류 메시지 표시
+    let errorMessage = '죄송합니다. 응답을 처리하는 중에 오류가 발생했습니다.';
+    if (error.response && error.response.data && error.response.data.error) {
+      errorMessage = error.response.data.error;
+    }
+    
+    // 오류 메시지 추가
+    messages.value.push({
+      role: 'assistant',
+      content: errorMessage
     });
   } finally {
     // 로딩 상태 비활성화
@@ -128,35 +184,32 @@ const sendMessage = async () => {
   }
 };
 
-// 모의 응답 함수 (백엔드 연동 전까지 임시 사용)
-const simulateResponse = async (query) => {
-  // 실제 구현에서는 이 부분을 백엔드 API 호출로 대체
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      // 뉴스 기사 내용 기반 모의 응답
-      const newsTitle = props.news.title;
-      const newsContent = props.news.content.substring(0, 100); // 내용 일부만 사용
-      
-      let response;
-      if (query.includes('요약')) {
-        response = `이 기사는 "${newsTitle}"에 관한 내용으로, ${newsContent}... 등의 내용을 다루고 있습니다.`;
-      } else if (query.includes('작성자')) {
-        response = `이 기사의 작성자는 ${props.news.writer}입니다.`;
-      } else if (query.includes('날짜') || query.includes('언제')) {
-        response = `이 기사는 ${new Date(props.news.write_date).toLocaleDateString()}에 작성되었습니다.`;
-      } else {
-        response = `질문하신 "${query}"에 대해 답변드리자면, 이 기사는 ${newsTitle}에 관한 내용입니다. 더 구체적인 질문이 있으시면 말씀해주세요.`;
+// 대화 초기화 함수
+const resetChat = async () => {
+  if (!authStore.isAuthenticated || !props.news.id) return;
+  
+  try {
+    await axios.post(
+      `${API_BASE_URL}/api/news/chatbot/reset/${props.news.id}/`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.accessToken}`
+        }
       }
-      
-      // 응답 메시지 추가
-      messages.value.push({
-        role: 'assistant',
-        content: response
-      });
-      
-      resolve();
-    }, 1000); // 1초 지연으로 응답 시뮬레이션
-  });
+    );
+    
+    // 메시지 초기화
+    messages.value = [];
+    
+    // 시스템 메시지 추가
+    messages.value.push({
+      role: 'system',
+      content: '대화가 초기화되었습니다. 새로운 질문을 해보세요!'
+    });
+  } catch (error) {
+    console.error('대화 초기화 중 오류 발생:', error);
+  }
 };
 
 // 채팅창을 아래로 스크롤하는 함수
@@ -170,7 +223,7 @@ const scrollToBottom = async () => {
 // 메시지가 추가될 때마다 스크롤 아래로 이동
 watch(() => messages.value.length, scrollToBottom);
 
-// 컴포넌트가 마운트될 때 뉴스 정보를 기반으로 초기 메시지 설정
+// 컴포넌트가 마운트될 때 스크롤 초기화
 onMounted(() => {
   scrollToBottom();
 });
@@ -196,10 +249,31 @@ onMounted(() => {
   font-size: 18px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   
   .chatbot-icon {
     margin-right: 8px;
     font-size: 20px;
+  }
+  
+  .reset-button {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .reset-icon {
+      margin-right: 5px;
+    }
   }
 }
 
@@ -325,6 +399,15 @@ onMounted(() => {
       cursor: not-allowed;
     }
   }
+}
+
+.login-prompt {
+  padding: 10px 15px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
 }
 
 // 타이핑 표시기 애니메이션

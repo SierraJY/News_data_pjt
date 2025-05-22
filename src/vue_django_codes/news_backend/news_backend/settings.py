@@ -142,6 +142,12 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+# 세션 설정
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # 데이터베이스 기반 세션
+SESSION_COOKIE_AGE = 1209600  # 2주 (초 단위)
+SESSION_SAVE_EVERY_REQUEST = True  # 매 요청마다 세션 저장
+
 # 로컬 설정 파일 불러오기
 try:
     from .local_settings import *
