@@ -49,24 +49,6 @@ x-airflow-common: &airflow-common
     - airflow
 
 services:
-  # ubuntu-python:
-  #   build: 
-  #     context: ./
-  #     dockerfile: ./services/ubuntu-python/Dockerfile
-  #   container_name: ubuntu_python
-  #   working_dir: /opt/workspace
-  #   volumes:
-  #     - ubuntu_workspace:/opt/workspace
-  #     - type: bind
-  #       source: ./src/up_test_codes
-  #       target: /opt/workspace/up_test_codes
-  #     - type: bind
-  #       source: ./src/up_ingest_codes
-  #       target: /opt/workspace/up_ingest_codes
-  #   depends_on:
-  #     - postgres
-  #   tty: true
-
   postgres:
     build: ./services/postgres
     container_name: postgres
@@ -118,9 +100,6 @@ services:
         source: ./src/kafka_producer
         target: /opt/workspace/kafka_producer
       - type: bind
-        source: ./src/kafka_test_codes
-        target: /opt/workspace/kafka_test_codes
-      - type: bind
         source: ./src/up_ingest_codes/article_extractors.py
         target: /opt/workspace/article_extractors.py
       - type: bind
@@ -141,9 +120,6 @@ services:
       working_dir: /opt/workspace
       volumes:
         - type: bind
-          source: ./src/flink_test_codes
-          target: /opt/workspace/flink_test_codes
-        - type: bind
           source: ./src/flink_consumer
           target: /opt/workspace/flink_consumer
         - type: bind
@@ -163,25 +139,6 @@ services:
       networks:
         - airflow
   
-  # spark:
-  #   build:
-  #     context: ./
-  #     dockerfile: ./services/spark/Dockerfile
-  #   container_name: spark
-  #   ports:
-  #     - "8082:8082"  # Spark Master Web UI
-  #     - "4040:4040"  # Spark Application Web UI
-  #   working_dir: /opt/workspace
-  #   volumes:
-  #     - type: bind
-  #       source: ./src/spark_test_codes
-  #       target: /opt/workspace/spark_test_codes
-  #   environment:
-  #     - SPARK_MASTER_HOST=spark
-  #   tty: true
-  #   networks:
-  #     - airflow
-
   django:
     build:
       context: ./
