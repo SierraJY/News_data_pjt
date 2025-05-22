@@ -83,6 +83,9 @@
           </div>
         </div>
       </ContentBox>
+      
+      <!-- 뉴스 챗봇 컴포넌트 추가 (ContentBox 밖으로 이동) -->
+      <NewsChatbot :news="news" />
     </div>
 
     <!-- 사이드바: 관련 기사 목록 -->
@@ -122,7 +125,7 @@ import { useDate } from "@/composables/useDate";
 // 라우터 인스턴스 임포트 (페이지 이동 처리용)
 import router from "@/router";
 // 뒤로가기 아이콘 SVG 컴포넌트 임포트
-// import LeftArrow from "@/components/icon/LeftArrow.svg";
+import LeftArrow from "@/components/icons/LeftArrow.svg";
 // Vue Router의 훅 임포트
 import { useRoute } from 'vue-router';
 // 라이프사이클 훅 임포트
@@ -132,6 +135,8 @@ import axios from 'axios';
 import { RouterLink } from 'vue-router';
 // 인증 스토어 임포트
 import { useAuthStore } from '@/stores/auth';
+// 뉴스 챗봇 컴포넌트 임포트
+import NewsChatbot from "@/components/NewsChatbot.vue";
 
 // API 기본 URL 설정 (나중에 환경 변수로 분리 가능)
 const API_BASE_URL = 'http://127.0.0.1:8000';
@@ -351,7 +356,7 @@ onMounted(() => {
     flex: 2;
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 20px;
   }
 
   .sidebar {
