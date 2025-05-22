@@ -41,10 +41,11 @@ ENV PATH="$JAVA_HOME/bin:/opt/spark/bin:${PATH}"
 ENV PYTHONPATH="${PYTHONPATH}:/opt/airflow"
 
 USER airflow
+
 # Python 패키지 설치 - Claude API 및 PDF 관련 패키지 추가
 RUN pip install --no-cache-dir \
     apache-airflow-providers-apache-spark \
-    "apache-airflow-providers-apache-hdfs[kerberos]==3.2.0" \
+    apache-airflow-providers-apache-hdfs \
     pyspark==3.5.4 \
     matplotlib \
     anthropic \

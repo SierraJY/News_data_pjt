@@ -620,13 +620,20 @@ services:
     image: apache/hadoop:3
     hostname: namenode
     container_name: namenode
-    command: ["hdfs", "namenode"]
+    command: >
+      sh -c "
+      chmod +x /opt/entrypoint.sh &&
+      /opt/entrypoint.sh
+      "
     ports:
       - 9870:9870
+      - 9000:9000
     env_file:
       - ./services/hadoop/.config
     environment:
       ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+    volumes:
+      - ./services/hadoop/entrypoint.sh:/opt/entrypoint.sh
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:9870" ]
       interval: 30s

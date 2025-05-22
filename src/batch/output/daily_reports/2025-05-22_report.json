@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "date": "2025-05-22",
+    "total_articles": 3,
+    "top_category": "경제",
+    "top_source": "khan",
+    "top_keyword": "규제"
+  },
+  "category_counts": [
+    {
+      "category": "경제",
+      "count": 3
+    }
+  ],
+  "original_category_counts": [
+    {
+      "category": "경제",
+      "count": 3
+    }
+  ],
+  "source_counts": [
+    {
+      "source": "khan",
+      "count": 3
+    }
+  ],
+  "keyword_counts": [
+    {
+      "keyword": "규제",
+      "count": 1
+    },
+    {
+      "keyword": "비트코인",
+      "count": 1
+    },
+    {
+      "keyword": "미국",
+      "count": 1
+    },
+    {
+      "keyword": "가격",
+      "count": 1
+    },
+    {
+      "keyword": "가상자산",
+      "count": 1
+    },
+    {
+      "keyword": "환율 협상",
+      "count": 1
+    },
+    {
+      "keyword": "원·달러",
+      "count": 1
+    },
+    {
+      "keyword": " 인건비",
+      "count": 1
+    },
+    {
+      "keyword": " 스마트기술",
+      "count": 1
+    },
+    {
+      "keyword": " 요식업소",
+      "count": 1
+    },
+    {
+      "keyword": "환율",
+      "count": 1
+    },
+    {
+      "keyword": "세종시",
+      "count": 1
+    },
+    {
+      "keyword": "원화 강세",
+      "count": 1
+    },
+    {
+      "keyword": "약달러",
+      "count": 1
+    },
+    {
+      "keyword": " 지원사업",
+      "count": 1
+    }
+  ],
+  "length_distribution": [
+    {
+      "category": "중간 기사",
+      "count": 2
+    },
+    {
+      "category": "짧은 기사",
+      "count": 1
+    }
+  ]
+}

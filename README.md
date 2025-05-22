@@ -287,7 +287,9 @@ docker exec -it airflow-webserver bash -c "airflow connections add spark_default
 
 ### 4. Airflow Hadoop 커넥션 설정
 ```bash
-docker exec -it airflow-webserver bash -c "airflow connections add hdfs_default --conn-type hdfs --conn-host namenode --conn-port 9000 --conn-extra '{\"use_sasl\": false}'"
+# docker exec -it airflow-webserver bash -c "airflow connections add hdfs_default --conn-type hdfs --conn-host namenode --conn-port 9000 --conn-extra '{\"use_sasl\": false}'"
+
+docker exec -it airflow-webserver bash -c "airflow connections add webhdfs_default --conn-type webhdfs --conn-host namenode --conn-port 9870 --conn-extra '{\"use_ssl\": false}'"
 ```
 
 ### 4. 웹 인터페이스 접속
