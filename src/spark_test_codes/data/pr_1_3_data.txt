@@ -1,4 +1,0 @@
-Spark is a powerful analytics engine
-Big Data is transforming industries 
-Data Science is revolutionizing decision making
-Machine Learning and AI are the future
