@@ -1,4 +1,3 @@
-# Dockerfile-airflow
 FROM apache/airflow:2.10.5
 USER root
 # Java 설치 + 폰트 설치 같이
@@ -16,7 +15,8 @@ RUN apt update && apt install -y \
     g++ \
     make \
     pkg-config \
-    sudo
+    sudo \
+    libkrb5-dev    # HDFS 연결에 필요한 추가 패키지
 
 # Java 설치 - default-jdk 사용
 RUN apt-get update && apt-get install -y default-jdk && \
@@ -41,9 +41,11 @@ ENV PATH="$JAVA_HOME/bin:/opt/spark/bin:${PATH}"
 ENV PYTHONPATH="${PYTHONPATH}:/opt/airflow"
 
 USER airflow
+
 # Python 패키지 설치 - Claude API 및 PDF 관련 패키지 추가
 RUN pip install --no-cache-dir \
     apache-airflow-providers-apache-spark \
+    apache-airflow-providers-apache-hdfs \
     pyspark==3.5.4 \
     matplotlib \
     anthropic \

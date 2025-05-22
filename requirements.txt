@@ -14,3 +14,4 @@ matplotlib==3.10.0
 hdfs==2.7.3
 elasticsearch==8.17.1
 pgvector==0.2.4
+requests==2.31.0

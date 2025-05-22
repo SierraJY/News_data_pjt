@@ -25,6 +25,10 @@ x-airflow-common: &airflow-common
     AIRFLOW__SMTP__SMTP_MAIL_FROM: ${AIRFLOW_SMTP_MAIL_FROM}
     # Anthropic API 키
     ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+    # Hadoop 관련 환경 변수 추가
+    HADOOP_CONF_DIR: /opt/hadoop/conf
+    HADOOP_HOME: /opt/hadoop
+    AIRFLOW_CONN_HDFS_DEFAULT: 'hdfs://namenode:9000'
   volumes:
     - ./src/batch/dags:/opt/airflow/dags
     - ./src/batch/logs:/opt/airflow/logs
@@ -33,6 +37,8 @@ x-airflow-common: &airflow-common
     - ./src/batch/dags/scripts:/opt/airflow/dags/scripts
     - ./src/batch/data:/opt/airflow/data
     - ./src/batch/output:/opt/airflow/output
+    # Hadoop 설정 파일 마운트 추가
+    - ./services/hadoop/conf:/opt/hadoop/conf
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on: &airflow-common-depends-on
     redis:
@@ -270,7 +276,7 @@ services:
     networks:
       - airflow
 
-  # Spark Master-Worker 아키텍처로 변경
+  # Spark Master-Worker 아키텍처로 변경 및 Hadoop 연동 설정 추가
   spark-master:
     build:
       context: ./
@@ -281,10 +287,20 @@ services:
       - "7077:7077"  # Spark Master 통신 포트
     environment:
       - SPARK_MODE=master
+      # Hadoop 연결을 위한 환경 변수 추가
+      - HADOOP_CONF_DIR=/opt/hadoop/conf
+      - HADOOP_HOME=/opt/hadoop
     volumes:
       - ./src/batch/dags/scripts:/opt/bitnami/spark/scripts
       - ./src/batch/data:/opt/bitnami/spark/data
       - ./src/batch/output:/opt/bitnami/spark/output
+      # Hadoop 설정 파일 마운트 추가
+      - ./services/hadoop/conf:/opt/hadoop/conf
+    depends_on:
+      namenode:
+        condition: service_healthy
+      resourcemanager:
+        condition: service_started
     networks:
       - airflow
 
@@ -298,12 +314,19 @@ services:
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
+      # Hadoop 연결을 위한 환경 변수 추가
+      - HADOOP_CONF_DIR=/opt/hadoop/conf
+      - HADOOP_HOME=/opt/hadoop
     volumes:
       - ./src/batch/dags/scripts:/opt/bitnami/spark/scripts
       - ./src/batch/data:/opt/bitnami/spark/data
       - ./src/batch/output:/opt/bitnami/spark/output
+      # Hadoop 설정 파일 마운트 추가
+      - ./services/hadoop/conf:/opt/hadoop/conf
     depends_on:
       - spark-master
+      - namenode
+      - datanode
     networks:
       - airflow
 
@@ -330,6 +353,8 @@ services:
         condition: service_completed_successfully
       spark-master:
         condition: service_started
+      namenode:
+        condition: service_healthy
     networks:
       - airflow
 
@@ -348,6 +373,8 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+      namenode:
+        condition: service_healthy
     networks:
       - airflow
 
@@ -371,6 +398,8 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+      namenode:
+        condition: service_healthy
     networks:
       - airflow
 
@@ -523,76 +552,6 @@ services:
         elasticsearch-plugin install analysis-nori --batch;
       fi &&
       exec /usr/local/bin/docker-entrypoint.sh elasticsearch"
-      # Nori 플러그인 설치 및 로드 관련:
-# - 문제: 다중 노드에서 'Unknown tokenizer type [nori_tokenizer]' 오류 발생.
-# - 원인: `es01`에만 Nori 플러그인 설치 `command`가 있어 다른 노드에는 플러그인이 없음.
-# - 중요: Elasticsearch는 분산 시스템이므로, Nori 토크나이저와 같은 특정 플러그인에 의존하는 인덱스 설정은
-#         클러스터 내의 모든 노드에 해당 플러그인이 설치되어 있어야 합니다.
-# - 해결: `analysis-nori`를 사용하는 모든 Elasticsearch 노드(es01, es02, es03 등)의 `command` 섹션에
-#         `elasticsearch-plugin install analysis-nori --batch;` 명령을 추가하여 플러그인 설치를 보장해야 함.
-
-
-  # es02:
-  #   image: docker.elastic.co/elasticsearch/elasticsearch:8.17.1
-  #   container_name: es02
-  #   environment:
-  #     - node.name=es02
-  #     - cluster.name=elastic-docker-cluster
-  #     - discovery.seed_hosts=es01,es03
-  #     - cluster.initial_master_nodes=es01,es02,es03
-  #     - node.roles=master,data,ingest
-  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-  #     - xpack.security.enabled=false
-  #     - network.host=0.0.0.0
-  #   volumes:
-  #     - ./config/dictionary:/usr/share/elasticsearch/config/dictionary
-  #   ports:
-  #     - 9201:9200
-  #   networks:
-  #     - airflow
-  #   depends_on:
-  #     postgres:
-  #       condition: service_healthy
-  #     kafka:
-  #       condition: service_started
-  #     redis:
-  #       condition: service_healthy
-  #     es01:
-  #       condition: service_healthy
-  #     airflow-init:
-  #       condition: service_completed_successfully
-
-  # es03:
-  #   image: docker.elastic.co/elasticsearch/elasticsearch:8.17.1
-  #   container_name: es03
-  #   environment:
-  #     - node.name=es03
-  #     - cluster.name=elastic-docker-cluster
-  #     - discovery.seed_hosts=es01,es02
-  #     - cluster.initial_master_nodes=es01,es02,es03
-  #     - node.roles=master,data,ingest
-  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-  #     - xpack.security.enabled=false
-  #     - network.host=0.0.0.0
-  #   volumes:
-  #     - ./config/dictionary:/usr/share/elasticsearch/config/dictionary
-  #   ports:
-  #     - 9202:9200
-  #   networks:
-  #     - airflow
-  #   depends_on:
-  #     postgres:
-  #       condition: service_healthy
-  #     kafka:
-  #       condition: service_started
-  #     redis:
-  #       condition: service_healthy
-  #     es01:
-  #       condition: service_healthy
-  #     es02:
-  #       condition: service_started
-  #     airflow-init:
-  #       condition: service_completed_successfully
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.17.1
@@ -655,12 +614,94 @@ services:
              /usr/share/logstash/bin/logstash -f /usr/share/logstash/pipeline/stash_news_db.conf'
     networks:
       - airflow
+  
+  # Hadoop 서비스 추가
+  namenode:
+    image: apache/hadoop:3
+    hostname: namenode
+    container_name: namenode
+    command: >
+      sh -c "
+      chmod +x /opt/entrypoint.sh &&
+      /opt/entrypoint.sh
+      "
+    ports:
+      - 9870:9870
+      - 9000:9000
+    env_file:
+      - ./services/hadoop/.config
+    volumes:
+      - ./services/hadoop/entrypoint.sh:/opt/entrypoint.sh
+      - namenode_data:/tmp/hadoop-root/dfs/name
+    user: "root"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:9870" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - airflow
+
+  datanode:
+    image: apache/hadoop:3
+    container_name: datanode
+    command: >
+      sh -c "
+      mkdir -p /tmp/hadoop-root/dfs/data &&
+      chown hadoop:hadoop /tmp/hadoop-root/dfs/data &&
+      chmod 755 /tmp/hadoop-root/dfs/data &&
+      hdfs datanode
+      "
+    env_file:
+      - ./services/hadoop/.config
+    volumes:
+      - datanode_data:/tmp/hadoop-root/dfs/data  # 경로 수정
+    user: "root"
+    depends_on:
+      namenode:
+        condition: service_healthy
+    networks:
+      - airflow
+
+  resourcemanager:
+    image: apache/hadoop:3
+    hostname: resourcemanager
+    container_name: resourcemanager
+    command: ["yarn", "resourcemanager"]
+    ports:
+      - 8088:8088
+    env_file:
+      - ./services/hadoop/.config
+    volumes:
+      - ./services/hadoop/test.sh:/opt/test.sh
+    depends_on:
+      namenode:
+        condition: service_healthy
+    networks:
+      - airflow
+
+  nodemanager:
+    image: apache/hadoop:3
+    container_name: nodemanager
+    command: ["yarn", "nodemanager"]
+    env_file:
+      - ./services/hadoop/.config
+    depends_on:
+      resourcemanager:
+        condition: service_started
+      datanode:
+        condition: service_started
+    networks:
+      - airflow
 
 volumes:
   pgdata:
   postgres-db-volume:
   ubuntu_workspace:
   vue_node_modules:
+  namenode_data:
+  datanode_data:
 
 networks:
   airflow:
