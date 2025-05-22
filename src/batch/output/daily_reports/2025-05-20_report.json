@@ -1,12 +1,12 @@
 {
   "meta": {
-    "date": "2025-05-22",
+    "date": "2025-05-20",
     "total_articles": 0,
     "top_category": "N/A",
     "top_source": "N/A",
     "top_keyword": "N/A",
     "data_source": "HDFS",
-    "input_path": "webhdfs://namenode:9870/user/realtime/news_*.json"
+    "input_path": "hdfs://namenode:9000/user/realtime/news_*.json"
   },
   "category_counts": [],
   "original_category_counts": [],

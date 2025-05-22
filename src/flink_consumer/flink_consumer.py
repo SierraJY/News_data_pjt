@@ -2,12 +2,14 @@
 Flink 컨슈머 메인 애플리케이션
 - Kafka에서 뉴스 데이터를 소비하여 처리하는 Flink 애플리케이션
 - 전처리, 임베딩 생성, 키워드 추출, 데이터베이스 저장 기능
+- JSON 파일을 HDFS에 직접 저장
 """
 
 import os
 import sys
 import json
 import traceback
+import requests
 from datetime import datetime
 from pyflink.datastream import StreamExecutionEnvironment
 from pyflink.common.serialization import SimpleStringSchema
@@ -29,6 +31,44 @@ from preprocess_openai import (
 
 # 환경 변수 로드
 load_dotenv()
+
+def save_to_hdfs(data, filename):
+    """WebHDFS API를 사용하여 HDFS에 JSON 파일 저장"""
+    try:
+        namenode_url = "http://namenode:9870"
+        hdfs_path = f"/user/realtime/{filename}"
+        
+        # JSON 데이터를 문자열로 변환
+        json_content = json.dumps(data, ensure_ascii=False, indent=2)
+        
+        # WebHDFS API를 사용하여 파일 업로드
+        # 1단계: 업로드 URL 받기
+        create_url = f"{namenode_url}/webhdfs/v1{hdfs_path}?op=CREATE&user.name=hadoop&overwrite=true"
+        response = requests.put(create_url, allow_redirects=False, timeout=30)
+        
+        if response.status_code == 307:
+            # 2단계: 실제 데이터 업로드
+            upload_url = response.headers['Location']
+            upload_response = requests.put(
+                upload_url, 
+                data=json_content.encode('utf-8'),
+                headers={'Content-Type': 'application/json'},
+                timeout=60
+            )
+            
+            if upload_response.status_code == 201:
+                print(f"HDFS 저장 성공: {hdfs_path}")
+                return True
+            else:
+                print(f"HDFS 업로드 실패: {upload_response.status_code} - {upload_response.text}")
+                return False
+        else:
+            print(f"HDFS 업로드 URL 생성 실패: {response.status_code} - {response.text}")
+            return False
+            
+    except Exception as e:
+        print(f"HDFS 저장 중 오류: {e}")
+        return False
 
 class NewsProcessor(MapFunction):
     """Kafka에서 수신한 뉴스 데이터를 처리하는 맵 함수"""
@@ -98,16 +138,18 @@ class NewsProcessor(MapFunction):
                     "source":source,
                     "writer":writer, 
                     "publish_date":write_date
-
                 }
 
+                # HDFS에 저장
                 filename = f"news_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}.json"
-                filepath = os.path.join("/opt/batch/data/realtime", filename)
-                with open(filepath, 'w',encoding ='utf-8') as f:
-                    json.dump(output_data, f, ensure_ascii=False)
+                hdfs_save_result = save_to_hdfs(output_data, filename)
+                
+                if hdfs_save_result:
+                    print(f"HDFS 저장 완료: /user/realtime/{filename}")
+                else:
+                    print(f"HDFS 저장 실패: {filename}")
 
-                print(f"JSON 파일로 저장 완료: {filepath}")
-                print(f"[DEBUG] 저장 결과: {save_result}")
+                print(f"[DEBUG] DB 저장 결과: {save_result}")
                 return f"Successfully processed: {title}"
 
             else:
@@ -187,4 +229,4 @@ def main():
         traceback.print_exc()
 
 if __name__ == "__main__":
-    main() 
+    main()
