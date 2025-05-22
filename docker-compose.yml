@@ -630,10 +630,10 @@ services:
       - 9000:9000
     env_file:
       - ./services/hadoop/.config
-    environment:
-      ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
     volumes:
       - ./services/hadoop/entrypoint.sh:/opt/entrypoint.sh
+      - namenode_data:/tmp/hadoop-root/dfs/name
+    user: "root"
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:9870" ]
       interval: 30s
@@ -646,9 +646,18 @@ services:
   datanode:
     image: apache/hadoop:3
     container_name: datanode
-    command: ["hdfs", "datanode"]
+    command: >
+      sh -c "
+      mkdir -p /tmp/hadoop-root/dfs/data &&
+      chown hadoop:hadoop /tmp/hadoop-root/dfs/data &&
+      chmod 755 /tmp/hadoop-root/dfs/data &&
+      hdfs datanode
+      "
     env_file:
       - ./services/hadoop/.config
+    volumes:
+      - datanode_data:/tmp/hadoop-root/dfs/data  # 경로 수정
+    user: "root"
     depends_on:
       namenode:
         condition: service_healthy
@@ -691,6 +700,8 @@ volumes:
   postgres-db-volume:
   ubuntu_workspace:
   vue_node_modules:
+  namenode_data:
+  datanode_data:
 
 networks:
   airflow:

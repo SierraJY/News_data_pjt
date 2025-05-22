@@ -2,14 +2,22 @@
   "meta": {
     "date": "2025-05-22",
     "total_articles": 3,
-    "top_category": "경제",
+    "top_category": "IT_과학",
     "top_source": "khan",
-    "top_keyword": "규제"
+    "top_keyword": " io 인수"
   },
   "category_counts": [
     {
+      "category": "IT_과학",
+      "count": 1
+    },
+    {
       "category": "경제",
-      "count": 3
+      "count": 1
+    },
+    {
+      "category": "산업",
+      "count": 1
     }
   ],
   "original_category_counts": [
@@ -26,74 +34,70 @@
   ],
   "keyword_counts": [
     {
-      "keyword": "규제",
+      "keyword": " io 인수",
       "count": 1
     },
     {
-      "keyword": "비트코인",
+      "keyword": " 조니 아이브",
       "count": 1
     },
     {
-      "keyword": "미국",
+      "keyword": " AI 하드웨어",
       "count": 1
     },
     {
-      "keyword": "가격",
+      "keyword": " 기술 회사",
       "count": 1
     },
     {
-      "keyword": "가상자산",
+      "keyword": "오픈AI",
       "count": 1
     },
     {
-      "keyword": "환율 협상",
+      "keyword": "다음",
       "count": 1
     },
     {
-      "keyword": "원·달러",
+      "keyword": "아워홈",
       "count": 1
     },
     {
-      "keyword": " 인건비",
+      "keyword": " 인공지능",
       "count": 1
     },
     {
-      "keyword": " 스마트기술",
+      "keyword": " 매출 5조원",
       "count": 1
     },
     {
-      "keyword": " 요식업소",
+      "keyword": " 주방 자동화",
       "count": 1
     },
     {
-      "keyword": "환율",
+      "keyword": " 분사",
       "count": 1
     },
     {
-      "keyword": "세종시",
+      "keyword": " 카카오",
       "count": 1
     },
     {
-      "keyword": "원화 강세",
+      "keyword": " K-푸드",
       "count": 1
     },
     {
-      "keyword": "약달러",
+      "keyword": " 영업이익 3000억원",
       "count": 1
     },
     {
-      "keyword": " 지원사업",
+      "keyword": " 신설법인",
       "count": 1
     }
   ],
   "length_distribution": [
     {
       "category": "중간 기사",
-      "count": 2
-    },
-    {
-      "category": "짧은 기사",
-      "count": 1
+      "count": 3
     }
   ]
 }
