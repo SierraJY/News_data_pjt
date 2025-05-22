@@ -11,7 +11,6 @@
 - [env 파일 설정](#env-파일-설정)
 - [Python 패키지 설정](#python-패키지-설정)
 - [실행 방법](#실행-방법)
-- [환경 테스트](#테스트-코드-실행)
 - [주의사항](#주의사항)
 
 ## 주요 기술 스택
@@ -160,15 +159,10 @@
 │   ├── airflow/          # Airflow 서비스 설정
 │   └── hadoop/           # Hadoop HDFS 서비스 설정 및 초기화 스크립트
 └── src/                   # 소스 코드 디렉토리
-    ├── up_ingest_codes/   # 뉴스 기사 추출 함수 및 DB 직접 적재용 코드 (ubuntu-python 전용)
-    ├── up_test_codes/     # RSS->PostgreSQL 직접 적재 테스트 코드 (ubuntu-python 전용)
+    ├── up_ingest_codes/   # 뉴스 기사 추출 함수 및 DB 직접 적재용 코드(kafka 컨테이너에서 실행)
     ├── kafka_producer/    # Kafka 프로듀서 코드 (kafka 컨테이너에서 실행)
-    ├── kafka_test_codes/  # Kafka 테스트 코드 (RSS 테스트, 프로듀서/컨슈머 테스트)
     ├── flink_consumer/    # Flink 컨슈머 코드 및 데이터 전처리 로직 (flink 컨테이너에서 실행)
     │   └── config/        # Flink 관련 설정 파일 디렉터리
-    ├── spark_test_codes/  # Spark 테스트 코드 (spark 컨테이너에서 사용)
-    │   ├── data/          # Spark 테스트용 데이터 파일
-    │   └── src/           # Spark 예제 및 테스트 코드
     ├── batch/             # 배치 처리 및 Airflow 관련 코드
     │   ├── dags/          # Airflow DAG 파일 및 스크립트
     │   │   └── scripts/   # DAG에서 사용하는 스크립트 파일
@@ -177,7 +171,6 @@
     │   ├── config/        # Airflow 설정 파일
     │   ├── data/          # 배치 처리용 데이터 파일
     │   └── output/        # 배치 처리 결과 출력 파일
-    ├── flink_test_codes/  # Flink 테스트 코드 (DB 테스트, Flink 컨슈머 테스트)
     ├── logstash/          # Logstash 설정 및 스크립트
     │   └── data/          # Logstash 데이터 디렉토리
     └── vue_django_codes/  # 웹 애플리케이션 프론트엔드 및 백엔드 코드
@@ -327,7 +320,7 @@ docker exec -it airflow-webserver bash -c "airflow connections add spark_default
 docker exec -it airflow-webserver bash -c "airflow connections add webhdfs_default --conn-type webhdfs --conn-host namenode --conn-port 9870 --conn-login hadoop --conn-extra '{\"use_ssl\": false}'"
 ```
 
-### 4. 웹 인터페이스 접속
+### 5. 웹 인터페이스 접속
 
 **Django 백엔드 API**
 - 기본 URL: http://localhost:8000/api/
@@ -363,7 +356,6 @@ docker exec -it airflow-webserver bash -c "airflow connections add webhdfs_defau
   - 스토리지 사용량 확인
   - 실시간 데이터 저장소(`/user/realtime/`) 및 아카이브(`/user/news_archive/`) 조회
 
-
 **Spark UI**
 - 접속 URL: http://localhost:8085/
 - Spark 작업의 상태 및 성능 모니터링
@@ -376,49 +368,6 @@ docker exec -it airflow-webserver bash -c "airflow connections add webhdfs_defau
   - 검색 패턴 및 사용자 행동 분석
   - 커스텀 시각화 및 리포트 생성
 
-### 5. 데이터 확인
-
-PostgreSQL 데이터베이스에 접속하여 저장된 데이터를 확인합니다:
-
-```bash
-docker exec -it postgres psql -U ${DB_USERNAME} -d news
-```
-
-```sql
-SELECT id, title, category, writer FROM news_article LIMIT 10;
-```
-
-## 테스트 코드 실행
-
-각 컨테이너에는 기능 테스트를 위한 코드가 포함되어 있습니다:
-
-**Ubuntu Python 테스트 코드**
-```bash
-# RSS 피드 및 DB 직접 적재 테스트
-docker exec -it ubuntu_python python /opt/workspace/up_test_codes/rss_test.py
-docker exec -it ubuntu_python python /opt/workspace/up_test_codes/db_test.py
-```
-
-**Kafka 테스트 코드**
-```bash
-# RSS 피드 테스트
-docker exec -it kafka python /opt/workspace/kafka_test_codes/rss_test.py
-
-# Kafka 프로듀서 테스트
-docker exec -it kafka python /opt/workspace/kafka_test_codes/rss_producer_test.py
-
-# Kafka 컨슈머 테스트 (별도 터미널에서 실행)
-docker exec -it kafka python /opt/workspace/kafka_test_codes/consumer_test.py
-```
-
-**Flink 테스트 코드**
-```bash
-# 데이터베이스 연결 테스트
-docker exec -it flink python /opt/workspace/flink_test_codes/db_test.py
-
-# Flink Kafka 컨슈머 테스트
-docker exec -it flink python /opt/workspace/flink_test_codes/flink_consumer_test.py
-```
 
 ## 주의사항
 
