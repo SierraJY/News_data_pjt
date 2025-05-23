@@ -31,7 +31,7 @@
             <!-- 사용자 아바타 -->
             <span v-if="message.role === 'user'">👤</span>
             <!-- AI 아바타 -->
-            <span v-else-if="message.role === 'assistant'">🤖</span>
+            <img v-else-if="message.role === 'assistant'" src="@/components/icons/chatgpt.png" alt="AI" class="ai-avatar">
           </div>
           <div class="message-content">
             <p>{{ message.content }}</p>
@@ -40,7 +40,9 @@
         
         <!-- 로딩 표시 -->
         <div v-if="isLoading" class="message assistant loading">
-          <div class="message-avatar">🤖</div>
+          <div class="message-avatar">
+            <img src="@/components/icons/chatgpt.png" alt="AI" class="ai-avatar">
+          </div>
           <div class="message-content">
             <div class="typing-indicator">
               <span></span>
@@ -235,6 +237,12 @@ onMounted(() => {
   flex-direction: column;
   background-color: #f9f9f9;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  
+  .dark-mode & {
+    background-color: var(--c-card-bg);
+    border-color: var(--c-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .chatbot-title {
@@ -246,6 +254,10 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  
+  .dark-mode & {
+    background-color: var(--c-main);
+  }
   
   .chatbot-icon {
     margin-right: 8px;
@@ -281,6 +293,10 @@ onMounted(() => {
   flex-direction: column;
   gap: 15px;
   background-color: #fff;
+  
+  .dark-mode & {
+    background-color: var(--c-bg);
+  }
 }
 
 .message {
@@ -295,6 +311,10 @@ onMounted(() => {
       background-color: #4a7bae;
       color: white;
       border-radius: 18px 18px 0 18px;
+      
+      .dark-mode & {
+        background-color: var(--c-main);
+      }
     }
     
     .message-avatar {
@@ -309,6 +329,11 @@ onMounted(() => {
     .message-content {
       background-color: #f0f0f0;
       border-radius: 18px 18px 18px 0;
+      
+      .dark-mode & {
+        background-color: var(--c-card-bg);
+        color: var(--c-text);
+      }
     }
   }
   
@@ -320,6 +345,11 @@ onMounted(() => {
       border-radius: 18px;
       color: #666;
       font-style: italic;
+      
+      .dark-mode & {
+        background-color: var(--c-hover-bg);
+        color: var(--c-gray-500);
+      }
     }
   }
   
@@ -338,6 +368,12 @@ onMounted(() => {
   justify-content: center;
   font-size: 20px;
   margin-right: 8px;
+  
+  .ai-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 }
 
 .message-content {
@@ -357,6 +393,11 @@ onMounted(() => {
   background-color: #fff;
   border-top: 1px solid #e0e0e0;
   
+  .dark-mode & {
+    background-color: var(--c-bg);
+    border-top-color: var(--c-border);
+  }
+  
   input {
     flex: 1;
     padding: 10px 15px;
@@ -365,13 +406,33 @@ onMounted(() => {
     outline: none;
     font-size: 14px;
     
+    .dark-mode & {
+      background-color: var(--c-input-bg);
+      border-color: var(--c-input-border);
+      color: var(--c-text);
+    }
+    
     &:focus {
       border-color: #4a7bae;
+      
+      .dark-mode & {
+        border-color: var(--c-main);
+      }
     }
     
     &:disabled {
       background-color: #f5f5f5;
       cursor: not-allowed;
+      
+      .dark-mode & {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+    }
+    
+    &::placeholder {
+      .dark-mode & {
+        color: var(--c-gray-500);
+      }
     }
   }
   
@@ -386,13 +447,25 @@ onMounted(() => {
     font-size: 14px;
     transition: background-color 0.2s;
     
+    .dark-mode & {
+      background-color: var(--c-main);
+    }
+    
     &:hover {
       background-color: #3a6a9e;
+      
+      .dark-mode & {
+        background-color: #0055c4;
+      }
     }
     
     &:disabled {
       background-color: #cccccc;
       cursor: not-allowed;
+      
+      .dark-mode & {
+        background-color: #1e3756;
+      }
     }
   }
 }
@@ -406,22 +479,38 @@ onMounted(() => {
   background-color: #fff;
   text-align: center;
   
+  .dark-mode & {
+    background-color: var(--c-bg);
+  }
+  
   .login-icon {
     font-size: 40px;
     margin-bottom: 15px;
     color: #4a7bae;
+    
+    .dark-mode & {
+      color: var(--c-main);
+    }
   }
   
   h4 {
     font-size: 18px;
     margin: 0 0 10px 0;
     color: #333;
+    
+    .dark-mode & {
+      color: var(--c-text);
+    }
   }
   
   p {
     font-size: 14px;
     color: #666;
     margin: 0 0 20px 0;
+    
+    .dark-mode & {
+      color: var(--c-gray-500);
+    }
   }
   
   .login-button {
@@ -434,8 +523,16 @@ onMounted(() => {
     font-weight: 500;
     transition: background-color 0.2s;
     
+    .dark-mode & {
+      background-color: var(--c-main);
+    }
+    
     &:hover {
       background-color: #3a6a9e;
+      
+      .dark-mode & {
+        background-color: #0055c4;
+      }
     }
   }
 }
@@ -454,6 +551,10 @@ onMounted(() => {
     border-radius: 50%;
     opacity: 0.4;
     animation: typing 1s infinite;
+    
+    .dark-mode & {
+      background-color: var(--c-gray-500);
+    }
     
     &:nth-child(1) {
       animation-delay: 0s;

@@ -82,8 +82,16 @@ const { formatDate } = useDate();
   margin-bottom: 10px;
   transition: background-color 0.2s;
   
+  .dark-mode & {
+    border-bottom-color: var(--c-border);
+  }
+  
   &:hover {
     background-color: #f5f5f5;
+    
+    .dark-mode & {
+      background-color: var(--c-hover-bg);
+    }
   }
   
   &__container {
@@ -98,6 +106,10 @@ const { formatDate } = useDate();
     gap: 15px;
     font-size: 0.85rem;
     color: #888;
+    
+    .dark-mode & {
+      color: var(--c-gray-500);
+    }
   }
   
   &__title {
@@ -109,6 +121,10 @@ const { formatDate } = useDate();
     line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    
+    .dark-mode & {
+      color: var(--c-text);
+    }
   }
   
   &__stats {
@@ -116,6 +132,10 @@ const { formatDate } = useDate();
     gap: 15px;
     font-size: 0.85rem;
     color: #888;
+    
+    .dark-mode & {
+      color: var(--c-gray-500);
+    }
   }
 }
 </style>

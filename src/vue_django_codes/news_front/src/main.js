@@ -6,6 +6,7 @@ import router from "@/router";
 import { createPinia } from "pinia";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
+import { useThemeStore } from "@/stores/theme";
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -40,6 +41,10 @@ axios.interceptors.response.use(
 // 애플리케이션 마운트 전에 인증 상태 초기화
 const authStore = useAuthStore();
 authStore.initAuth();
+
+// 테마 초기화
+const themeStore = useThemeStore();
+themeStore.initTheme();
 
 app.use(router);
 app.mount("#app");
