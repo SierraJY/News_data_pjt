@@ -292,12 +292,7 @@ services:
   airflow-webserver:
     <<: *airflow-common
     container_name: airflow-webserver
-    command: >
-      bash -c "
-      chmod +x /opt/airflow/init-connections.sh &&
-      /opt/airflow/init-connections.sh &
-      airflow webserver
-      "
+    command: webserver
     ports:
       - "8080:8080"
     healthcheck:
@@ -311,8 +306,6 @@ services:
       <<: *airflow-common-env
       _AIRFLOW_WWW_USER_USERNAME: airflow
       _AIRFLOW_WWW_USER_PASSWORD: airflow
-    volumes:
-      - ./services/airflow/init-connections.sh:/opt/airflow/init-connections.sh
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
@@ -323,6 +316,22 @@ services:
         condition: service_healthy
     networks:
       - airflow
+  
+  # 별도 컨테이너로 분리
+  airflow-connections-setup:
+    <<: *airflow-common
+    container_name: airflow-connections-setup
+    command: >
+      bash -c "
+      sleep 60 &&
+      airflow connections delete spark_default || true &&
+      airflow connections delete webhdfs_default || true &&
+      airflow connections add spark_default --conn-type spark --conn-host spark-master --conn-port 7077 --conn-extra '{\"deploy-mode\": \"client\"}' &&
+      airflow connections add webhdfs_default --conn-type webhdfs --conn-host namenode --conn-port 9870 --conn-login hadoop --conn-extra '{\"use_ssl\": false}'"
+    depends_on:
+      airflow-webserver:
+        condition: service_healthy
+    restart: "no"
 
   airflow-scheduler:
     <<: *airflow-common
