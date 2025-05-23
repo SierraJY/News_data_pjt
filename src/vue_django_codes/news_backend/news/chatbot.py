@@ -10,26 +10,32 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 
-# 환경 변수 로드 방법 1: 컨테이너 내부 경로 사용
-dotenv_path = os.path.join(os.getcwd(), '.env')
-if os.path.exists(dotenv_path):
-    load_dotenv(dotenv_path)
-else:
-    # 환경 변수 로드 방법 2: 프로젝트 루트 디렉토리 경로 설정 (최상위 디렉토리)
-    PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent.parent
-    dotenv_path = os.path.join(PROJECT_ROOT, '.env')
+# 환경 변수 로드 시도
+dotenv_paths = [
+    os.path.join(os.getcwd(), '.env'),  # 현재 작업 디렉토리
+    os.path.join(Path(__file__).resolve().parent.parent.parent.parent.parent, '.env'),  # 프로젝트 루트
+    '/app/.env',  # Docker 컨테이너 내부
+]
+
+env_loaded = False
+for dotenv_path in dotenv_paths:
     if os.path.exists(dotenv_path):
         load_dotenv(dotenv_path)
-    else:
-        print(f"경고: .env 파일을 찾을 수 없습니다. 경로 확인: {dotenv_path}")
+        print(f"환경 변수를 로드했습니다: {dotenv_path}")
+        env_loaded = True
+        break
+
+if not env_loaded:
+    print(f"경고: .env 파일을 찾을 수 없습니다. 환경 변수가 시스템에 직접 설정되어 있는지 확인하세요.")
+    print(f"시도한 경로: {dotenv_paths}")
 
 # OpenAI API 키 확인
 if not os.getenv("OPENAI_API_KEY"):
-    print(f"경고: OPENAI_API_KEY 환경 변수가 설정되지 않았습니다. 현재 디렉토리: {os.getcwd()}")
-    print(f"찾는 .env 파일 경로: {dotenv_path}")
-    print(f"환경 변수 목록: {os.environ.keys()}")
-    # 임시 대체 로직 (실제 API 키로 대체해야 함)
-    os.environ["OPENAI_API_KEY"] = "sk-..."  # 실제 API 키로 교체 필요
+    print(f"경고: OPENAI_API_KEY 환경 변수가 설정되지 않았습니다.")
+    print(f"현재 디렉토리: {os.getcwd()}")
+    print(f"환경 변수 목록: {[k for k in os.environ.keys() if 'KEY' in k or 'API' in k]}")
+    # 실제 운영 환경에서는 아래 예외를 발생시켜야 함
+    raise ValueError("OPENAI_API_KEY가 설정되지 않았습니다. .env 파일을 확인하거나 환경 변수를 설정하세요.")
 
 # 챗봇 프롬프트 템플릿 정의
 CHAT_PROMPT = ChatPromptTemplate.from_messages([
@@ -55,6 +61,50 @@ def get_llm():
     except Exception as e:
         print(f"LLM 초기화 오류: {e}")
         raise
+
+# 메시지 직렬화/역직렬화 함수들
+def serialize_messages(messages):
+    """
+    LangChain 메시지 객체들을 딕셔너리 리스트로 변환 (JSON 저장 가능)
+    
+    Args:
+        messages (list): LangChain 메시지 객체 리스트
+        
+    Returns:
+        list: 딕셔너리 형태의 메시지 리스트
+    """
+    serialized = []
+    for msg in messages:
+        if isinstance(msg, SystemMessage):
+            serialized.append({"type": "system", "content": msg.content})
+        elif isinstance(msg, HumanMessage):
+            serialized.append({"type": "human", "content": msg.content})
+        elif isinstance(msg, AIMessage):
+            serialized.append({"type": "ai", "content": msg.content})
+    return serialized
+
+def deserialize_messages(serialized_messages):
+    """
+    딕셔너리 리스트를 LangChain 메시지 객체들로 변환
+    
+    Args:
+        serialized_messages (list): 딕셔너리 형태의 메시지 리스트
+        
+    Returns:
+        list: LangChain 메시지 객체 리스트
+    """
+    messages = []
+    for msg_dict in serialized_messages:
+        msg_type = msg_dict.get("type")
+        content = msg_dict.get("content")
+        
+        if msg_type == "system":
+            messages.append(SystemMessage(content=content))
+        elif msg_type == "human":
+            messages.append(HumanMessage(content=content))
+        elif msg_type == "ai":
+            messages.append(AIMessage(content=content))
+    return messages
 
 # 단일 질문에 대한 응답 생성 함수
 def get_single_response(news_data, question):
@@ -82,19 +132,22 @@ def get_single_response(news_data, question):
     return response.content
 
 # 세션 기반 대화 처리 함수
-def process_conversation(messages, news_data, question):
+def process_conversation(serialized_messages, news_data, question):
     """
     기존 대화 내역과 새 질문을 처리하여 응답을 생성합니다.
     
     Args:
-        messages (list): 기존 대화 메시지 목록
+        serialized_messages (list): 직렬화된 기존 대화 메시지 목록
         news_data (dict): 뉴스 기사 정보
         question (str): 사용자 질문
         
     Returns:
-        tuple: (응답 내용, 업데이트된 메시지 목록)
+        tuple: (응답 내용, 업데이트된 직렬화된 메시지 목록)
     """
     llm = get_llm()
+    
+    # 직렬화된 메시지를 LangChain 객체로 변환
+    messages = deserialize_messages(serialized_messages) if serialized_messages else []
     
     # 첫 질문이면 시스템 메시지 생성
     if not messages:
@@ -114,7 +167,7 @@ def process_conversation(messages, news_data, question):
     # 사용자 질문 추가
     messages.append(HumanMessage(content=question))
     
-    # 컨텍스트 윈도우 관리 (최근 10개 메시지만 유지)
+    # 컨텍스트 윈도우 관리 (최근 20개 메시지만 유지)
     if len(messages) > 20:
         # 시스템 메시지는 유지하고 나머지 중 오래된 것 제거
         system_message = messages[0] if isinstance(messages[0], SystemMessage) else None
@@ -128,7 +181,10 @@ def process_conversation(messages, news_data, question):
     # 응답 메시지 추가
     messages.append(AIMessage(content=response.content))
     
-    return response.content, messages
+    # 메시지를 직렬화해서 반환
+    serialized_messages = serialize_messages(messages)
+    
+    return response.content, serialized_messages
 
 # 테스트 함수
 def test_chatbot():
@@ -146,16 +202,16 @@ def test_chatbot():
     print(f"응답: {response}")
     
     # 세션 기반 대화 테스트
-    messages = []
-    response, messages = process_conversation(messages, test_news, question)
+    serialized_messages = []
+    response, serialized_messages = process_conversation(serialized_messages, test_news, question)
     print("\n세션 기반 대화 테스트:")
     print(f"질문1: {question}")
     print(f"응답1: {response}")
     
     question2 = "성능은 얼마나 향상되었나요?"
-    response2, messages = process_conversation(messages, test_news, question2)
+    response2, serialized_messages = process_conversation(serialized_messages, test_news, question2)
     print(f"\n질문2: {question2}")
     print(f"응답2: {response2}")
 
 if __name__ == "__main__":
-    test_chatbot() 
+    test_chatbot()

@@ -1,12 +1,11 @@
 """
-뉴스 챗봇 API 뷰
+뉴스 챗봇 뷰 - RAG 기반 뉴스 질의응답 API
 """
 
-import json
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 
 from .models import News
@@ -14,98 +13,120 @@ from .chatbot import process_conversation
 
 class ChatbotView(APIView):
     """
-    뉴스 기사에 대한 질문을 처리하는 챗봇 API 뷰
+    뉴스 챗봇 API - 세션 기반 대화 처리
+    
+    POST /api/news/chatbot/
+    Body:
+    {
+        "article_id": 기사ID,
+        "question": "사용자 질문"
+    }
+    
+    Response:
+    {
+        "response": "AI 응답",
+        "status": "success"
+    }
     """
     permission_classes = [IsAuthenticated]
     
     def post(self, request):
-        """
-        사용자 질문을 처리하고 챗봇 응답을 반환합니다.
-        
-        요청 본문:
-        - article_id: 뉴스 기사 ID
-        - question: 사용자 질문
-        
-        응답:
-        - response: 챗봇 응답
-        """
-        # 요청 데이터 검증
-        article_id = request.data.get("article_id")
-        question = request.data.get("question")
-        
-        if not article_id or not question:
-            return Response(
-                {"error": "기사 ID와 질문이 필요합니다."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        
-        # 뉴스 기사 조회
         try:
-            article = get_object_or_404(News, id=article_id)
-        except Exception as e:
-            return Response(
-                {"error": f"기사를 찾을 수 없습니다: {str(e)}"},
-                status=status.HTTP_404_NOT_FOUND
-            )
-        
-        # 세션에서 대화 내역 가져오기
-        session_key = f"chat_history_{request.user.id}_{article_id}"
-        messages = request.session.get(session_key, [])
-        
-        # 메시지가 문자열로 저장된 경우 처리 (세션 직렬화 문제)
-        if isinstance(messages, str):
-            try:
-                messages = json.loads(messages)
-            except:
-                messages = []
-        
-        # 뉴스 데이터 준비
-        news_data = {
-            "title": article.title,
-            "writer": article.writer,
-            "write_date": article.write_date.strftime("%Y-%m-%d"),
-            "content": article.content
-        }
-        
-        try:
-            # 대화 처리
-            response_text, updated_messages = process_conversation(messages, news_data, question)
+            # 요청 데이터 파싱
+            article_id = request.data.get('article_id')
+            question = request.data.get('question')
             
-            # 세션에 대화 내역 저장
+            print(f"받은 요청: article_id={article_id}, question={question}")
+            
+            if not article_id or not question:
+                return Response({
+                    'error': '기사 ID와 질문이 모두 필요합니다.'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            # 뉴스 기사 조회
+            try:
+                news = get_object_or_404(News, id=article_id)
+                print(f"뉴스 조회 성공: {news.title}")
+            except News.DoesNotExist:
+                return Response({
+                    'error': '해당 기사를 찾을 수 없습니다.'
+                }, status=status.HTTP_404_NOT_FOUND)
+            
+            # 뉴스 데이터 준비
+            news_data = {
+                'title': news.title,
+                'writer': news.writer,
+                'write_date': news.write_date.strftime('%Y-%m-%d') if news.write_date else '날짜 정보 없음',
+                'content': news.content
+            }
+            
+            # 세션에서 기존 대화 기록 가져오기 (딕셔너리 형태)
+            session_key = f'chatbot_messages_{article_id}'
+            existing_messages = request.session.get(session_key, [])
+            
+            print(f"기존 메시지 개수: {len(existing_messages)}")
+            print(f"기존 메시지 타입: {type(existing_messages)}")
+            
+            # 대화 처리 (직렬화된 메시지 사용)
+            response_content, updated_messages = process_conversation(
+                existing_messages, 
+                news_data, 
+                question
+            )
+            
+            print(f"업데이트된 메시지 개수: {len(updated_messages)}")
+            print(f"메시지 샘플: {updated_messages[-1] if updated_messages else 'None'}")
+            
+            # 업데이트된 대화 기록을 세션에 저장 (딕셔너리 형태)
             request.session[session_key] = updated_messages
             request.session.modified = True
             
-            # 응답 반환
+            print("세션 저장 완료")
+            
             return Response({
-                "response": response_text,
-                "article_id": article_id
-            })
+                'response': response_content,
+                'status': 'success'
+            }, status=status.HTTP_200_OK)
+            
         except Exception as e:
-            return Response(
-                {"error": f"챗봇 응답 생성 중 오류가 발생했습니다: {str(e)}"},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
+            # 상세한 오류 로깅
+            import traceback
+            print(f"챗봇 처리 중 오류 발생: {str(e)}")
+            print(f"오류 상세: {traceback.format_exc()}")
+            
+            return Response({
+                'error': f'서버 오류가 발생했습니다: {str(e)}'
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class ChatbotResetView(APIView):
     """
-    특정 기사에 대한 챗봇 대화 내역을 초기화하는 API 뷰
+    특정 기사의 챗봇 대화 기록 초기화
+    
+    POST /api/news/chatbot/reset/{article_id}/
+    
+    Response:
+    {
+        "message": "대화 기록이 초기화되었습니다.",
+        "status": "success"
+    }
     """
     permission_classes = [IsAuthenticated]
     
     def post(self, request, article_id):
-        """
-        특정 기사에 대한 대화 내역을 초기화합니다.
-        
-        URL 파라미터:
-        - article_id: 뉴스 기사 ID
-        
-        응답:
-        - message: 초기화 결과 메시지
-        """
-        session_key = f"chat_history_{request.user.id}_{article_id}"
-        
-        if session_key in request.session:
-            del request.session[session_key]
-            request.session.modified = True
+        try:
+            # 세션에서 해당 기사의 대화 기록 삭제
+            session_key = f'chatbot_messages_{article_id}'
+            if session_key in request.session:
+                del request.session[session_key]
+                request.session.modified = True
             
-        return Response({"message": "대화가 초기화되었습니다."}) 
+            return Response({
+                'message': '대화 기록이 초기화되었습니다.',
+                'status': 'success'
+            }, status=status.HTTP_200_OK)
+            
+        except Exception as e:
+            print(f"대화 초기화 중 오류 발생: {str(e)}")
+            return Response({
+                'error': f'초기화 중 오류가 발생했습니다: {str(e)}'
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

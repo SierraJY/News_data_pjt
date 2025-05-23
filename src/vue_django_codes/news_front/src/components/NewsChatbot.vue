@@ -11,65 +11,71 @@
       </button>
     </h3>
     
-    <div class="chat-messages" ref="chatMessagesRef">
-      <!-- 시스템 메시지 (환영 메시지) -->
-      <div class="message system">
-        <div class="message-content">
-          <p>안녕하세요! 이 뉴스 기사에 대해 궁금한 점이 있으시면 질문해주세요.</p>
+    <!-- 로그인 되어 있을 때만 챗봇 인터페이스 표시 -->
+    <div v-if="authStore.isAuthenticated">
+      <div class="chat-messages" ref="chatMessagesRef">
+        <!-- 시스템 메시지 (환영 메시지) -->
+        <div class="message system">
+          <div class="message-content">
+            <p>안녕하세요! 이 뉴스 기사에 대해 궁금한 점이 있으시면 질문해주세요.</p>
+          </div>
         </div>
-      </div>
-      
-      <!-- 채팅 메시지 목록 -->
-      <div 
-        v-for="(message, index) in messages" 
-        :key="index" 
-        :class="['message', message.role]"
-      >
-        <div class="message-avatar">
-          <!-- 사용자 아바타 -->
-          <span v-if="message.role === 'user'">👤</span>
-          <!-- AI 아바타 -->
-          <span v-else-if="message.role === 'assistant'">🤖</span>
+        
+        <!-- 채팅 메시지 목록 -->
+        <div 
+          v-for="(message, index) in messages" 
+          :key="index" 
+          :class="['message', message.role]"
+        >
+          <div class="message-avatar">
+            <!-- 사용자 아바타 -->
+            <span v-if="message.role === 'user'">👤</span>
+            <!-- AI 아바타 -->
+            <span v-else-if="message.role === 'assistant'">🤖</span>
+          </div>
+          <div class="message-content">
+            <p>{{ message.content }}</p>
+          </div>
         </div>
-        <div class="message-content">
-          <p>{{ message.content }}</p>
-        </div>
-      </div>
-      
-      <!-- 로딩 표시 -->
-      <div v-if="isLoading" class="message assistant loading">
-        <div class="message-avatar">🤖</div>
-        <div class="message-content">
-          <div class="typing-indicator">
-            <span></span>
-            <span></span>
-            <span></span>
+        
+        <!-- 로딩 표시 -->
+        <div v-if="isLoading" class="message assistant loading">
+          <div class="message-avatar">🤖</div>
+          <div class="message-content">
+            <div class="typing-indicator">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </div>
         </div>
       </div>
+      
+      <!-- 메시지 입력 폼 -->
+      <div class="chat-input">
+        <input
+          type="text"
+          v-model="userInput"
+          placeholder="뉴스에 대해 질문하세요..."
+          @keyup.enter="sendMessage"
+          :disabled="isLoading"
+        />
+        <button 
+          class="send-button" 
+          @click="sendMessage" 
+          :disabled="!userInput.trim() || isLoading"
+        >
+          전송
+        </button>
+      </div>
     </div>
     
-    <!-- 메시지 입력 폼 -->
-    <div class="chat-input">
-      <input
-        type="text"
-        v-model="userInput"
-        placeholder="뉴스에 대해 질문하세요..."
-        @keyup.enter="sendMessage"
-        :disabled="isLoading"
-      />
-      <button 
-        class="send-button" 
-        @click="sendMessage" 
-        :disabled="!userInput.trim() || isLoading"
-      >
-        전송
-      </button>
-    </div>
-    
-    <!-- 로그인 유도 메시지 -->
-    <div v-if="!authStore.isAuthenticated" class="login-prompt">
-      <p>로그인하시면 대화 내용이 저장되어 더 자연스러운 대화가 가능합니다.</p>
+    <!-- 로그인 유도 메시지 (로그인하지 않은 경우) -->
+    <div v-else class="login-required">
+      <div class="login-icon">🔒</div>
+      <h4>로그인이 필요한 기능입니다</h4>
+      <p>뉴스 AI 챗봇을 이용하시려면 로그인해주세요.</p>
+      <router-link to="/login" class="login-button">로그인하기</router-link>
     </div>
   </div>
 </template>
@@ -78,9 +84,11 @@
 import { ref, onMounted, watch, nextTick } from 'vue';
 import axios from 'axios';
 import { useAuthStore } from '@/stores/auth';
+import { useRouter } from 'vue-router';
 
 // 인증 스토어
 const authStore = useAuthStore();
+const router = useRouter();
 
 // API 기본 URL
 const API_BASE_URL = 'http://127.0.0.1:8000';
@@ -105,6 +113,11 @@ const chatMessagesRef = ref(null);
 
 // 메시지 전송 함수
 const sendMessage = async () => {
+  // 로그인되지 않은 경우 처리
+  if (!authStore.isAuthenticated) {
+    return;
+  }
+  
   // 입력이 비어있으면 무시
   if (!userInput.value.trim()) return;
   
@@ -126,36 +139,19 @@ const sendMessage = async () => {
   await scrollToBottom();
   
   try {
-    let response;
-    
-    // 로그인 여부에 따라 다른 API 호출
-    if (authStore.isAuthenticated) {
-      // 로그인 사용자: 세션 기반 챗봇 API 호출
-      response = await axios.post(
-        `${API_BASE_URL}/api/news/chatbot/`,
-        {
-          article_id: props.news.id,
-          question: userQuery
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${authStore.accessToken}`
-          }
+    // 로그인 사용자: 세션 기반 챗봇 API 호출
+    const response = await axios.post(
+      `${API_BASE_URL}/api/news/chatbot/`,
+      {
+        article_id: props.news.id,
+        question: userQuery
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.accessToken}`
         }
-      );
-    } else {
-      // 비로그인 사용자: 익명 챗봇 API 호출
-      response = await axios.post(
-        `${API_BASE_URL}/api/news/chatbot/anonymous/`,
-        {
-          title: props.news.title,
-          writer: props.news.writer,
-          write_date: props.news.write_date,
-          content: props.news.content,
-          question: userQuery
-        }
-      );
-    }
+      }
+    );
     
     // 응답 메시지 추가
     messages.value.push({
@@ -401,13 +397,47 @@ onMounted(() => {
   }
 }
 
-.login-prompt {
-  padding: 10px 15px;
-  background-color: #f8f9fa;
-  border-top: 1px solid #e0e0e0;
+.login-required {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  background-color: #fff;
   text-align: center;
-  font-size: 12px;
-  color: #666;
+  
+  .login-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+    color: #4a7bae;
+  }
+  
+  h4 {
+    font-size: 18px;
+    margin: 0 0 10px 0;
+    color: #333;
+  }
+  
+  p {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 20px 0;
+  }
+  
+  .login-button {
+    display: inline-block;
+    background-color: #4a7bae;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    
+    &:hover {
+      background-color: #3a6a9e;
+    }
+  }
 }
 
 // 타이핑 표시기 애니메이션
