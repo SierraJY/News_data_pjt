@@ -6,68 +6,92 @@
   <div class="chatbot-container">
     <h3 class="chatbot-title">
       <span class="chatbot-icon">🤖</span> 뉴스 AI 챗봇
+      <button class="reset-button" @click="resetChat" v-if="authStore.isAuthenticated">
+        <span class="reset-icon">🔄</span> 대화 초기화
+      </button>
     </h3>
     
-    <div class="chat-messages" ref="chatMessagesRef">
-      <!-- 시스템 메시지 (환영 메시지) -->
-      <div class="message system">
-        <div class="message-content">
-          <p>안녕하세요! 이 뉴스 기사에 대해 궁금한 점이 있으시면 질문해주세요.</p>
+    <!-- 로그인 되어 있을 때만 챗봇 인터페이스 표시 -->
+    <div v-if="authStore.isAuthenticated">
+      <div class="chat-messages" ref="chatMessagesRef">
+        <!-- 시스템 메시지 (환영 메시지) -->
+        <div class="message system">
+          <div class="message-content">
+            <p>안녕하세요! 이 뉴스 기사에 대해 궁금한 점이 있으시면 질문해주세요.</p>
+          </div>
         </div>
-      </div>
-      
-      <!-- 채팅 메시지 목록 -->
-      <div 
-        v-for="(message, index) in messages" 
-        :key="index" 
-        :class="['message', message.role]"
-      >
-        <div class="message-avatar">
-          <!-- 사용자 아바타 -->
-          <span v-if="message.role === 'user'">👤</span>
-          <!-- AI 아바타 -->
-          <span v-else-if="message.role === 'assistant'">🤖</span>
+        
+        <!-- 채팅 메시지 목록 -->
+        <div 
+          v-for="(message, index) in messages" 
+          :key="index" 
+          :class="['message', message.role]"
+        >
+          <div class="message-avatar">
+            <!-- 사용자 아바타 -->
+            <span v-if="message.role === 'user'">👤</span>
+            <!-- AI 아바타 -->
+            <span v-else-if="message.role === 'assistant'">🤖</span>
+          </div>
+          <div class="message-content">
+            <p>{{ message.content }}</p>
+          </div>
         </div>
-        <div class="message-content">
-          <p>{{ message.content }}</p>
-        </div>
-      </div>
-      
-      <!-- 로딩 표시 -->
-      <div v-if="isLoading" class="message assistant loading">
-        <div class="message-avatar">🤖</div>
-        <div class="message-content">
-          <div class="typing-indicator">
-            <span></span>
-            <span></span>
-            <span></span>
+        
+        <!-- 로딩 표시 -->
+        <div v-if="isLoading" class="message assistant loading">
+          <div class="message-avatar">🤖</div>
+          <div class="message-content">
+            <div class="typing-indicator">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </div>
         </div>
       </div>
+      
+      <!-- 메시지 입력 폼 -->
+      <div class="chat-input">
+        <input
+          type="text"
+          v-model="userInput"
+          placeholder="뉴스에 대해 질문하세요..."
+          @keyup.enter="sendMessage"
+          :disabled="isLoading"
+        />
+        <button 
+          class="send-button" 
+          @click="sendMessage" 
+          :disabled="!userInput.trim() || isLoading"
+        >
+          전송
+        </button>
+      </div>
     </div>
     
-    <!-- 메시지 입력 폼 -->
-    <div class="chat-input">
-      <input
-        type="text"
-        v-model="userInput"
-        placeholder="뉴스에 대해 질문하세요..."
-        @keyup.enter="sendMessage"
-        :disabled="isLoading"
-      />
-      <button 
-        class="send-button" 
-        @click="sendMessage" 
-        :disabled="!userInput.trim() || isLoading"
-      >
-        전송
-      </button>
+    <!-- 로그인 유도 메시지 (로그인하지 않은 경우) -->
+    <div v-else class="login-required">
+      <div class="login-icon">🔒</div>
+      <h4>로그인이 필요한 기능입니다</h4>
+      <p>뉴스 AI 챗봇을 이용하시려면 로그인해주세요.</p>
+      <router-link to="/login" class="login-button">로그인하기</router-link>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, watch, nextTick } from 'vue';
+import axios from 'axios';
+import { useAuthStore } from '@/stores/auth';
+import { useRouter } from 'vue-router';
+
+// 인증 스토어
+const authStore = useAuthStore();
+const router = useRouter();
+
+// API 기본 URL
+const API_BASE_URL = 'http://127.0.0.1:8000';
 
 // 컴포넌트 props 정의
 const props = defineProps({
@@ -89,6 +113,11 @@ const chatMessagesRef = ref(null);
 
 // 메시지 전송 함수
 const sendMessage = async () => {
+  // 로그인되지 않은 경우 처리
+  if (!authStore.isAuthenticated) {
+    return;
+  }
+  
   // 입력이 비어있으면 무시
   if (!userInput.value.trim()) return;
   
@@ -110,15 +139,38 @@ const sendMessage = async () => {
   await scrollToBottom();
   
   try {
-    // 백엔드 연동 부분 (현재는 모의 응답)
-    // 실제 구현 시 axios를 사용하여 백엔드 API 호출
-    await simulateResponse(userQuery);
-  } catch (error) {
-    console.error('챗봇 응답 처리 중 오류 발생:', error);
-    // 오류 메시지 표시
+    // 로그인 사용자: 세션 기반 챗봇 API 호출
+    const response = await axios.post(
+      `${API_BASE_URL}/api/news/chatbot/`,
+      {
+        article_id: props.news.id,
+        question: userQuery
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.accessToken}`
+        }
+      }
+    );
+    
+    // 응답 메시지 추가
     messages.value.push({
       role: 'assistant',
-      content: '죄송합니다. 응답을 처리하는 중에 오류가 발생했습니다.'
+      content: response.data.response
+    });
+  } catch (error) {
+    console.error('챗봇 응답 처리 중 오류 발생:', error);
+    
+    // API 오류 메시지 표시
+    let errorMessage = '죄송합니다. 응답을 처리하는 중에 오류가 발생했습니다.';
+    if (error.response && error.response.data && error.response.data.error) {
+      errorMessage = error.response.data.error;
+    }
+    
+    // 오류 메시지 추가
+    messages.value.push({
+      role: 'assistant',
+      content: errorMessage
     });
   } finally {
     // 로딩 상태 비활성화
@@ -128,35 +180,32 @@ const sendMessage = async () => {
   }
 };
 
-// 모의 응답 함수 (백엔드 연동 전까지 임시 사용)
-const simulateResponse = async (query) => {
-  // 실제 구현에서는 이 부분을 백엔드 API 호출로 대체
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      // 뉴스 기사 내용 기반 모의 응답
-      const newsTitle = props.news.title;
-      const newsContent = props.news.content.substring(0, 100); // 내용 일부만 사용
-      
-      let response;
-      if (query.includes('요약')) {
-        response = `이 기사는 "${newsTitle}"에 관한 내용으로, ${newsContent}... 등의 내용을 다루고 있습니다.`;
-      } else if (query.includes('작성자')) {
-        response = `이 기사의 작성자는 ${props.news.writer}입니다.`;
-      } else if (query.includes('날짜') || query.includes('언제')) {
-        response = `이 기사는 ${new Date(props.news.write_date).toLocaleDateString()}에 작성되었습니다.`;
-      } else {
-        response = `질문하신 "${query}"에 대해 답변드리자면, 이 기사는 ${newsTitle}에 관한 내용입니다. 더 구체적인 질문이 있으시면 말씀해주세요.`;
+// 대화 초기화 함수
+const resetChat = async () => {
+  if (!authStore.isAuthenticated || !props.news.id) return;
+  
+  try {
+    await axios.post(
+      `${API_BASE_URL}/api/news/chatbot/reset/${props.news.id}/`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.accessToken}`
+        }
       }
-      
-      // 응답 메시지 추가
-      messages.value.push({
-        role: 'assistant',
-        content: response
-      });
-      
-      resolve();
-    }, 1000); // 1초 지연으로 응답 시뮬레이션
-  });
+    );
+    
+    // 메시지 초기화
+    messages.value = [];
+    
+    // 시스템 메시지 추가
+    messages.value.push({
+      role: 'system',
+      content: '대화가 초기화되었습니다. 새로운 질문을 해보세요!'
+    });
+  } catch (error) {
+    console.error('대화 초기화 중 오류 발생:', error);
+  }
 };
 
 // 채팅창을 아래로 스크롤하는 함수
@@ -170,7 +219,7 @@ const scrollToBottom = async () => {
 // 메시지가 추가될 때마다 스크롤 아래로 이동
 watch(() => messages.value.length, scrollToBottom);
 
-// 컴포넌트가 마운트될 때 뉴스 정보를 기반으로 초기 메시지 설정
+// 컴포넌트가 마운트될 때 스크롤 초기화
 onMounted(() => {
   scrollToBottom();
 });
@@ -196,10 +245,31 @@ onMounted(() => {
   font-size: 18px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   
   .chatbot-icon {
     margin-right: 8px;
     font-size: 20px;
+  }
+  
+  .reset-button {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .reset-icon {
+      margin-right: 5px;
+    }
   }
 }
 
@@ -323,6 +393,49 @@ onMounted(() => {
     &:disabled {
       background-color: #cccccc;
       cursor: not-allowed;
+    }
+  }
+}
+
+.login-required {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  background-color: #fff;
+  text-align: center;
+  
+  .login-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+    color: #4a7bae;
+  }
+  
+  h4 {
+    font-size: 18px;
+    margin: 0 0 10px 0;
+    color: #333;
+  }
+  
+  p {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 20px 0;
+  }
+  
+  .login-button {
+    display: inline-block;
+    background-color: #4a7bae;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    
+    &:hover {
+      background-color: #3a6a9e;
     }
   }
 }
