@@ -11,6 +11,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 
 # 환경 변수 로드 시도
+# OPENAI_API_KEY가 환경변수로 등록된 상황이라 하면 openai_key를 따로 선언하지 않을 수 있음
 dotenv_paths = [
     os.path.join(os.getcwd(), '.env'),  # 현재 작업 디렉토리
     os.path.join(Path(__file__).resolve().parent.parent.parent.parent.parent, '.env'),  # 프로젝트 루트
