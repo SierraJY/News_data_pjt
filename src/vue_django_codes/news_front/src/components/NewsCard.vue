@@ -75,66 +75,135 @@ const { formatDate } = useDate();
 <style scoped lang="scss">
 .card {
   background-color: white;
-  width: 80%;
-  padding: 20px;
-  margin-bottom: 10px;
+  width: 100%;
+  padding: 22px 25px;
+  margin-bottom: 0;
   display: block;
   text-decoration: none;
   color: inherit;
   cursor: pointer;
-  transition: box-shadow 0.3s ease;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f0f0f0;
+  position: relative;
+  overflow: hidden;
+
+  .dark-mode & {
+    background-color: var(--c-card-bg);
+    border-color: var(--c-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: #0c3057;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    .dark-mode & {
+      background-color: var(--c-main);
+    }
+  }
 
   &:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+    
+    .dark-mode & {
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      background-color: var(--c-hover-bg);
+    }
+    
+    &::before {
+      opacity: 1;
+    }
   }
 
   &__header {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #888;
+    flex-wrap: wrap;
+    
+    .dark-mode & {
+      color: var(--c-gray-500);
+    }
+    
     &-item {
       font-weight: normal;
     }
   }
 
   .title {
-    margin: 12px 0;
-    font-size: 22px;
-    font-weight: bold;
+    margin: 14px 0;
+    font-size: 20px;
+    font-weight: 700;
     color: #1c1c1e;
+    line-height: 1.3;
+    
+    .dark-mode & {
+      color: var(--c-text);
+    }
   }
 
   .description {
-    font-size: 1rem;
-    width: 90%;
-    color: var(--c-gray-600);
+    font-size: 15px;
+    width: 95%;
+    color: #555;
     margin: 15px 0;
     display: -webkit-box;
-    -webkit-line-clamp: 4;  /* 최대 4줄까지만 표시 */
-    line-clamp: 4;
+    -webkit-line-clamp: 3;  /* 최대 3줄까지만 표시 */
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    line-height: 1.3;
+    line-height: 1.5;
+    
+    .dark-mode & {
+      color: var(--c-gray-500);
+    }
   }
 
   .stats {
     display: flex;
     gap: 15px;
-    font-size: 0.9rem;
-    color: var(--c-gray-500);
-    margin-bottom: 15px;
+    font-size: 0.85rem;
+    color: #666;
+    margin: 15px 0;
     align-items: center;
+    
+    .dark-mode & {
+      color: var(--c-gray-500);
+    }
+    
+    a {
+      color: #0c3057;
+      transition: transform 0.2s;
+      
+      .dark-mode & {
+        color: var(--c-main);
+      }
+      
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
   }
 
   .tags {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
-    padding-bottom: 40px;
-    border-bottom: 1px solid #e7e6e6;
+    padding-bottom: 5px;
+    margin-top: 10px;
   }
 }
 </style>

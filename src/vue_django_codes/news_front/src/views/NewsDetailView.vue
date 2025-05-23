@@ -60,8 +60,9 @@
             <div class="article__content__emoji">
               <!-- 좋아요 상태 및 개수 표시 -->
               <span class="emoji-btn">
-                <span v-if="liked"> ❤️ </span> <span v-else>🤍</span
-                >{{ likeCount }}
+                <span v-if="liked" class="heart-icon filled-heart">❤️</span>
+                <span v-else class="heart-icon empty-heart">🤍</span>
+                {{ likeCount }}
               </span>
               
               <!-- 원본 기사 링크 -->
@@ -71,13 +72,18 @@
             <!-- 좋아요 토글 버튼 -->
             <button class="emoji-btn" @click="toggleLike" :disabled="!authStore.isAuthenticated">
               <span v-if="!authStore.isAuthenticated">로그인 필요</span>
-              <span v-else>{{ liked ? "❤️" : "🤍" }} 좋아요</span>
+              <span v-else>
+                <span v-if="liked" class="heart-icon filled-heart">❤️</span>
+                <span v-else class="heart-icon empty-heart">🤍</span>
+                좋아요
+              </span>
             </button>
             
             <!-- 좋아요 버튼 클릭시 애니메이션 효과 (하트 띄우기) -->
             <transition name="heart-float">
               <span v-if="isAnimating" class="floating-heart">
-                {{ liked ? "❤️" : "🤍" }}
+                <span v-if="liked" class="filled-heart">❤️</span>
+                <span v-else class="empty-heart">🤍</span>
               </span>
             </transition>
           </div>
@@ -351,6 +357,10 @@ onBeforeRouteUpdate((to, from) => {
 .loading, .error {
   text-align: center;
   margin: 50px 0;
+  
+  .dark-mode & {
+    color: var(--c-text);
+  }
 }
 
 .news-detail {
@@ -374,6 +384,10 @@ onBeforeRouteUpdate((to, from) => {
       font-weight: 700;
       font-size: 18px;
       margin-bottom: 20px;
+      
+      .dark-mode & {
+        color: var(--c-text);
+      }
     }
   }
 
@@ -384,11 +398,20 @@ onBeforeRouteUpdate((to, from) => {
       color: #888;
       font-size: 0.9rem;
       margin-bottom: 10px;
+      
+      .dark-mode & {
+        color: var(--c-gray-500);
+      }
+      
       &-title {
         margin: 12px 0;
         font-size: 1.6rem;
         font-weight: bold;
         color: #1c1c1e;
+        
+        .dark-mode & {
+          color: var(--c-text);
+        }
       }
       &-writer {
         display: flex;
@@ -399,6 +422,10 @@ onBeforeRouteUpdate((to, from) => {
     &__content {
       margin: 16px 0;
       line-height: 1.6;
+      
+      .dark-mode & {
+        color: var(--c-text);
+      }
 
       &__footer {
         display: flex;
@@ -413,6 +440,11 @@ onBeforeRouteUpdate((to, from) => {
         display: flex;
         gap: 30px;
         align-items: center;
+        
+        .dark-mode & {
+          color: var(--c-gray-500);
+        }
+        
         &-eye {
           font-size: 17px;
         }
@@ -432,13 +464,40 @@ onBeforeRouteUpdate((to, from) => {
     align-items: center;
     font-size: 15px;
     color: #888;
+    
+    .dark-mode & {
+      color: var(--c-gray-500);
+    }
+  }
+  
+  .heart-icon {
+    display: inline-block;
+    margin-right: 4px;
+  }
+  
+  .filled-heart {
+    color: #e74c3c !important;
+    text-shadow: 0 0 0 #e74c3c;
+  }
+  
+  .empty-heart {
+    color: #888 !important;
+    text-shadow: 0 0 0 #888;
+    
+    .dark-mode & {
+      color: #aaa !important;
+      text-shadow: 0 0 0 #aaa;
+    }
   }
 
   .floating-heart {
     position: absolute;
     font-size: 24px;
-    color: red;
     animation: heartFloat 0.6s ease-out forwards;
+    
+    .filled-heart {
+      color: #e74c3c !important;
+    }
   }
 
   @keyframes heartFloat {
@@ -461,6 +520,10 @@ onBeforeRouteUpdate((to, from) => {
     border-bottom: 1px solid #eee;
     padding-bottom: 10px;
     
+    .dark-mode & {
+      border-bottom-color: var(--c-border);
+    }
+    
     &:last-child {
       border-bottom: none;
     }
@@ -473,6 +536,10 @@ onBeforeRouteUpdate((to, from) => {
       &:hover {
         h3 {
           color: #4a7bae;
+          
+          .dark-mode & {
+            color: var(--c-main);
+          }
         }
       }
       
@@ -480,6 +547,10 @@ onBeforeRouteUpdate((to, from) => {
         font-size: 16px;
         margin: 0 0 8px 0;
         transition: color 0.2s;
+        
+        .dark-mode & {
+          color: var(--c-text);
+        }
       }
       
       .related-meta {
@@ -487,6 +558,10 @@ onBeforeRouteUpdate((to, from) => {
         color: #888;
         display: flex;
         gap: 10px;
+        
+        .dark-mode & {
+          color: var(--c-gray-500);
+        }
       }
     }
   }
@@ -495,6 +570,10 @@ onBeforeRouteUpdate((to, from) => {
     color: #888;
     text-align: center;
     padding: 20px 0;
+    
+    .dark-mode & {
+      color: var(--c-gray-500);
+    }
   }
 }
 </style>

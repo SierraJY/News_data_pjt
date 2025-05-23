@@ -115,6 +115,11 @@ async function handleRegister() {
   width: 100%;
   max-width: 400px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  .dark-mode & {
+    background-color: var(--c-card-bg);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
 }
 
 .auth-title {
@@ -122,6 +127,10 @@ async function handleRegister() {
   margin-bottom: 20px;
   font-size: 24px;
   color: #0c3057;
+  
+  .dark-mode & {
+    color: var(--c-main);
+  }
 }
 
 .auth-form {
@@ -132,6 +141,10 @@ async function handleRegister() {
       display: block;
       margin-bottom: 5px;
       font-weight: 500;
+      
+      .dark-mode & {
+        color: var(--c-text);
+      }
     }
     
     input {
@@ -141,9 +154,19 @@ async function handleRegister() {
       border-radius: 4px;
       font-size: 16px;
       
+      .dark-mode & {
+        background-color: var(--c-input-bg);
+        border-color: var(--c-input-border);
+        color: var(--c-text);
+      }
+      
       &:focus {
         outline: none;
         border-color: #0c3057;
+        
+        .dark-mode & {
+          border-color: var(--c-main);
+        }
       }
     }
   }
@@ -160,13 +183,24 @@ async function handleRegister() {
   cursor: pointer;
   margin-top: 10px;
   
+  .dark-mode & {
+    background-color: var(--c-main);
+  }
+  
   &:disabled {
     background-color: #cccccc;
-    cursor: not-allowed;
+    
+    .dark-mode & {
+      background-color: #444;
+    }
   }
   
   &:hover:not(:disabled) {
     background-color: #0a2744;
+    
+    .dark-mode & {
+      background-color: #0055c4;
+    }
   }
 }
 
@@ -175,9 +209,17 @@ async function handleRegister() {
   margin-top: 20px;
   font-size: 14px;
   
+  .dark-mode & {
+    color: var(--c-text);
+  }
+  
   a {
     color: #0c3057;
     text-decoration: none;
+    
+    .dark-mode & {
+      color: var(--c-main);
+    }
     
     &:hover {
       text-decoration: underline;
@@ -192,6 +234,11 @@ async function handleRegister() {
   border-radius: 4px;
   margin-bottom: 15px;
   font-size: 14px;
+  
+  .dark-mode & {
+    background-color: rgba(211, 47, 47, 0.2);
+    color: #ff6b6b;
+  }
 }
 
 .error-text {
@@ -199,5 +246,9 @@ async function handleRegister() {
   font-size: 12px;
   margin-top: 4px;
   margin-bottom: 0;
+  
+  .dark-mode & {
+    color: #ff6b6b;
+  }
 }
 </style>

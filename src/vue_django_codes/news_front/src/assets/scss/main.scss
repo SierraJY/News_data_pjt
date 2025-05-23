@@ -8,12 +8,19 @@
   font-family: "Pretendard";
   font-size: 14px;
   width: 100%;
+  transition: background-color 0.3s, color 0.3s;
+  
+  .dark-mode & {
+    color: var(--c-text);
+  }
 }
 
 body {
   min-height: 100vh;
   background-color: var(--c-bg);
+  transition: background-color 0.3s;
 }
+
 *,
 *::before,
 *::after {
@@ -30,6 +37,10 @@ button {
 h1 {
   font-weight: 700;
   font-size: 18px;
+  
+  .dark-mode & {
+    color: var(--c-text);
+  }
 }
 
 .no-data {
@@ -37,4 +48,58 @@ h1 {
   color: #888;
   font-size: 16px;
   padding: 100px;
+  
+  .dark-mode & {
+    color: var(--c-gray-500);
+  }
+}
+
+// 카드 스타일 (뉴스 카드 등)
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  overflow: hidden;
+  transition: background-color 0.3s, border-color 0.3s;
+  
+  .dark-mode & {
+    background-color: var(--c-card-bg);
+    border-color: var(--c-border);
+  }
+}
+
+// 콘텐츠 박스 스타일
+.content-box {
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s, border-color 0.3s;
+  
+  .dark-mode & {
+    background-color: var(--c-card-bg);
+    border-color: var(--c-border);
+  }
+}
+
+// 입력 필드 스타일
+input, textarea, select {
+  &:not([type="checkbox"]):not([type="radio"]) {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    
+    .dark-mode & {
+      background-color: var(--c-input-bg);
+      border-color: var(--c-input-border);
+      color: var(--c-text);
+    }
+    
+    &::placeholder {
+      .dark-mode & {
+        color: var(--c-gray-500);
+      }
+    }
+  }
 }

@@ -39,6 +39,6 @@ main {
   min-width: 360px;
   min-height: 100vh;
   margin: 0 auto;
-  padding: 50px 15px;
+  padding: 15px 15px 50px;
 }
 </style>

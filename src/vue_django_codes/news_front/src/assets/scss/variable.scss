@@ -1,8 +1,29 @@
 :root {
-  --c-main: #f5f4ef;
+  /* 라이트 모드 색상 (기본값) */
+  --c-main: #0c3057;
   --c-text: #1a1a1a;
   --c-bg: #f9fafb;
   --c-gray-500: #6b7280;
   --c-gray-600: #4b5563;
   --c-error: #d61f2d;
+  --c-card-bg: #ffffff;
+  --c-border: #e0e0e0;
+  --c-input-bg: #f5f7fb;
+  --c-input-border: #ddd;
+  --c-hover-bg: #f0f4f9;
+}
+
+/* 다크 모드 */
+.dark-mode {
+  --c-main: #00469D;
+  --c-text: #e4e4e4;
+  --c-bg: #171B1C;
+  --c-gray-500: #9ca3af;
+  --c-gray-600: #d1d5db;
+  --c-error: #f87171;
+  --c-card-bg: #222729;
+  --c-border: #2a2f31;
+  --c-input-bg: #242a2d;
+  --c-input-border: #3a3f42;
+  --c-hover-bg: #2a3033;
 }

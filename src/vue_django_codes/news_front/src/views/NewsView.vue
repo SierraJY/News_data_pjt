@@ -1,23 +1,46 @@
 <template>
   <div class="news">
     <div>
-      <h1 class="news__title">🤖 AI 맞춤 추천 뉴스</h1>
-      <p class="news__description">
-        당신이 원하는 뉴스, 이제 AI가 직접 추천해드립니다!<br />
-        나만의 취향을 기반으로, 맞춤형 뉴스만 쏙쏙 골라주는 뉴스 큐레이팅 서비스<br />
-        AI 챗봇과 기사에 대해 대화하며 궁금한 점을 물어보고, <br />
-        한눈에 보기 쉬운 대시보드를 통해 나의 뉴스 소비 패턴도 확인할 수 있습니다.
-      </p>
+      <div class="how_to_use">
+        <div class="sort-buttons">
+          <button 
+            class="sort-btn" 
+            :class="{ active: sortBy === 'latest' }" 
+            @click="sortBy = 'latest'; handleSortChange()"
+          >
+            <span class="icon">🕒</span> 최신순으로 보기
+          </button>
+          <button 
+            class="sort-btn" 
+            :class="{ active: sortBy === 'recommend' }" 
+            @click="sortBy = 'recommend'; handleSortChange()"
+          >
+            <span class="icon">✨</span> 맞춤 추천 보기
+          </button>
+        </div>
+      </div>
       <ContentBox class="news__tabs">
-        <StateButton
-          v-for="tab in tabs"
-          :key="tab.id"
-          type="state"
-          :is-active="activeTab === tab.value"
-          @click="activeTab = tab.value"
-        >
-          {{ tab.label }}
-        </StateButton>
+        <div class="tabs-wrapper">
+          <button class="scroll-btn scroll-left" @click="scrollTabs('left')">
+            &lt;
+          </button>
+          <div class="tab-container" ref="tabContainerRef">
+            <div 
+              v-for="tab in tabs" 
+              :key="tab.id" 
+              class="tab-item"
+              :class="{ 'active': activeTab === tab.value }"
+              @click="activeTab = tab.value"
+            >
+              {{ tab.label }}
+              <div class="tab-indicator" v-if="activeTab === tab.value"></div>
+            </div>
+          </div>
+          <button class="scroll-btn scroll-right" @click="scrollTabs('right')">
+            &gt;
+          </button>
+          <div class="scroll-hint right"></div>
+        </div>
       </ContentBox>
     </div>
 
@@ -39,13 +62,6 @@
         <!-- 추천순 문구 -->
         <div v-else-if="sortBy === 'recommend' && authStore.user?.username" class="recommend-text">
           <span class="username-highlight">{{ authStore.user.username }}</span>님에게 추천하는 뉴스 목록이에요
-        </div>
-
-        <div class="filters__container">
-          <select class="filters" v-model="sortBy" @change="handleSortChange">
-            <option value="latest">최신순</option>
-            <option value="recommend">추천순</option>
-          </select>
         </div>
       </div>
 
@@ -214,6 +230,23 @@ const sortBy = ref("latest");
 const activeTab = ref('all');
 const currentPage = ref(1);
 
+// 탭 스크롤을 위한 참조
+const tabContainerRef = ref(null);
+
+// 탭 스크롤 함수
+const scrollTabs = (direction) => {
+  if (!tabContainerRef.value) return;
+  
+  const container = tabContainerRef.value;
+  const scrollAmount = 200; // 스크롤할 픽셀 양
+  
+  if (direction === 'left') {
+    container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  } else {
+    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  }
+};
+
 watch(sortBy, () => {
   currentPage.value = 1;
 });
@@ -231,14 +264,19 @@ watch(totalPages, (newValue) => {
 .news {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin-top: 30px;
+  gap: 15px;
+  margin-top: 10px;
 
   &__title {
     font-size: 20px;
     font-weight: 700;
     border-bottom: 1px solid #e2e2e2;
     padding-bottom: 10px;
+    
+    .dark-mode & {
+      border-bottom-color: var(--c-border);
+      color: var(--c-text);
+    }
   }
 
   &__description {
@@ -247,18 +285,159 @@ watch(totalPages, (newValue) => {
     color: #575757;
     line-height: normal;
     margin: 15px 0 25px;
+    
+    .dark-mode & {
+      color: var(--c-gray-500);
+    }
   }
 
   &__tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 12px 30px !important;
+    padding: 0 !important;
+    overflow: hidden;
+    position: relative;
+    
+    .tabs-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    
+    .tab-container {
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+      scroll-behavior: smooth;
+      padding: 0 10px;
+      flex: 1;
+      
+      &::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+      }
+    }
+    
+    .tab-item {
+      padding: 15px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #666;
+      cursor: pointer;
+      position: relative;
+      white-space: nowrap;
+      transition: color 0.3s;
+      
+      .dark-mode & {
+        color: var(--c-gray-500);
+      }
+      
+      &:hover {
+        color: #0c3057;
+        
+        .dark-mode & {
+          color: var(--c-main);
+        }
+      }
+      
+      &.active {
+        color: #0c3057;
+        font-weight: 600;
+        
+        .dark-mode & {
+          color: var(--c-main);
+        }
+      }
+      
+      .tab-indicator {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: #0c3057;
+        animation: slideIn 0.3s ease-in-out;
+        
+        .dark-mode & {
+          background-color: var(--c-main);
+        }
+      }
+    }
+    
+    .scroll-btn {
+      width: 30px;
+      height: 30px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #0c3057;
+      transition: all 0.2s;
+      
+      .dark-mode & {
+        background-color: var(--c-card-bg);
+        border-color: var(--c-border);
+        color: var(--c-main);
+      }
+      
+      &:hover {
+        background-color: #f0f4f9;
+        border-color: #0c3057;
+        
+        .dark-mode & {
+          background-color: var(--c-hover-bg);
+          border-color: var(--c-main);
+        }
+      }
+      
+      &.scroll-left {
+        margin-left: 5px;
+      }
+      
+      &.scroll-right {
+        margin-right: 5px;
+      }
+    }
+    
+    .scroll-hint {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 20px;
+      pointer-events: none;
+      
+      &.right {
+        right: 0;
+        background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.9) 70%);
+        
+        .dark-mode & {
+          background: linear-gradient(to right, transparent, rgba(34, 39, 41, 0.9) 70%);
+        }
+      }
+    }
+    
+    @keyframes slideIn {
+      from {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
   }
 
   .loading, .error {
     text-align: center;
     margin: 50px 0;
+    
+    .dark-mode & {
+      color: var(--c-text);
+    }
   }
   
   .no-results {
@@ -266,44 +445,135 @@ watch(totalPages, (newValue) => {
     margin: 30px 0;
     font-size: 16px;
     color: #666;
+    
+    .dark-mode & {
+      color: var(--c-gray-500);
+    }
+  }
+
+  .how_to_use {
+    background-color: white;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    
+    .dark-mode & {
+      background-color: var(--c-card-bg);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .sort-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    
+    .sort-btn {
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      background-color: white;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      
+      .dark-mode & {
+        background-color: var(--c-card-bg);
+        border-color: var(--c-border);
+        color: var(--c-text);
+      }
+      
+      &:hover {
+        border-color: #0c3057;
+        background-color: #f5f7fa;
+        transform: translateY(-2px);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        
+        .dark-mode & {
+          border-color: var(--c-main);
+          background-color: var(--c-hover-bg);
+        }
+      }
+      
+      &.active {
+        background-color: #0c3057;
+        color: white;
+        border-color: #0c3057;
+        
+        .dark-mode & {
+          background-color: var(--c-main);
+          border-color: var(--c-main);
+        }
+      }
+      
+      .icon {
+        margin-right: 8px;
+        font-size: 16px;
+      }
+    }
   }
 
   &__box {
-    padding: 30px !important;
+    padding: 25px !important;
+    border-radius: 14px;
 
     &__title-container {
       position: relative;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 20px;
 
       .recommend-text, .search-result-text {
         font-size: 18px;
         font-weight: 600;
-        margin-left: 5px;
+        margin-left: 0;
+        margin-bottom: 5px;
+        color: #333;
+        
+        .dark-mode & {
+          color: var(--c-text);
+        }
       }
       
       .search-highlight {
         color: #0c3057;
         font-weight: bold;
+        
+        .dark-mode & {
+          color: var(--c-main);
+        }
       }
 
       .username-highlight {
-        text-decoration: underline red;
+        text-decoration: underline #e74c3c;
         text-underline-offset: 3px;
         font-weight: bold;
         margin-right: 4px;
+        color: #0c3057;
+        
+        .dark-mode & {
+          color: var(--c-main);
+          text-decoration: underline #e55039;
+        }
       }
     }
 
-    .filters__container {
-      position: absolute;
-      right: 0;
-    }
-
     &__cards {
-      margin-top: 30px;
-      margin-left: 30px;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      width: 92%;
+      max-width: 850px;
+      margin-left: auto;
+      margin-right: auto;
+      gap: 15px;
     }
   }
 }
