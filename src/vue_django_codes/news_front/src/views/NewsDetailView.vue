@@ -127,7 +127,7 @@ import router from "@/router";
 // 뒤로가기 아이콘 SVG 컴포넌트 임포트
 import LeftArrow from "@/components/icons/LeftArrow.svg";
 // Vue Router의 훅 임포트
-import { useRoute } from 'vue-router';
+import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 // 라이프사이클 훅 임포트
 import { onMounted } from 'vue';
 // axios 임포트
@@ -330,6 +330,15 @@ onMounted(() => {
     console.error('뉴스 ID가 없습니다.');
     error.value = '유효하지 않은 뉴스 ID입니다.';
     loading.value = false;
+  }
+});
+
+// 같은 컴포넌트 내에서 라우트가 변경될 때 호출되는 함수
+// 관련 기사 클릭 시 같은 NewsDetailView 컴포넌트 내에서 다른 ID로 이동할 때 필요
+onBeforeRouteUpdate((to, from) => {
+  // 뉴스 ID가 변경된 경우에만 데이터 다시 불러오기
+  if (to.params.id !== from.params.id) {
+    fetchNewsById(to.params.id);
   }
 });
 </script>
