@@ -83,6 +83,9 @@
           </div>
         </div>
       </ContentBox>
+      
+      <!-- 뉴스 챗봇 컴포넌트 추가 (ContentBox 밖으로 이동) -->
+      <NewsChatbot :news="news" />
     </div>
 
     <!-- 사이드바: 관련 기사 목록 -->
@@ -122,9 +125,9 @@ import { useDate } from "@/composables/useDate";
 // 라우터 인스턴스 임포트 (페이지 이동 처리용)
 import router from "@/router";
 // 뒤로가기 아이콘 SVG 컴포넌트 임포트
-// import LeftArrow from "@/components/icon/LeftArrow.svg";
+import LeftArrow from "@/components/icons/LeftArrow.svg";
 // Vue Router의 훅 임포트
-import { useRoute } from 'vue-router';
+import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 // 라이프사이클 훅 임포트
 import { onMounted } from 'vue';
 // axios 임포트
@@ -132,6 +135,8 @@ import axios from 'axios';
 import { RouterLink } from 'vue-router';
 // 인증 스토어 임포트
 import { useAuthStore } from '@/stores/auth';
+// 뉴스 챗봇 컴포넌트 임포트
+import NewsChatbot from "@/components/NewsChatbot.vue";
 
 // API 기본 URL 설정 (나중에 환경 변수로 분리 가능)
 const API_BASE_URL = 'http://127.0.0.1:8000';
@@ -327,6 +332,15 @@ onMounted(() => {
     loading.value = false;
   }
 });
+
+// 같은 컴포넌트 내에서 라우트가 변경될 때 호출되는 함수
+// 관련 기사 클릭 시 같은 NewsDetailView 컴포넌트 내에서 다른 ID로 이동할 때 필요
+onBeforeRouteUpdate((to, from) => {
+  // 뉴스 ID가 변경된 경우에만 데이터 다시 불러오기
+  if (to.params.id !== from.params.id) {
+    fetchNewsById(to.params.id);
+  }
+});
 </script>
 
 <style scoped lang="scss">
@@ -351,7 +365,7 @@ onMounted(() => {
     flex: 2;
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 20px;
   }
 
   .sidebar {

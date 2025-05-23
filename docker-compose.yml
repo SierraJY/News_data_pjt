@@ -150,7 +150,9 @@ services:
       - type: bind
         source: ./src/vue_django_codes/news_backend
         target: /app
-      # .env 파일 마운트 부분 제거
+      - type: bind
+        source: ./.env
+        target: /app/.env
       - type: bind
         source: ./services/django/local_settings.py
         target: /app/news_backend/local_settings.py
