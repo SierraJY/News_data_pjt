@@ -210,7 +210,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - postgres-db-volume:/var/lib/postgresql/data
+      - pg_for_airflow:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "airflow"]
       interval: 10s
@@ -292,7 +292,12 @@ services:
   airflow-webserver:
     <<: *airflow-common
     container_name: airflow-webserver
-    command: webserver
+    command: >
+      bash -c "
+      chmod +x /opt/airflow/init-connections.sh &&
+      /opt/airflow/init-connections.sh &
+      airflow webserver
+      "
     ports:
       - "8080:8080"
     healthcheck:
@@ -306,6 +311,8 @@ services:
       <<: *airflow-common-env
       _AIRFLOW_WWW_USER_USERNAME: airflow
       _AIRFLOW_WWW_USER_PASSWORD: airflow
+    volumes:
+      - ./services/airflow/init-connections.sh:/opt/airflow/init-connections.sh
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
@@ -656,7 +663,7 @@ services:
 
 volumes:
   pgdata:
-  postgres-db-volume:
+  pg_for_airflow:
   ubuntu_workspace:
   vue_node_modules:
   namenode_data:
