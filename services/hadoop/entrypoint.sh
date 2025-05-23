@@ -22,17 +22,17 @@ echo "Waiting for namenode to be ready..."
 sleep 30
 
 # HDFS 디렉토리 및 권한 설정
+# "2>/dev/null || true" - 오류 메시지를 숨기고(2>/dev/null) 명령어가 실패해도 스크립트 실행을 계속(|| true)
 echo "Setting up HDFS directories..."
 hdfs dfs -mkdir -p /user 2>/dev/null || true
 hdfs dfs -chmod 755 /user 2>/dev/null || true
 hdfs dfs -chown hadoop:supergroup /user 2>/dev/null || true
-hdfs dfs -mkdir -p /user/default/news_archive 2>/dev/null || true
-hdfs dfs -mkdir -p /user/airflow 2>/dev/null || true
-hdfs dfs -chmod 755 /user/default 2>/dev/null || true
-hdfs dfs -chmod 755 /user/default/news_archive 2>/dev/null || true
-hdfs dfs -chmod 755 /user/airflow 2>/dev/null || true
-hdfs dfs -chown hadoop:supergroup /user/default 2>/dev/null || true
-hdfs dfs -chown hadoop:supergroup /user/default/news_archive 2>/dev/null || true
+hdfs dfs -mkdir -p /user/realtime 2>/dev/null || true
+hdfs dfs -mkdir -p /user/news_archive 2>/dev/null || true
+hdfs dfs -chmod 755 /user/realtime 2>/dev/null || true
+hdfs dfs -chmod 755 /user/news_archive 2>/dev/null || true
+hdfs dfs -chown hadoop:supergroup /user/realtime 2>/dev/null || true
+hdfs dfs -chown hadoop:supergroup /user/news_archive 2>/dev/null || true
 
 echo "HDFS setup completed!"
 
