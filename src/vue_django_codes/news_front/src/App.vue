@@ -39,6 +39,7 @@ main {
   min-width: 360px;
   min-height: 100vh;
   margin: 0 auto;
-  padding: 15px 15px 50px;
+  padding: 20px 24px 60px;
+  position: relative;
 }
 </style>

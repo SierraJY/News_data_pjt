@@ -113,16 +113,18 @@ function toggleDarkMode() {
 
 <style scoped lang="scss">
 .header {
-  background-color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-  padding: 12px 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+  padding: 15px 0;
   position: sticky;
   top: 0;
   z-index: 100;
   
   .dark-mode & {
-    background-color: var(--c-bg);
-    color: var(--c-text);
+    background-color: rgba(18, 26, 32, 0.8);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
   }
   
   &__container {
@@ -131,7 +133,7 @@ function toggleDarkMode() {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 24px;
   }
   
   &__nav {
@@ -144,10 +146,11 @@ function toggleDarkMode() {
       text-decoration: none;
       font-weight: 500;
       position: relative;
-      padding: 5px 0;
+      padding: 6px 0;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      transition: all 0.3s ease;
       
       .dark-mode & {
         color: var(--c-text);
@@ -164,19 +167,15 @@ function toggleDarkMode() {
         height: 2px;
         bottom: 0;
         left: 0;
-        background-color: #0c3057;
-        transition: width 0.3s;
-        
-        .dark-mode & {
-          background-color: var(--c-main);
-        }
+        background: var(--gradient-accent);
+        transition: width 0.3s ease;
       }
       
       &:hover, &.router-link-active {
-        color: #0c3057;
+        color: var(--c-main);
         
         .dark-mode & {
-          color: var(--c-main);
+          color: var(--c-main-light);
         }
         
         &::after {
@@ -195,25 +194,26 @@ function toggleDarkMode() {
       display: flex;
       position: relative;
       align-items: center;
-      background-color: #f5f7fb;
-      border-radius: 30px;
-      padding: 2px;
-      transition: all 0.3s;
+      background-color: rgba(240, 244, 249, 0.8);
+      border-radius: 12px;
+      padding: 3px;
+      transition: all 0.3s ease;
       border: 1px solid transparent;
       min-width: 200px;
       
       .dark-mode & {
-        background-color: var(--c-input-bg);
+        background-color: rgba(35, 45, 56, 0.8);
       }
       
       &:focus-within {
         background-color: #fff;
-        border-color: #0c3057;
-        box-shadow: 0 2px 8px rgba(12, 48, 87, 0.1);
+        border-color: var(--c-main-light);
+        box-shadow: 0 0 0 3px rgba(10, 77, 149, 0.15);
         
         .dark-mode & {
           background-color: var(--c-card-bg);
           border-color: var(--c-main);
+          box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.2);
         }
       }
     }
@@ -222,12 +222,12 @@ function toggleDarkMode() {
       position: absolute;
       left: 15px;
       font-size: 16px;
-      color: #0c3057;
+      color: var(--c-main);
       opacity: 0.7;
       z-index: 1;
       
       .dark-mode & {
-        color: var(--c-text);
+        color: var(--c-main-light);
       }
     }
     
@@ -236,7 +236,7 @@ function toggleDarkMode() {
       min-width: 0;
       padding: 12px 12px 12px 45px;
       border: none;
-      border-radius: 30px;
+      border-radius: 10px;
       font-size: 15px;
       background: transparent;
       outline: none;
@@ -259,30 +259,27 @@ function toggleDarkMode() {
     }
     
     .search-btn {
-      background-color: #0c3057;
+      background: var(--gradient-button);
       color: white;
       border: none;
-      border-radius: 24px;
+      border-radius: 10px;
       padding: 10px 20px;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.3s ease;
       margin-right: 2px;
       white-space: nowrap;
       flex-shrink: 0;
-      
-      .dark-mode & {
-        background-color: var(--c-main);
-      }
+      box-shadow: 0 2px 5px rgba(10, 77, 149, 0.2);
       
       &:hover {
-        background-color: #0a2744;
-        transform: translateY(-1px);
-        
-        .dark-mode & {
-          background-color: #0055c4;
-        }
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(10, 77, 149, 0.25);
+      }
+      
+      &:active {
+        transform: translateY(0);
       }
     }
   }
@@ -290,7 +287,7 @@ function toggleDarkMode() {
   &__auth {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
     flex: 0 0 auto;
     
     .theme-toggle-btn {
@@ -300,23 +297,24 @@ function toggleDarkMode() {
       background: none;
       border: none;
       cursor: pointer;
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       padding: 0;
       font-size: 20px;
-      background-color: rgba(0, 0, 0, 0.05);
-      transition: all 0.3s;
+      background-color: rgba(10, 77, 149, 0.1);
+      transition: all 0.3s ease;
       
       .dark-mode & {
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(30, 136, 229, 0.2);
       }
       
       &:hover {
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: rgba(10, 77, 149, 0.15);
+        transform: translateY(-2px);
         
         .dark-mode & {
-          background-color: rgba(255, 255, 255, 0.2);
+          background-color: rgba(30, 136, 229, 0.3);
         }
       }
       
@@ -334,7 +332,7 @@ function toggleDarkMode() {
       font-weight: 500;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
       
       .dark-mode & {
         color: var(--c-text);
@@ -346,12 +344,12 @@ function toggleDarkMode() {
     }
     
     .auth-btn {
-      padding: 8px 16px;
-      border-radius: 6px;
+      padding: 9px 18px;
+      border-radius: 10px;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.3s ease;
       text-decoration: none;
       display: flex;
       align-items: center;
@@ -363,44 +361,31 @@ function toggleDarkMode() {
       
       &.login-btn {
         color: white;
-        background-color: #0c3057;
-        border: 1px solid #0c3057;
-        
-        .dark-mode & {
-          color: white;
-          background-color: var(--c-main);
-          border-color: var(--c-main);
-        }
+        background: var(--gradient-button);
+        box-shadow: 0 2px 5px rgba(10, 77, 149, 0.2);
         
         &:hover {
-          background-color: #0a2744;
           transform: translateY(-2px);
-          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-          
-          .dark-mode & {
-            background-color: #0055c4;
-          }
+          box-shadow: 0 4px 8px rgba(10, 77, 149, 0.25);
+        }
+        
+        &:active {
+          transform: translateY(0);
         }
       }
       
       &.register-btn, &.logout-btn {
         color: white;
-        background-color: #0c3057;
-        border: 1px solid #0c3057;
-        
-        .dark-mode & {
-          background-color: var(--c-main);
-          border-color: var(--c-main);
-        }
+        background: var(--gradient-button);
+        box-shadow: 0 2px 5px rgba(10, 77, 149, 0.2);
         
         &:hover {
-          background-color: #0a2744;
           transform: translateY(-2px);
-          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-          
-          .dark-mode & {
-            background-color: #0055c4;
-          }
+          box-shadow: 0 4px 8px rgba(10, 77, 149, 0.25);
+        }
+        
+        &:active {
+          transform: translateY(0);
         }
       }
     }
