@@ -1,5 +1,6 @@
 FROM apache/airflow:2.10.5
 USER root
+
 # Java 설치 + 폰트 설치 같이
 RUN apt update && apt install -y \
     curl \
@@ -16,7 +17,8 @@ RUN apt update && apt install -y \
     make \
     pkg-config \
     sudo \
-    libkrb5-dev    # HDFS 연결에 필요한 추가 패키지
+    libkrb5-dev \
+    docker.io
 
 # Java 설치 - default-jdk 사용
 RUN apt-get update && apt-get install -y default-jdk && \
@@ -40,6 +42,12 @@ ENV JAVA_HOME=/usr/lib/jvm/default-java
 ENV PATH="$JAVA_HOME/bin:/opt/spark/bin:${PATH}"
 ENV PYTHONPATH="${PYTHONPATH}:/opt/airflow"
 
+# ARG를 통해 빌드 시점에 Docker 그룹 GID 전달받기 (기본값 없음)
+ARG DOCKER_GID
+
+# Docker 그룹 생성 및 airflow 사용자 추가 (동적 GID 사용)
+RUN groupadd -f -g ${DOCKER_GID} docker && usermod -aG docker airflow
+
 USER airflow
 
 # Python 패키지 설치 - Claude API 및 PDF 관련 패키지 추가
@@ -53,7 +61,3 @@ RUN pip install --no-cache-dir \
     reportlab \
     pillow \
     tiktoken
-
-# 스크립트 추가
-COPY --chown=airflow:root services/airflow/setup.sh /opt/airflow/setup.sh
-RUN chmod +x /opt/airflow/setup.sh

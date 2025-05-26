@@ -3,6 +3,7 @@ Flink 컨슈머 메인 애플리케이션
 - Kafka에서 뉴스 데이터를 소비하여 처리하는 Flink 애플리케이션
 - 전처리, 임베딩 생성, 키워드 추출, 데이터베이스 저장 기능
 - JSON 파일을 HDFS에 직접 저장
+- idle 타임아웃으로 자동 종료
 """
 
 import os
@@ -10,6 +11,8 @@ import sys
 import json
 import traceback
 import requests
+import time
+import threading
 from datetime import datetime
 from pyflink.datastream import StreamExecutionEnvironment
 from pyflink.common.serialization import SimpleStringSchema
@@ -73,9 +76,45 @@ def save_to_hdfs(data, filename):
 class NewsProcessor(MapFunction):
     """Kafka에서 수신한 뉴스 데이터를 처리하는 맵 함수"""
     
+    def __init__(self):
+        self.processed_count = 0
+        self.last_message_time = time.time()
+        # main()에서 설정한 값과 동일하게 맞춤
+        self.timeout_seconds = int(os.getenv("IDLE_TIMEOUT_SECONDS", "300"))  # 기본 5분(300초)
+        
+        print(f"🔧 NewsProcessor: {self.timeout_seconds}초 idle 타임아웃 설정됨")
+        
+        # 간단한 타임아웃 체커 시작
+        self.start_timeout_checker()
+    
+    def start_timeout_checker(self):
+        """백그라운드에서 타임아웃 체크"""
+        def timeout_checker():
+            while True:
+                time.sleep(10)  # 10초마다 체크
+                idle_time = time.time() - self.last_message_time
+                
+                if idle_time > self.timeout_seconds:
+                    print(f"⏰ {self.timeout_seconds}초 동안 새 메시지가 없습니다.")
+                    print(f"✅ 모든 메시지 처리 완료! (총 {self.processed_count}개 처리됨)")
+                    print("🎯 Flink Consumer 정상 종료")
+                    os._exit(0)
+                
+                # 진행 상황 로그 (60초마다)
+                if int(idle_time) % 60 == 0 and idle_time > 0:
+                    print(f"[INFO] 대기 중... (마지막 메시지로부터 {int(idle_time)}초 경과, 처리된 메시지: {self.processed_count}개)")
+        
+        timeout_thread = threading.Thread(target=timeout_checker)
+        timeout_thread.daemon = True
+        timeout_thread.start()
+    
     def map(self, message):
         try:
-            print(f"[DEBUG] 새 메시지 수신: {message}")  # 메시지 수신 로그 추가
+            # 메시지 수신 시간 업데이트
+            self.last_message_time = time.time()
+            self.processed_count += 1
+            
+            print(f"[DEBUG] 새 메시지 수신 ({self.processed_count}번째): {message[:100]}...")
             
             # JSON 문자열을 파이썬 딕셔너리로 변환
             data = json.loads(message)
@@ -150,6 +189,7 @@ class NewsProcessor(MapFunction):
                     print(f"HDFS 저장 실패: {filename}")
 
                 print(f"[DEBUG] DB 저장 결과: {save_result}")
+                print(f"✅ 메시지 처리 완료 ({self.processed_count}번째): {title}")
                 return f"Successfully processed: {title}"
 
             else:
@@ -165,26 +205,30 @@ class NewsProcessor(MapFunction):
 def main():
     print("Flink 컨슈머 시작: 초기 설정")
     
+    # 설정 값 확인 - NewsProcessor와 동일한 기본값 사용
+    timeout_seconds = int(os.getenv("IDLE_TIMEOUT_SECONDS", "300"))  # 기본 5분(300초)
+    print(f"🔧 Main: Idle 타임아웃: {timeout_seconds}초")
+    
     # 데이터베이스 연결 확인
     if not test_database_connection():
         print("❌ 데이터베이스 연결 실패. 애플리케이션을 종료합니다.")
         return
     
-    print("데이터베이스 연결 성공")
+    print("✅ 데이터베이스 연결 성공")
     
     # Flink 실행 환경 설정
     env = StreamExecutionEnvironment.get_execution_environment()
     env.set_parallelism(1)  # 병렬 처리 수준 설정
     
-    print("Flink 환경 설정 완료")
+    print("✅ Flink 환경 설정 완료")
     
     # Kafka connector JAR 등록 - 환경 변수에서 경로 가져오기
     kafka_jar = os.getenv("KAFKA_CONNECTOR_PATH", "/opt/flink/lib/flink-sql-connector-kafka-3.3.0-1.20.jar")
     
-    print(f"카프카 커넥터 경로: {kafka_jar}")
+    print(f"📦 카프카 커넥터 경로: {kafka_jar}")
     env.add_jars(f"file://{kafka_jar}")
     
-    print("Kafka 커넥터 JAR 등록 완료")
+    print("✅ Kafka 커넥터 JAR 등록 완료")
     
     # Kafka Consumer 설정 - 도커 네트워크에 맞게 서버 주소 변경
     kafka_props = {
@@ -193,7 +237,7 @@ def main():
         'auto.offset.reset': 'earliest'  # 가장 오래된 메시지부터 읽기
     }
     
-    print("Kafka 속성 설정 완료")
+    print("✅ Kafka 속성 설정 완료")
     
     consumer = FlinkKafkaConsumer(
         topics='news',
@@ -204,12 +248,12 @@ def main():
     # 모든 메시지 읽도록 설정
     consumer.set_start_from_earliest()
     
-    print("Kafka 컨슈머 설정 완료")
+    print("✅ Kafka 컨슈머 설정 완료")
     
     # Kafka에서 메시지 수신
     stream = env.add_source(consumer)
     
-    print("메시지 스트림 생성")
+    print("✅ 메시지 스트림 생성")
     
     # 뉴스 데이터 처리 로직 적용
     processed_stream = stream.map(NewsProcessor())
@@ -217,16 +261,21 @@ def main():
     # 처리 결과 출력 (옵션)
     processed_stream.print()
     
-    print("처리 스트림 설정 완료")
+    print("✅ 처리 스트림 설정 완료")
     
     # Flink 작업 실행
-    print("Flink 작업 실행 시도...")
+    print("🚀 Flink 작업 실행 시도...")
+    print(f"📊 메시지 처리를 시작합니다. {timeout_seconds}초 idle 타임아웃이 설정되었습니다.")
+    print("⏰ 새 메시지가 없으면 자동으로 종료됩니다.")
+    
     try:
         env.execute("News Data Processing and Storage")
-        print("Flink 작업 정상 실행")
+        print("✅ Flink 작업 정상 실행")
     except Exception as e:
-        print(f"Flink 작업 실행 중 오류 발생: {e}")
+        print(f"❌ Flink 작업 실행 중 오류 발생: {e}")
         traceback.print_exc()
+    finally:
+        print("🎯 Flink Consumer 종료")
 
 if __name__ == "__main__":
     main()

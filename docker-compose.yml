@@ -5,6 +5,9 @@ x-airflow-common: &airflow-common
   build: 
     context: ./
     dockerfile: ./services/airflow/Dockerfile
+    args:
+        # .env 파일에서 DOCKER_GID 값을 빌드 인수로 전달
+        DOCKER_GID: ${DOCKER_GID:-999}
   environment: &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres-airflow/airflow
@@ -39,6 +42,8 @@ x-airflow-common: &airflow-common
     - ./src/batch/output:/opt/airflow/output
     # Hadoop 설정 파일 마운트 추가
     - ./services/hadoop/conf:/opt/hadoop/conf
+    # airflow 컨테이너에서 docker 명령어 실행 가능하도록 설정
+    - /var/run/docker.sock:/var/run/docker.sock
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on: &airflow-common-depends-on
     redis:
@@ -317,7 +322,27 @@ services:
     networks:
       - airflow
   
-  # 별도 컨테이너로 분리
+  # airflow에서 bashoperator로 docker 명령어 실행 가능하도록 설정하고 종료되는 컨테이너임
+  airflow-docker-setup:
+    image: news_data_pjt-airflow-webserver  # 빌드된 이미지 사용
+    container_name: airflow-docker-setup
+    user: "root:0"
+    command: >
+      bash -c "
+      DOCKER_GID=$$(stat -c '%g' /var/run/docker.sock) &&
+      groupadd -f -g $$DOCKER_GID docker &&
+      usermod -aG docker airflow &&
+      chmod 666 /var/run/docker.sock"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      airflow-webserver:
+        condition: service_healthy
+    restart: "no"
+    networks:
+      - airflow
+  
+  # airflow에서 사용하는 커넥션 설정을 초기화하는 컨테이너임
   airflow-connections-setup:
     <<: *airflow-common
     container_name: airflow-connections-setup
