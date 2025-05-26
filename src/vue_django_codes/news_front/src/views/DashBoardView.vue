@@ -5,7 +5,7 @@
 <template>
   <div class="dashboard">
     <!-- 페이지 제목 -->
-    <h1 class="title">DASHBOARD</h1>
+    <h1 class="title dashboard-title">DASHBOARD</h1>
     
     <!-- 페이지 설명 -->
     <p class="subtitle">
@@ -29,7 +29,7 @@
       <div class="layout">
         <!-- 관심 카테고리 차트 컨테이너 -->
         <ContentBox class="category">
-          <h1>🐤 나의 관심 카테고리</h1>
+          <h1 class="dashboard-section-title">🐤 나의 관심 카테고리</h1>
           <p class="card_description">
             내가 주로 읽은 기사들을 분석하여 정치, 경제, 문화 등 가장 관심 있는
             뉴스 카테고리를 한눈에 보여드립니다.
@@ -64,7 +64,7 @@
 
         <!-- 주요 키워드 차트 컨테이너 -->
         <ContentBox class="keyword">
-          <h1>⭐️ 주요 키워드</h1>
+          <h1 class="dashboard-section-title">⭐️ 주요 키워드</h1>
           <p class="card_description">
             내가 관심있게 본 뉴스 기사들에서 가장 많이 등장한 핵심 키워드를
             추출하여 현재 나의 주요 관심사를 보여드립니다.
@@ -83,7 +83,7 @@
       <div class="layout">
         <!-- 주간 읽은 기사 차트 컨테이너 -->
         <ContentBox>
-          <h1>📰 주간 읽은 기사</h1>
+          <h1 class="dashboard-section-title">📰 주간 읽은 기사</h1>
           <p class="card_description">
             최근 일주일 동안 하루에 몇 개의 기사를 읽었는지 그래프로 확인하며 나의
             뉴스 소비 패턴을 분석합니다.
@@ -99,7 +99,7 @@
 
         <!-- 좋아요 누른 기사 목록 컨테이너 -->
         <ContentBox class="like-news">
-          <h1>❤️ 좋아요 누른 기사</h1>
+          <h1 class="dashboard-section-title">❤️ 좋아요 누른 기사</h1>
           <p class="card_description">
             내가 좋아요를 누른 기사들의 목록을 한곳에서 모아보고 다시 찾아볼 수
             있습니다.
@@ -389,6 +389,18 @@ onMounted(() => {
   font-size: 25px;
 }
 
+.dashboard-title {
+  color: #0066CC;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-section-title {
+  color: #0066CC;
+  font-weight: 600;
+}
+
 .subtitle {
   font-weight: 500;
   margin-bottom: 40px;
@@ -494,7 +506,7 @@ onMounted(() => {
       
       &:hover {
         .article-title {
-          color: #0c3057;
+          color: #0066CC;
         }
       }
     }
@@ -517,7 +529,7 @@ onMounted(() => {
 h1 {
   margin-bottom: 20px;
   font-size: 1.2rem;
-  color: #0c3057;
+  color: #333;
 }
 
 .keyword-chart {

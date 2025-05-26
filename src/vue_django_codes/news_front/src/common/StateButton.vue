@@ -43,13 +43,16 @@ function handleClick() {
   padding: 10px 20px;
   font-size: 16px;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border-radius: 10px;
   background-color: white;
   color: #333;
   text-align: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   
   .dark-mode & {
     background-color: var(--c-card-bg);
@@ -59,57 +62,55 @@ function handleClick() {
   }
 
   &.tag {
-    background-color: #f8f9fa;
-    color: #0c3057;
+    background-color: rgba(10, 77, 149, 0.08);
+    color: var(--c-main);
     cursor: default;
     border: none;
     font-weight: 500;
     padding: 4px 10px;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 12px;
     box-shadow: none;
     
     .dark-mode & {
-      background-color: rgba(0, 70, 157, 0.15);
-      color: var(--c-main);
+      background-color: rgba(30, 136, 229, 0.15);
+      color: var(--c-main-light);
     }
   }
 
   &.state {
-    background-color: #f5f8fc;
-    color: #0c3057;
-    border: 1px solid #e1e8f0;
+    background-color: rgba(10, 77, 149, 0.08);
+    color: var(--c-main);
+    border: 1px solid rgba(10, 77, 149, 0.15);
+    font-weight: 500;
     
     .dark-mode & {
-      background-color: rgba(0, 70, 157, 0.2);
-      color: var(--c-main);
-      border-color: var(--c-border);
+      background-color: rgba(30, 136, 229, 0.15);
+      color: var(--c-main-light);
+      border-color: rgba(30, 136, 229, 0.2);
     }
   }
 
   &.active {
-    background-color: #0c3057;
+    background: var(--gradient-button);
     color: white;
-    border-color: #0c3057;
-    
-    .dark-mode & {
-      background-color: var(--c-main);
-      border-color: var(--c-main);
-    }
+    border-color: transparent;
+    box-shadow: 0 2px 5px rgba(10, 77, 149, 0.2);
 
     &:hover {
-      background-color: #0a2744;
-      
-      .dark-mode & {
-        background-color: #0055c4;
-      }
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(10, 77, 149, 0.25);
+    }
+    
+    &:active {
+      transform: translateY(0);
     }
   }
 
   &:hover {
     background-color: #f5f7fa;
     border-color: #d1d5db;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
     
     .dark-mode & {
       background-color: var(--c-hover-bg);
@@ -118,13 +119,13 @@ function handleClick() {
   }
 
   &.sm {
-    padding: 4px 10px;
+    padding: 4px 12px;
     font-size: 12px;
-    border-radius: 6px;
+    border-radius: 8px;
   }
 
   &.md {
-    padding: 8px 12px;
+    padding: 8px 16px;
     font-size: 14px;
   }
 

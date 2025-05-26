@@ -30,9 +30,15 @@
     
     <!-- 통계 정보: 좋아요, 원본 링크 -->
     <div class="stats">
-      <span>❤️ {{ props.news.like_count || 0 }}</span>
+      <span class="stats-item">
+        <span class="stats-icon like-icon">❤️</span>
+        {{ props.news.like_count || 0 }}
+      </span>
       <!-- 원본 링크는 클릭 이벤트 전파를 막아서 카드 클릭 없이 직접 이동 가능 -->
-      <a @click.stop :href="props.news.url" target="_blank">📄</a>
+      <a @click.stop :href="props.news.url" target="_blank" class="stats-item">
+        <span class="stats-icon">📄</span>
+        원본 링크
+      </a>
     </div>
 
     <!-- 키워드 태그 목록 (키워드가 있는 경우에만 표시) -->
@@ -76,18 +82,21 @@ const { formatDate } = useDate();
 .card {
   background-color: white;
   width: 100%;
-  padding: 22px 25px;
+  padding: 24px 28px;
   margin-bottom: 0;
   display: block;
   text-decoration: none;
   color: inherit;
   cursor: pointer;
   transition: all 0.3s ease;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
   border: 1px solid #f0f0f0;
   position: relative;
   overflow: hidden;
+  background-image: var(--gradient-card);
+  background-position: top;
+  background-repeat: no-repeat;
 
   .dark-mode & {
     background-color: var(--c-card-bg);
@@ -100,35 +109,39 @@ const { formatDate } = useDate();
     position: absolute;
     top: 0;
     left: 0;
-    width: 4px;
+    width: 5px;
     height: 100%;
-    background-color: #0c3057;
+    background: var(--gradient-accent);
     opacity: 0;
     transition: opacity 0.3s ease;
-
-    .dark-mode & {
-      background-color: var(--c-main);
-    }
+    border-radius: 4px 0 0 4px;
   }
 
   &:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
     
     .dark-mode & {
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
       background-color: var(--c-hover-bg);
     }
     
     &::before {
       opacity: 1;
     }
+    
+    .title {
+      color: var(--c-main);
+      
+      .dark-mode & {
+        color: var(--c-main-light);
+      }
+    }
   }
 
   &__header {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     font-size: 0.85rem;
     color: #888;
     flex-wrap: wrap;
@@ -143,11 +156,12 @@ const { formatDate } = useDate();
   }
 
   .title {
-    margin: 14px 0;
+    margin: 16px 0;
     font-size: 20px;
     font-weight: 700;
     color: #1c1c1e;
-    line-height: 1.3;
+    line-height: 1.4;
+    transition: color 0.3s ease;
     
     .dark-mode & {
       color: var(--c-text);
@@ -158,14 +172,14 @@ const { formatDate } = useDate();
     font-size: 15px;
     width: 95%;
     color: #555;
-    margin: 15px 0;
+    margin: 16px 0;
     display: -webkit-box;
     -webkit-line-clamp: 3;  /* 최대 3줄까지만 표시 */
     line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    line-height: 1.5;
+    line-height: 1.6;
     
     .dark-mode & {
       color: var(--c-gray-500);
@@ -174,26 +188,44 @@ const { formatDate } = useDate();
 
   .stats {
     display: flex;
-    gap: 15px;
-    font-size: 0.85rem;
+    gap: 20px;
+    font-size: 14px;
     color: #666;
-    margin: 15px 0;
+    margin: 16px 0;
     align-items: center;
     
     .dark-mode & {
       color: var(--c-gray-500);
     }
     
+    &-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    &-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .like-icon {
+      transform: scale(0.9);
+    }
+    
     a {
-      color: #0c3057;
-      transition: transform 0.2s;
+      color: var(--c-main);
+      transition: all 0.2s ease;
+      text-decoration: none;
       
       .dark-mode & {
-        color: var(--c-main);
+        color: var(--c-main-light);
       }
       
       &:hover {
-        transform: scale(1.2);
+        color: var(--c-accent);
+        transform: translateY(-1px);
       }
     }
   }
@@ -203,7 +235,7 @@ const { formatDate } = useDate();
     gap: 8px;
     flex-wrap: wrap;
     padding-bottom: 5px;
-    margin-top: 10px;
+    margin-top: 12px;
   }
 }
 </style>
