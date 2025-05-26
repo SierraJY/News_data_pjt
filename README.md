@@ -294,6 +294,11 @@ requests
 ### 1. Docker 컨테이너 빌드 및 실행
 
 ```bash
+# 도커 환경 정리
+docker system prune -a
+```
+
+```bash
 # 모든 서비스를 빌드하고 시작
 docker compose up --build
 ```

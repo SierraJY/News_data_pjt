@@ -7,7 +7,7 @@ x-airflow-common: &airflow-common
     dockerfile: ./services/airflow/Dockerfile
     args:
         # .env 파일에서 DOCKER_GID 값을 빌드 인수로 전달
-        DOCKER_GID: ${DOCKER_GID:-999}
+        DOCKER_GID: ${DOCKER_GID}
   environment: &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres-airflow/airflow
@@ -324,7 +324,7 @@ services:
   
   # airflow에서 bashoperator로 docker 명령어 실행 가능하도록 설정하고 종료되는 컨테이너임
   airflow-docker-setup:
-    image: news_data_pjt-airflow-webserver  # 빌드된 이미지 사용
+    <<: *airflow-common
     container_name: airflow-docker-setup
     user: "root:0"
     command: >
