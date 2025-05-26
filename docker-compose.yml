@@ -322,7 +322,7 @@ services:
     networks:
       - airflow
   
-  # docker-compose.yml에 추가
+  # airflow에서 bashoperator로 docker 명령어 실행 가능하도록 설정하고 종료되는 컨테이너임
   airflow-docker-setup:
     image: news_data_pjt-airflow-webserver  # 빌드된 이미지 사용
     container_name: airflow-docker-setup
@@ -342,7 +342,7 @@ services:
     networks:
       - airflow
   
-  # 별도 컨테이너로 분리
+  # airflow에서 사용하는 커넥션 설정을 초기화하는 컨테이너임
   airflow-connections-setup:
     <<: *airflow-common
     container_name: airflow-connections-setup

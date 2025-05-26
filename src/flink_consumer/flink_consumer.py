@@ -3,7 +3,7 @@ Flink 컨슈머 메인 애플리케이션
 - Kafka에서 뉴스 데이터를 소비하여 처리하는 Flink 애플리케이션
 - 전처리, 임베딩 생성, 키워드 추출, 데이터베이스 저장 기능
 - JSON 파일을 HDFS에 직접 저장
-- 30초 idle 타임아웃으로 자동 종료
+- idle 타임아웃으로 자동 종료
 """
 
 import os
@@ -79,9 +79,10 @@ class NewsProcessor(MapFunction):
     def __init__(self):
         self.processed_count = 0
         self.last_message_time = time.time()
-        self.timeout_seconds = int(os.getenv("IDLE_TIMEOUT_SECONDS", "30"))  # 기본 30초
+        # main()에서 설정한 값과 동일하게 맞춤
+        self.timeout_seconds = int(os.getenv("IDLE_TIMEOUT_SECONDS", "300"))  # 기본 5분(300초)
         
-        print(f"🔧 {self.timeout_seconds}초 idle 타임아웃 설정됨")
+        print(f"🔧 NewsProcessor: {self.timeout_seconds}초 idle 타임아웃 설정됨")
         
         # 간단한 타임아웃 체커 시작
         self.start_timeout_checker()
@@ -90,7 +91,7 @@ class NewsProcessor(MapFunction):
         """백그라운드에서 타임아웃 체크"""
         def timeout_checker():
             while True:
-                time.sleep(5)  # 5초마다 체크
+                time.sleep(10)  # 10초마다 체크
                 idle_time = time.time() - self.last_message_time
                 
                 if idle_time > self.timeout_seconds:
@@ -99,8 +100,8 @@ class NewsProcessor(MapFunction):
                     print("🎯 Flink Consumer 정상 종료")
                     os._exit(0)
                 
-                # 진행 상황 로그 (30초마다)
-                if int(idle_time) % 30 == 0 and idle_time > 0:
+                # 진행 상황 로그 (60초마다)
+                if int(idle_time) % 60 == 0 and idle_time > 0:
                     print(f"[INFO] 대기 중... (마지막 메시지로부터 {int(idle_time)}초 경과, 처리된 메시지: {self.processed_count}개)")
         
         timeout_thread = threading.Thread(target=timeout_checker)
@@ -204,9 +205,9 @@ class NewsProcessor(MapFunction):
 def main():
     print("Flink 컨슈머 시작: 초기 설정")
     
-    # 설정 값 확인
-    timeout_seconds = int(os.getenv("IDLE_TIMEOUT_SECONDS", "60"))
-    print(f"🔧 Idle 타임아웃: {timeout_seconds}초")
+    # 설정 값 확인 - NewsProcessor와 동일한 기본값 사용
+    timeout_seconds = int(os.getenv("IDLE_TIMEOUT_SECONDS", "300"))  # 기본 5분(300초)
+    print(f"🔧 Main: Idle 타임아웃: {timeout_seconds}초")
     
     # 데이터베이스 연결 확인
     if not test_database_connection():

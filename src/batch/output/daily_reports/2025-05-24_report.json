@@ -1,0 +1,241 @@
+{
+  "meta": {
+    "date": "2025-05-24",
+    "total_articles": 28,
+    "top_category": "사회일반",
+    "top_source": "mk",
+    "top_keyword": " 눈",
+    "data_source": "HDFS",
+    "input_path": "webhdfs://namenode:9870/user/realtime/news_*.json"
+  },
+  "category_counts": [
+    {
+      "category": "사회일반",
+      "count": 20
+    },
+    {
+      "category": "경제",
+      "count": 6
+    },
+    {
+      "category": "정치",
+      "count": 1
+    },
+    {
+      "category": "산업",
+      "count": 1
+    }
+  ],
+  "original_category_counts": [
+    {
+      "category": "정치",
+      "count": 16
+    },
+    {
+      "category": "경제",
+      "count": 12
+    }
+  ],
+  "source_counts": [
+    {
+      "source": "mk",
+      "count": 20
+    },
+    {
+      "source": "khan",
+      "count": 8
+    }
+  ],
+  "keyword_counts": [
+    {
+      "keyword": " 눈",
+      "count": 15
+    },
+    {
+      "keyword": " 비",
+      "count": 15
+    },
+    {
+      "keyword": " 기온",
+      "count": 14
+    },
+    {
+      "keyword": "날씨",
+      "count": 9
+    },
+    {
+      "keyword": " 안전사고",
+      "count": 9
+    },
+    {
+      "keyword": "기상청",
+      "count": 4
+    },
+    {
+      "keyword": "기온",
+      "count": 4
+    },
+    {
+      "keyword": "비",
+      "count": 4
+    },
+    {
+      "keyword": "눈",
+      "count": 4
+    },
+    {
+      "keyword": " 안전",
+      "count": 3
+    },
+    {
+      "keyword": "봄",
+      "count": 3
+    },
+    {
+      "keyword": " 기상청",
+      "count": 3
+    },
+    {
+      "keyword": " 한진칼",
+      "count": 2
+    },
+    {
+      "keyword": " 경영권 분쟁",
+      "count": 2
+    },
+    {
+      "keyword": "호반그룹",
+      "count": 2
+    },
+    {
+      "keyword": "안전사고",
+      "count": 2
+    },
+    {
+      "keyword": "기상",
+      "count": 2
+    },
+    {
+      "keyword": "안전",
+      "count": 2
+    },
+    {
+      "keyword": " 강수량",
+      "count": 2
+    },
+    {
+      "keyword": " 투자",
+      "count": 2
+    },
+    {
+      "keyword": "닛산",
+      "count": 2
+    },
+    {
+      "keyword": " 본사 매각",
+      "count": 2
+    },
+    {
+      "keyword": "트럼프",
+      "count": 2
+    },
+    {
+      "keyword": " US스틸",
+      "count": 2
+    },
+    {
+      "keyword": " 순손실",
+      "count": 2
+    },
+    {
+      "keyword": " 일본제철",
+      "count": 2
+    },
+    {
+      "keyword": " 국가안보",
+      "count": 2
+    },
+    {
+      "keyword": " 구조조정",
+      "count": 2
+    },
+    {
+      "keyword": " 1등",
+      "count": 2
+    },
+    {
+      "keyword": " 당첨금",
+      "count": 2
+    },
+    {
+      "keyword": " 동행복권",
+      "count": 2
+    },
+    {
+      "keyword": "로또복권",
+      "count": 2
+    },
+    {
+      "keyword": " 당첨번호",
+      "count": 2
+    },
+    {
+      "keyword": " 주주권",
+      "count": 1
+    },
+    {
+      "keyword": " 지분 경쟁",
+      "count": 1
+    },
+    {
+      "keyword": " LS그룹",
+      "count": 1
+    },
+    {
+      "keyword": " 기업 거버넌스",
+      "count": 1
+    },
+    {
+      "keyword": " 봄날씨",
+      "count": 1
+    },
+    {
+      "keyword": "봄날씨",
+      "count": 1
+    },
+    {
+      "keyword": " 강풍",
+      "count": 1
+    },
+    {
+      "keyword": "온도",
+      "count": 1
+    },
+    {
+      "keyword": " 바람",
+      "count": 1
+    },
+    {
+      "keyword": " 조립 공장 폐쇄",
+      "count": 1
+    },
+    {
+      "keyword": " 자동차 판매",
+      "count": 1
+    }
+  ],
+  "length_distribution": [
+    {
+      "category": "긴 기사",
+      "count": 2
+    },
+    {
+      "category": "중간 기사",
+      "count": 24
+    },
+    {
+      "category": "짧은 기사",
+      "count": 2
+    }
+  ]
+}
