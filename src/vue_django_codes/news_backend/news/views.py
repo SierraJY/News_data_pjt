@@ -162,8 +162,6 @@ class NewsViewSet(viewsets.ModelViewSet):
             return Response({'error': f'추천 시스템 처리 중 오류가 발생했습니다: {str(e)}'}, status=500)
 
 
-
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def user_dashboard(request):

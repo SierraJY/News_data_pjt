@@ -119,20 +119,40 @@ function goToPage(page) {
     font-size: 14px;
     transition: all 0.2s;
     
+    .dark-mode & {
+      background-color: var(--c-card-bg);
+      border-color: var(--c-border);
+      color: var(--c-text);
+    }
+    
     &:hover:not(:disabled) {
       background-color: #f0f0f0;
+      
+      .dark-mode & {
+        background-color: var(--c-hover-bg);
+      }
     }
     
     &.active {
       background-color: #0c3057;
       color: white;
       border-color: #0c3057;
+      
+      .dark-mode & {
+        background-color: var(--c-main);
+        border-color: var(--c-main);
+      }
     }
     
     &:disabled {
       background-color: #f5f5f5;
       color: #ccc;
       cursor: not-allowed;
+      
+      .dark-mode & {
+        background-color: var(--c-bg);
+        color: var(--c-border);
+      }
     }
   }
   

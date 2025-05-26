@@ -60,8 +60,9 @@
             <div class="article__content__emoji">
               <!-- 좋아요 상태 및 개수 표시 -->
               <span class="emoji-btn">
-                <span v-if="liked"> ❤️ </span> <span v-else>🤍</span
-                >{{ likeCount }}
+                <span v-if="liked" class="heart-icon filled-heart">❤️</span>
+                <span v-else class="heart-icon empty-heart">🤍</span>
+                {{ likeCount }}
               </span>
               
               <!-- 원본 기사 링크 -->
@@ -71,18 +72,26 @@
             <!-- 좋아요 토글 버튼 -->
             <button class="emoji-btn" @click="toggleLike" :disabled="!authStore.isAuthenticated">
               <span v-if="!authStore.isAuthenticated">로그인 필요</span>
-              <span v-else>{{ liked ? "❤️" : "🤍" }} 좋아요</span>
+              <span v-else>
+                <span v-if="liked" class="heart-icon filled-heart">❤️</span>
+                <span v-else class="heart-icon empty-heart">🤍</span>
+                좋아요
+              </span>
             </button>
             
             <!-- 좋아요 버튼 클릭시 애니메이션 효과 (하트 띄우기) -->
             <transition name="heart-float">
               <span v-if="isAnimating" class="floating-heart">
-                {{ liked ? "❤️" : "🤍" }}
+                <span v-if="liked" class="filled-heart">❤️</span>
+                <span v-else class="empty-heart">🤍</span>
               </span>
             </transition>
           </div>
         </div>
       </ContentBox>
+      
+      <!-- 뉴스 챗봇 컴포넌트 추가 (ContentBox 밖으로 이동) -->
+      <NewsChatbot :news="news" />
     </div>
 
     <!-- 사이드바: 관련 기사 목록 -->
@@ -122,9 +131,9 @@ import { useDate } from "@/composables/useDate";
 // 라우터 인스턴스 임포트 (페이지 이동 처리용)
 import router from "@/router";
 // 뒤로가기 아이콘 SVG 컴포넌트 임포트
-// import LeftArrow from "@/components/icon/LeftArrow.svg";
+import LeftArrow from "@/components/icons/LeftArrow.svg";
 // Vue Router의 훅 임포트
-import { useRoute } from 'vue-router';
+import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 // 라이프사이클 훅 임포트
 import { onMounted } from 'vue';
 // axios 임포트
@@ -132,6 +141,8 @@ import axios from 'axios';
 import { RouterLink } from 'vue-router';
 // 인증 스토어 임포트
 import { useAuthStore } from '@/stores/auth';
+// 뉴스 챗봇 컴포넌트 임포트
+import NewsChatbot from "@/components/NewsChatbot.vue";
 
 // API 기본 URL 설정 (나중에 환경 변수로 분리 가능)
 const API_BASE_URL = 'http://127.0.0.1:8000';
@@ -327,6 +338,15 @@ onMounted(() => {
     loading.value = false;
   }
 });
+
+// 같은 컴포넌트 내에서 라우트가 변경될 때 호출되는 함수
+// 관련 기사 클릭 시 같은 NewsDetailView 컴포넌트 내에서 다른 ID로 이동할 때 필요
+onBeforeRouteUpdate((to, from) => {
+  // 뉴스 ID가 변경된 경우에만 데이터 다시 불러오기
+  if (to.params.id !== from.params.id) {
+    fetchNewsById(to.params.id);
+  }
+});
 </script>
 
 <style scoped lang="scss">
@@ -337,6 +357,10 @@ onMounted(() => {
 .loading, .error {
   text-align: center;
   margin: 50px 0;
+  
+  .dark-mode & {
+    color: var(--c-text);
+  }
 }
 
 .news-detail {
@@ -351,7 +375,7 @@ onMounted(() => {
     flex: 2;
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 20px;
   }
 
   .sidebar {
@@ -360,6 +384,10 @@ onMounted(() => {
       font-weight: 700;
       font-size: 18px;
       margin-bottom: 20px;
+      
+      .dark-mode & {
+        color: var(--c-text);
+      }
     }
   }
 
@@ -370,11 +398,20 @@ onMounted(() => {
       color: #888;
       font-size: 0.9rem;
       margin-bottom: 10px;
+      
+      .dark-mode & {
+        color: var(--c-gray-500);
+      }
+      
       &-title {
         margin: 12px 0;
         font-size: 1.6rem;
         font-weight: bold;
         color: #1c1c1e;
+        
+        .dark-mode & {
+          color: var(--c-text);
+        }
       }
       &-writer {
         display: flex;
@@ -385,6 +422,10 @@ onMounted(() => {
     &__content {
       margin: 16px 0;
       line-height: 1.6;
+      
+      .dark-mode & {
+        color: var(--c-text);
+      }
 
       &__footer {
         display: flex;
@@ -399,6 +440,11 @@ onMounted(() => {
         display: flex;
         gap: 30px;
         align-items: center;
+        
+        .dark-mode & {
+          color: var(--c-gray-500);
+        }
+        
         &-eye {
           font-size: 17px;
         }
@@ -418,13 +464,40 @@ onMounted(() => {
     align-items: center;
     font-size: 15px;
     color: #888;
+    
+    .dark-mode & {
+      color: var(--c-gray-500);
+    }
+  }
+  
+  .heart-icon {
+    display: inline-block;
+    margin-right: 4px;
+  }
+  
+  .filled-heart {
+    color: #e74c3c !important;
+    text-shadow: 0 0 0 #e74c3c;
+  }
+  
+  .empty-heart {
+    color: #888 !important;
+    text-shadow: 0 0 0 #888;
+    
+    .dark-mode & {
+      color: #aaa !important;
+      text-shadow: 0 0 0 #aaa;
+    }
   }
 
   .floating-heart {
     position: absolute;
     font-size: 24px;
-    color: red;
     animation: heartFloat 0.6s ease-out forwards;
+    
+    .filled-heart {
+      color: #e74c3c !important;
+    }
   }
 
   @keyframes heartFloat {
@@ -447,6 +520,10 @@ onMounted(() => {
     border-bottom: 1px solid #eee;
     padding-bottom: 10px;
     
+    .dark-mode & {
+      border-bottom-color: var(--c-border);
+    }
+    
     &:last-child {
       border-bottom: none;
     }
@@ -459,6 +536,10 @@ onMounted(() => {
       &:hover {
         h3 {
           color: #4a7bae;
+          
+          .dark-mode & {
+            color: var(--c-main);
+          }
         }
       }
       
@@ -466,6 +547,10 @@ onMounted(() => {
         font-size: 16px;
         margin: 0 0 8px 0;
         transition: color 0.2s;
+        
+        .dark-mode & {
+          color: var(--c-text);
+        }
       }
       
       .related-meta {
@@ -473,6 +558,10 @@ onMounted(() => {
         color: #888;
         display: flex;
         gap: 10px;
+        
+        .dark-mode & {
+          color: var(--c-gray-500);
+        }
       }
     }
   }
@@ -481,6 +570,10 @@ onMounted(() => {
     color: #888;
     text-align: center;
     padding: 20px 0;
+    
+    .dark-mode & {
+      color: var(--c-gray-500);
+    }
   }
 }
 </style>

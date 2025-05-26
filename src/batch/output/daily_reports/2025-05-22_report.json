@@ -1,0 +1,233 @@
+{
+  "meta": {
+    "date": "2025-05-22",
+    "total_articles": 9,
+    "top_category": "경제",
+    "top_source": "khan",
+    "top_keyword": " 글로벌진출",
+    "data_source": "HDFS",
+    "input_path": "webhdfs://namenode:9870/user/realtime/news_*.json"
+  },
+  "category_counts": [
+    {
+      "category": "경제",
+      "count": 4
+    },
+    {
+      "category": "IT_과학",
+      "count": 2
+    },
+    {
+      "category": "산업",
+      "count": 2
+    },
+    {
+      "category": "사회일반",
+      "count": 1
+    }
+  ],
+  "original_category_counts": [
+    {
+      "category": "경제",
+      "count": 9
+    }
+  ],
+  "source_counts": [
+    {
+      "source": "khan",
+      "count": 9
+    }
+  ],
+  "keyword_counts": [
+    {
+      "keyword": " 글로벌진출",
+      "count": 1
+    },
+    {
+      "keyword": " 영업이익",
+      "count": 1
+    },
+    {
+      "keyword": "아워홈",
+      "count": 1
+    },
+    {
+      "keyword": " 매출목표",
+      "count": 1
+    },
+    {
+      "keyword": " K-푸드",
+      "count": 1
+    },
+    {
+      "keyword": " io 인수",
+      "count": 1
+    },
+    {
+      "keyword": " 조니 아이브",
+      "count": 1
+    },
+    {
+      "keyword": " AI 하드웨어",
+      "count": 1
+    },
+    {
+      "keyword": " 기술 회사",
+      "count": 1
+    },
+    {
+      "keyword": "오픈AI",
+      "count": 1
+    },
+    {
+      "keyword": " 낸드 플래시",
+      "count": 1
+    },
+    {
+      "keyword": " 트리플 레벨 셀",
+      "count": 1
+    },
+    {
+      "keyword": "SK하이닉스",
+      "count": 1
+    },
+    {
+      "keyword": " 온디바이스 AI",
+      "count": 1
+    },
+    {
+      "keyword": " UFS 4.1",
+      "count": 1
+    },
+    {
+      "keyword": "임차권",
+      "count": 1
+    },
+    {
+      "keyword": " 민사소송",
+      "count": 1
+    },
+    {
+      "keyword": " 임대차 계약",
+      "count": 1
+    },
+    {
+      "keyword": " 대법원",
+      "count": 1
+    },
+    {
+      "keyword": " 비용 청구",
+      "count": 1
+    },
+    {
+      "keyword": "다음",
+      "count": 1
+    },
+    {
+      "keyword": " 신설 법인",
+      "count": 1
+    },
+    {
+      "keyword": " AI",
+      "count": 1
+    },
+    {
+      "keyword": " 분사",
+      "count": 1
+    },
+    {
+      "keyword": " 카카오",
+      "count": 1
+    },
+    {
+      "keyword": " PB 상품",
+      "count": 1
+    },
+    {
+      "keyword": " 글로벌 파트너십",
+      "count": 1
+    },
+    {
+      "keyword": " 돈키호테",
+      "count": 1
+    },
+    {
+      "keyword": "GS25",
+      "count": 1
+    },
+    {
+      "keyword": " 일본 수출",
+      "count": 1
+    },
+    {
+      "keyword": "규제",
+      "count": 1
+    },
+    {
+      "keyword": "비트코인",
+      "count": 1
+    },
+    {
+      "keyword": "가격",
+      "count": 1
+    },
+    {
+      "keyword": "사상최고",
+      "count": 1
+    },
+    {
+      "keyword": "가상자산",
+      "count": 1
+    },
+    {
+      "keyword": " 인건비",
+      "count": 1
+    },
+    {
+      "keyword": " 스마트기술",
+      "count": 1
+    },
+    {
+      "keyword": " 요식업소",
+      "count": 1
+    },
+    {
+      "keyword": "세종시",
+      "count": 1
+    },
+    {
+      "keyword": " 지원사업",
+      "count": 1
+    },
+    {
+      "keyword": "원·달러",
+      "count": 1
+    },
+    {
+      "keyword": "환율",
+      "count": 1
+    },
+    {
+      "keyword": "약달러",
+      "count": 1
+    },
+    {
+      "keyword": "외환시장",
+      "count": 1
+    },
+    {
+      "keyword": "한·미 협상",
+      "count": 1
+    }
+  ],
+  "length_distribution": [
+    {
+      "category": "중간 기사",
+      "count": 8
+    },
+    {
+      "category": "짧은 기사",
+      "count": 1
+    }
+  ]
+}

@@ -4,29 +4,48 @@
 
 ## 목차
 - [주요 특징 및 기술 스택](#주요-기술-스택)
+- [데이터 파이프라인 아키텍처](#데이터-파이프라인-아키텍처)
 - [기능 설명](#기능-설명)
 - [프로젝트 구조](#프로젝트-구조)
 - [컨테이너 구성](#컨테이너-구성)
 - [env 파일 설정](#env-파일-설정)
 - [Python 패키지 설정](#python-패키지-설정)
 - [실행 방법](#실행-방법)
-- [환경 테스트](#테스트_코드_실행)
 - [주의사항](#주의사항)
 
 ## 주요 기술 스택
 <div style="margin-bottom: 10px;">
-    <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white">
-    <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=flat&logo=scikit-learn&logoColor=white">
-    <img src="https://img.shields.io/badge/Apache%20Spark-E25A1C?style=flat&logo=apachespark&logoColor=white">
-    <img src="https://img.shields.io/badge/Apache%20Kafka-231F20?style=flat&logo=apachekafka&logoColor=white">
-    <img src="https://img.shields.io/badge/Apache%20Airflow-017CEE?style=flat&logo=apacheairflow&logoColor=white">
-    <img src="https://img.shields.io/badge/Apache%20Flink-E6526F?style=flat&logo=apacheflink&logoColor=white">
-    <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white">
-    <img src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=vuedotjs&logoColor=white">
-    <img src="https://img.shields.io/badge/Django-092E20?style=flat&logo=django&logoColor=white">
-    <img src="https://img.shields.io/badge/Elasticsearch-005571?style=flat&logo=elasticsearch&logoColor=white">
+   <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white">
+   <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=flat&logo=scikit-learn&logoColor=white">
+   <img src="https://img.shields.io/badge/Apache%20Spark-E25A1C?style=flat&logo=apachespark&logoColor=white">
+   <img src="https://img.shields.io/badge/Apache%20Kafka-231F20?style=flat&logo=apachekafka&logoColor=white">
+   <img src="https://img.shields.io/badge/Apache%20Airflow-017CEE?style=flat&logo=apacheairflow&logoColor=white">
+   <img src="https://img.shields.io/badge/Apache%20Flink-E6526F?style=flat&logo=apacheflink&logoColor=white">
+   <img src="https://img.shields.io/badge/Apache%20Hadoop-66CCFF?style=flat&logo=apachehadoop&logoColor=black">
+   <img src="https://img.shields.io/badge/HDFS-FF6B35?style=flat&logo=apache&logoColor=white">
+   <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white">
+   <img src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=vuedotjs&logoColor=white">
+   <img src="https://img.shields.io/badge/Django-092E20?style=flat&logo=django&logoColor=white">
+   <img src="https://img.shields.io/badge/Elasticsearch-005571?style=flat&logo=elasticsearch&logoColor=white">
 </div>
 
+## 데이터 파이프라인 아키텍처
+```
+[RSS Feeds] → [Kafka Producer] → [Kafka] → [Flink Consumer] 
+                                                   ↓
+                                           [AI Processing]
+                                        (Claude API or OpenAI API Analysis)
+                                                   ↓
+                                    [PostgreSQL] ← → [HDFS realtime/]
+                                         ↓                    ↓
+                                   [Logstash]           [Spark Analysis]
+                                         ↓                    ↓
+                                  [Elasticsearch]      [PDF Report]
+                                         ↓                    ↓
+                                     [Kibana]         [Email Delivery]
+                                                           ↓
+                                                [HDFS news_archive/]
+```
 
 ## 기능 설명
 <div style="display: flex; justify-content: space-between;">
@@ -68,15 +87,32 @@
    - 분석 결과 시각화 및 저장
 
 - **일일 뉴스 리포트 생성**:
+     - **HDFS 기반 완전 무파일시스템 파이프라인**:
+       1. Flink → HDFS realtime 저장
+       2. Spark → HDFS에서 데이터 읽어 분석
+       3. PDF 리포트 생성
+       4. HDFS 내부 파일 아카이브 (realtime → news_archive)
+       5. 이메일 자동 발송
      - Spark 클러스터 활용 대량 뉴스 데이터 분석
      - Claude API 활용 자연어 보고서 작성
      - 데이터 시각화 그래프 자동 생성
      - PDF 리포트 생성 및 이메일 자동 발송
-     - 처리 완료된 JSON 파일 자동 아카이브
 
 - **데이터 저장 (PostgreSQL)**
    - 처리된 데이터를 PostgreSQL 데이터베이스에 저장
    - pgvector 확장을 통한 벡터 데이터 저장
+
+<div style="display: flex; justify-content: space-between;">
+   <img src="README_img/hadoop_realtime.png" style="width: 48%;">
+  <img src="README_img/hadoop_archive.png" style="width: 48%;">
+</div>
+
+- **분산 파일 시스템 (HDFS)**
+   - Hadoop Distributed File System을 통한 대용량 데이터 저장
+   - 실시간 데이터 임시 저장소 `/user/realtime/` (Flink에서 처리된 JSON 파일)
+   - 영구 보관 아카이브 `/user/news_archive/YYYY/MM/DD/` (날짜별 구조화된 저장)
+   - 데이터 영속성 Docker 볼륨을 통한 컨테이너 재시작 후에도 데이터 보존
+   - WebHDFS API HTTP 기반 파일 시스템 접근으로 안정적인 데이터 전송
 
 <div style="display: flex; justify-content: space-between;">
   <img src="README_img/search.png" style="width: 48%;">
@@ -104,8 +140,6 @@
    - 커스텀 대시보드를 통한 뉴스 데이터 인사이트 도출
 
 
-
-
 ## 프로젝트 구조
 
 ```
@@ -122,17 +156,13 @@
 │   ├── vue/              # Vue 프론트엔드 서비스 설정
 │   ├── spark/            # Spark 서비스 설정 (테스트 환경용)
 │   ├── spark_cluster/    # Spark 클러스터 서비스 설정 (Bitnami 이미지 활용)
-│   └── airflow/          # Airflow 서비스 설정
+│   ├── airflow/          # Airflow 서비스 설정
+│   └── hadoop/           # Hadoop HDFS 서비스 설정 및 초기화 스크립트
 └── src/                   # 소스 코드 디렉토리
-    ├── up_ingest_codes/   # 뉴스 기사 추출 함수 및 DB 직접 적재용 코드 (ubuntu-python 전용)
-    ├── up_test_codes/     # RSS->PostgreSQL 직접 적재 테스트 코드 (ubuntu-python 전용)
+    ├── up_ingest_codes/   # 뉴스 기사 추출 함수 및 DB 직접 적재용 코드(kafka 컨테이너에서 실행)
     ├── kafka_producer/    # Kafka 프로듀서 코드 (kafka 컨테이너에서 실행)
-    ├── kafka_test_codes/  # Kafka 테스트 코드 (RSS 테스트, 프로듀서/컨슈머 테스트)
     ├── flink_consumer/    # Flink 컨슈머 코드 및 데이터 전처리 로직 (flink 컨테이너에서 실행)
     │   └── config/        # Flink 관련 설정 파일 디렉터리
-    ├── spark_test_codes/  # Spark 테스트 코드 (spark 컨테이너에서 사용)
-    │   ├── data/          # Spark 테스트용 데이터 파일
-    │   └── src/           # Spark 예제 및 테스트 코드
     ├── batch/             # 배치 처리 및 Airflow 관련 코드
     │   ├── dags/          # Airflow DAG 파일 및 스크립트
     │   │   └── scripts/   # DAG에서 사용하는 스크립트 파일
@@ -141,7 +171,6 @@
     │   ├── config/        # Airflow 설정 파일
     │   ├── data/          # 배치 처리용 데이터 파일
     │   └── output/        # 배치 처리 결과 출력 파일
-    ├── flink_test_codes/  # Flink 테스트 코드 (DB 테스트, Flink 컨슈머 테스트)
     ├── logstash/          # Logstash 설정 및 스크립트
     │   └── data/          # Logstash 데이터 디렉토리
     └── vue_django_codes/  # 웹 애플리케이션 프론트엔드 및 백엔드 코드
@@ -257,6 +286,7 @@ pyspark==3.5.4
 matplotlib==3.10.0
 hdfs==2.7.3
 elasticsearch==8.17.1
+requests
 ```
 
 ## 실행 방법
@@ -285,7 +315,12 @@ Airflow에서 Spark 작업을 실행하기 위한 커넥션 추가(GUI(Admin > C
 docker exec -it airflow-webserver bash -c "airflow connections add spark_default --conn-type spark --conn-host spark-master --conn-port 7077 --conn-extra '{\"deploy-mode\": \"client\"}'"
 ```
 
-### 4. 웹 인터페이스 접속
+### 4. Airflow Hadoop 커넥션 설정
+```bash
+docker exec -it airflow-webserver bash -c "airflow connections add webhdfs_default --conn-type webhdfs --conn-host namenode --conn-port 9870 --conn-login hadoop --conn-extra '{\"use_ssl\": false}'"
+```
+
+### 5. 웹 인터페이스 접속
 
 **Django 백엔드 API**
 - 기본 URL: http://localhost:8000/api/
@@ -312,6 +347,15 @@ docker exec -it airflow-webserver bash -c "airflow connections add spark_default
   - Spark 작업 모니터링
   - Variable 및 Connection 관리
 
+**HDFS Web UI (NameNode)**
+- 접속 URL: http://localhost:9870/
+- 기능:
+  - HDFS 파일 시스템 브라우징
+  - 클러스터 상태 및 DataNode 모니터링
+  - 파일 및 디렉토리 관리
+  - 스토리지 사용량 확인
+  - 실시간 데이터 저장소(`/user/realtime/`) 및 아카이브(`/user/news_archive/`) 조회
+
 **Spark UI**
 - 접속 URL: http://localhost:8085/
 - Spark 작업의 상태 및 성능 모니터링
@@ -324,49 +368,6 @@ docker exec -it airflow-webserver bash -c "airflow connections add spark_default
   - 검색 패턴 및 사용자 행동 분석
   - 커스텀 시각화 및 리포트 생성
 
-### 5. 데이터 확인
-
-PostgreSQL 데이터베이스에 접속하여 저장된 데이터를 확인합니다:
-
-```bash
-docker exec -it postgres psql -U ${DB_USERNAME} -d news
-```
-
-```sql
-SELECT id, title, category, writer FROM news_article LIMIT 10;
-```
-
-## 테스트 코드 실행
-
-각 컨테이너에는 기능 테스트를 위한 코드가 포함되어 있습니다:
-
-**Ubuntu Python 테스트 코드**
-```bash
-# RSS 피드 및 DB 직접 적재 테스트
-docker exec -it ubuntu_python python /opt/workspace/up_test_codes/rss_test.py
-docker exec -it ubuntu_python python /opt/workspace/up_test_codes/db_test.py
-```
-
-**Kafka 테스트 코드**
-```bash
-# RSS 피드 테스트
-docker exec -it kafka python /opt/workspace/kafka_test_codes/rss_test.py
-
-# Kafka 프로듀서 테스트
-docker exec -it kafka python /opt/workspace/kafka_test_codes/rss_producer_test.py
-
-# Kafka 컨슈머 테스트 (별도 터미널에서 실행)
-docker exec -it kafka python /opt/workspace/kafka_test_codes/consumer_test.py
-```
-
-**Flink 테스트 코드**
-```bash
-# 데이터베이스 연결 테스트
-docker exec -it flink python /opt/workspace/flink_test_codes/db_test.py
-
-# Flink Kafka 컨슈머 테스트
-docker exec -it flink python /opt/workspace/flink_test_codes/flink_consumer_test.py
-```
 
 ## 주의사항
 
