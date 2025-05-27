@@ -1,0 +1,6 @@
+feedparser==6.0.11
+kafka-python==2.0.2
+beautifulsoup4==4.13.0
+psycopg2-binary==2.9.8
+python-dotenv==0.20.0
+requests==2.27.1
