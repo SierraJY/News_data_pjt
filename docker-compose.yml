@@ -129,9 +129,6 @@ services:
           source: ./src/flink_consumer
           target: /opt/workspace/flink_consumer
         - type: bind
-          source: ./services/flink/config
-          target: /opt/flink/lib
-        - type: bind
           source: ./src/batch/data/realtime
           target: /opt/batch/data/realtime
       env_file:
