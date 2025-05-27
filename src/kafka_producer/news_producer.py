@@ -49,14 +49,14 @@ producer = KafkaProducer(
 # RSS 피드 URL 목록
 RSS_FEED_URLS = [
     ("khan","경제", "https://www.khan.co.kr/rss/rssdata/economy_news.xml"),  # 경향신문
-    ("khan","정치", "https://www.khan.co.kr/rss/rssdata/economy_news.xml"),
-    ("khan", "사회", "https://www.khan.co.kr/rss/rssdata/society_news.xml"),
-    ("mk","경제","https://www.mk.co.kr/rss/30100041/"),
-    ("mk","정치","https://www.mk.co.kr/rss/30200030/"),
-    ("mk","사회","https://www.mk.co.kr/rss/50400012/"),
-    ("yna","경제","https://www.yna.co.kr/rss/economy.xml"),
-    ("yna","정치", "https://www.yna.co.kr/rss/politics.xml"),
-    ("yna", "사회","https://www.yna.co.kr/rss/society.xml")
+    # ("khan","정치", "https://www.khan.co.kr/rss/rssdata/economy_news.xml"),
+    # ("khan", "사회", "https://www.khan.co.kr/rss/rssdata/society_news.xml"),
+    # ("mk","경제","https://www.mk.co.kr/rss/30100041/"),
+    # ("mk","정치","https://www.mk.co.kr/rss/30200030/"),
+    # ("mk","사회","https://www.mk.co.kr/rss/50400012/"),
+    # ("yna","경제","https://www.yna.co.kr/rss/economy.xml"),
+    # ("yna","정치", "https://www.yna.co.kr/rss/politics.xml"),
+    # ("yna", "사회","https://www.yna.co.kr/rss/society.xml")
 ]
 
 def main():
@@ -100,9 +100,23 @@ def main():
                 producer.send(TOPIC, message)
                 print(f"✅[kafka] [{time.strftime('%Y-%m-%d %H:%M:%S')}] 전송 완료: {title}")
 
-        # 모든 메시지가 전송될 때까지 대기
+        # 종료 메시지 전송
+        end_message = {
+            "source": "SYSTEM",
+            "title": "END",
+            "writer": "SYSTEM",
+            "write_date": str(datetime.now()),
+            "category": "SYSTEM",
+            "content": "END",
+            "url": "",
+            "timestamp": str(datetime.now())
+        }
+        producer.send(TOPIC, end_message)
+        
+        # 모든 메시지가 전송될 때까지 대기 (일반 메시지와 END 메시지 모두)
         producer.flush()
-        print("모든 메시지 전송 완료")
+        print("모든 메시지 전송 완료 (종료 메시지 포함)")
+        
     except Exception as e:
         print(f"❌ 오류 발생: {e}")
         traceback.print_exc()
@@ -111,4 +125,4 @@ def main():
         print("Producer 종료")
 
 if __name__ == "__main__":
-    main() 
+    main()
