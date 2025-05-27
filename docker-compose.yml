@@ -322,25 +322,25 @@ services:
     networks:
       - airflow
   
-  # docker-compose.yml에 추가
-  airflow-docker-setup:
-    image: news_data_pjt-airflow-webserver  # 빌드된 이미지 사용
-    container_name: airflow-docker-setup
-    user: "root:0"
-    command: >
-      bash -c "
-      DOCKER_GID=$$(stat -c '%g' /var/run/docker.sock) &&
-      groupadd -f -g $$DOCKER_GID docker &&
-      usermod -aG docker airflow &&
-      chmod 666 /var/run/docker.sock"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    depends_on:
-      airflow-webserver:
-        condition: service_healthy
-    restart: "no"
-    networks:
-      - airflow
+  # # docker-compose.yml에 추가
+  # airflow-docker-setup:
+  #   image: news_data_pjt-airflow-webserver  # 빌드된 이미지 사용
+  #   container_name: airflow-docker-setup
+  #   user: "root:0"
+  #   command: >
+  #     bash -c "
+  #     DOCKER_GID=$$(stat -c '%g' /var/run/docker.sock) &&
+  #     groupadd -f -g $$DOCKER_GID docker &&
+  #     usermod -aG docker airflow &&
+  #     chmod 666 /var/run/docker.sock"
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   depends_on:
+  #     airflow-webserver:
+  #       condition: service_healthy
+  #   restart: "no"
+  #   networks:
+  #     - airflow
   
   # 별도 컨테이너로 분리
   airflow-connections-setup:
