@@ -2,6 +2,10 @@
 
 이 프로젝트는 Docker 기반 데이터 엔지니어링 환경에서 뉴스 기사 데이터를 수집, 처리, 분석하고 자동화된 리포트를 생성하는 통합 파이프라인을 구현합니다.
 
+<div style="display: flex; justify-content: space-between;">
+  <img src="README_img/flow_chart.png" style="width: 80%;">
+</div>
+
 ## 목차
 - [주요 특징 및 기술 스택](#주요-기술-스택)
 - [데이터 파이프라인 아키텍처](#데이터-파이프라인-아키텍처)
@@ -292,6 +296,11 @@ requests
 ## 명령어로 직접 실행
 
 ### 1. Docker 컨테이너 빌드 및 실행
+
+```bash
+# 도커 환경 정리
+docker system prune -a
+```
 
 ```bash
 # 모든 서비스를 빌드하고 시작
