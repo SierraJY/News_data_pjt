@@ -75,7 +75,7 @@ with DAG(
     # 이메일 리포트 전송
     send_email_report = EmailOperator(
         task_id='send_email_report',
-        to='wndus51445@gmail.com',
+        to=['wndus51445@gmail.com','yeeunyoo99@naver.com'],
         subject='[뉴스 데이터 HDFS] {{ ds }} 일일 뉴스 리포트',
         html_content="""
         <h3>{{ ds }} 일일 뉴스 리포트가 생성되었습니다.</h3>

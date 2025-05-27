@@ -13,9 +13,15 @@ from .serializers import RecommendNewsSerializer
 from elasticsearch import Elasticsearch
 import os
 from django.conf import settings
+from django.http import HttpResponse
+from gtts import gTTS
+import io
+import requests
 
 # Elasticsearch 클라이언트 설정
 es = Elasticsearch(["http://es01:9200"])
+
+
 
 # Create your views here.
 class NewsViewSet(viewsets.ModelViewSet):
@@ -84,6 +90,32 @@ class NewsViewSet(viewsets.ModelViewSet):
             
         except Exception as e:
             return Response({"error": f"검색 중 오류가 발생했습니다: {str(e)}"}, status=500)
+        
+    # mattermost를 통해서 기사 공유하기 
+    @action(detail=True, methods=['post'], url_path = 'share-mattermost')
+    def share_to_mattermost(self, request, pk = None):
+        """뉴스를 Mattermost로 공유하는 API"""
+        try:
+            news= self.get_object()
+            webhook_url = settings.MATTERMOST_WEBHOOK_URL
+
+            # Mattermost 메시지 포맷 
+            message = {
+                "text" : "### 뉴스 공유\n" + 
+                f"**{news.title}**\n\n" + 
+                f"카테고리 : {news.category}\n" + 
+                f"작성자: {news.writer}\n" + 
+                f"작성일: {news.write_date}\n\n" + 
+                f"원문 링크 : {news.url}\n" + 
+                f"상세 페이지: {settings.FRONTEND_URL}/news/{news.id}"
+            }
+            # Mattermost로 메세지 전송 
+            response = requests.post(webhook_url, json=message)
+            response.raise_for_status() # 예외 발생시 
+
+            return Response({'message': 'Mattermost로 뉴스가 공유되었습니다.'})
+        except Exception as e:
+            return Response({'error': f"공유 중 오류가 발생했습니다: {str(e)}"}, status = 500)
 
     @action(detail=True, methods=['post'], url_path='like')
     def like(self, request, pk=None):
@@ -93,6 +125,26 @@ class NewsViewSet(viewsets.ModelViewSet):
         if not created:
             return Response({'message': '이미 좋아요한 뉴스입니다.'}, status=400)
         return Response({'message': '좋아요 완료'})
+    @action(detail = True, methods=['post'], url_path='tts')
+    def text_to_speech(self, request, pk=None):
+        """
+        뉴스 내용을 음성으로 변환합니다.
+        """
+        try:
+            news=  self.get_object()
+            text = news.content
+            if not text:
+                return Response({'error': '변환할 텍스트가 없습니다.'}, status = 400)
+            tts = gTTS(text = text, lang = 'ko')
+            fp = io.BytesIO()
+            tts.write_to_fp(fp)
+            fp.seek(0)
+
+            response = HttpResponse(fp.read(), content_type = 'audio/mpeg')
+            response['Content-Disposition'] = 'attachment; filename = news_speech.mp3'
+            return response
+        except Exception as e:
+            return Response({'error': f'음성 변환 중 오류가 발생했습니다: {str(e)}'}, status = 500)
 
     @action(detail=True, methods=['post'], url_path='unlike')
     def unlike(self, request, pk=None):
@@ -160,6 +212,7 @@ class NewsViewSet(viewsets.ModelViewSet):
         except Exception as e:
             print(f"추천 시스템 오류: {str(e)}")
             return Response({'error': f'추천 시스템 처리 중 오류가 발생했습니다: {str(e)}'}, status=500)
+        
 
 
 @api_view(['GET'])

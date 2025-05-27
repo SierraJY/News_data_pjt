@@ -38,7 +38,10 @@
               <span> 🕒 {{ formatDate(news.write_date) }}</span>
             </div>
           </div>
-
+          <!--TTS 컴포넌트 추가-->
+          <div class ="article__tts">
+            <TextToSpeech :newsId="route.params.id" />
+          </div>
           <!-- 기사 본문 내용 -->
           <p class="article__content">{{ news?.content }}</p>
 
@@ -89,7 +92,15 @@
           </div>
         </div>
       </ContentBox>
-      
+      <!-- Mattermost 공유 버튼 추가 -->
+      <button
+      class = "share-button"
+      @click="shareToMattermost"
+      :disabled="sharing"
+      >
+      <span class = "share-icon">📤</span>
+      {{ sharing ? '공유 중...' : 'Mattermost로 공유' }}
+    </button>      
       <!-- 뉴스 챗봇 컴포넌트 추가 (ContentBox 밖으로 이동) -->
       <NewsChatbot :news="news" />
     </div>
@@ -143,6 +154,8 @@ import { RouterLink } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 // 뉴스 챗봇 컴포넌트 임포트
 import NewsChatbot from "@/components/NewsChatbot.vue";
+
+import TextToSpeech from "@/components/TextToSpeech.vue";
 
 // API 기본 URL 설정 (나중에 환경 변수로 분리 가능)
 const API_BASE_URL = 'http://127.0.0.1:8000';
@@ -326,6 +339,30 @@ const toggleLike = async () => {
   }
 };
 
+//공유 상태 관리 
+const sharing = ref(false); 
+// Mattermost로 공유 함수 
+const shareToMattermost = async() => {
+  if (!news.value) return
+  try {
+    sharing.value = true 
+    const response = await axios.post(
+      `${API_BASE_URL}/api/news/${route.params.id}/share-mattermost/`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.accessToken}`
+        }
+      })
+    alert('Mattermost로 공유되었습니다!')
+  } catch (error) {
+    console.error('공유 실패:', error)
+    alert('공유 중 오류가 발생했습니다.') 
+  } finally {
+    sharing.value = false
+  }
+}
+
 onMounted(() => {
   // 라우트 파라미터에서 ID 가져오기
   const newsId = route.params.id;
@@ -354,6 +391,17 @@ onBeforeRouteUpdate((to, from) => {
   margin-bottom: 10px;
 }
 
+.article {
+  &__tts {
+    margin : 16px 0;
+    display : flex;
+    justify-content: flex-start;
+
+    .dark-mode & {
+      color : var(--c-text);
+    }
+  }
+}
 .loading, .error {
   text-align: center;
   margin: 50px 0;
@@ -575,5 +623,27 @@ onBeforeRouteUpdate((to, from) => {
       color: var(--c-gray-500);
     }
   }
+}
+
+//Mattermost 공유 버튼 
+.share-button {
+  display : flex;
+  align-items:center; 
+  padding: 8px 16px; 
+  border : none; 
+  border-radius : 4px; 
+  background-color : #1e88e5;
+  color: white;
+  cursor : pointer; 
+  font-size:14px; 
+  transition : background-color 0.3s; 
+}
+.share-button:hover {
+  background-color : #cccccc;
+  cursor : not-allowed; 
+}
+.share-icon {
+  margin-right : 8px; 
+  font-size : 16px; 
 }
 </style>
