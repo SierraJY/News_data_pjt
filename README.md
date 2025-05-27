@@ -440,3 +440,56 @@ Kafka 커넥터 JAR 파일은 다음 링크에서 다운로드할 수 있습니�
    - Spark과 통합 시 JAVA_HOME 환경 변수가 올바르게 설정되어 있어야 합니다 (docker-compose.yml의 x-airflow-common 설정 참조).
    - Airflow 로그는 src/batch/logs 디렉터리에서 확인할 수 있습니다.
    - 반드시 `.env` 파일에 `AIRFLOW_UID` 설정이 있어야 파일 권한 문제가 발생하지 않습니다.
+
+### 추가된 기능들 
+1. 텍스트 음성 변환 (TTS) 기능 
+- Google Text-to-Speech(gTTS) 기술을 활용한 뉴스 읽기 기능 
+- 사용자 접근성 향상을 위한 음성 서비스 제공 
+- 주요 특징:
+   - 한국어 자연스러운 음성 지원 
+   - 실시간 텍스트-음성 변환 
+   - 재생/정지 기능 제공 
+
+2. Mattermost 뉴스 공유 기능 
+- 뉴스 콘텐츠를 Mattermost 채널로 즉시 공유 
+- 팀 협업 및 정보 공유 강화 
+- 공유되는 정보 : 
+   - 뉴스 제목 
+   - 카테고리 
+   - 작성자 정보 
+   - 작성일 
+   - 원문 링크 
+   - 상세 페이지 링크 
+
+### 기술 스택 업데이트 
+- **신규 패키지**:
+   - gTTS (Google Text-to-Speech): `2.5.4`
+   - requests : 외부 API 통신용
+### 📝 API 문서 업데이트 
+
+### TTS (Text-to-Speech) API 
+```http
+POST /api/news/{news_id}/tts/
+```
+- 뉴스 내용을 음성으로 변환하여 스트리밍 
+- Response : `audio/mpeg` 형식의 음성 파일 
+
+### Mattermost 공유 API
+```http
+POST /api/news/{news_id}/share-mattermost/
+```
+- 뉴스를 Mattermost 채널로 공유 
+- Response  
+```json
+{
+   "message" : "Mattermost로 공유되었습니다."
+}
+```
+### 💡사용 예시 
+1. **뉴스 읽기 기능**
+   - 뉴스 상세 페이지에서 "뉴스 읽기" 버튼 클릭
+   - 음성 재생 중 정지/ 재시작 가능 
+
+2. **Mattermost 공유**
+   - 뉴스 상세 페이지에서 "Mattermost로 공유" 버튼 클릭
+   - 지정된 Mattermost 채널에 자동으로 포맷팅되어 공유 
