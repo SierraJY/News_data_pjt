@@ -1,6 +1,7 @@
 {
   "meta": {
     "date": "2025-05-27",
+<<<<<<< HEAD
     "total_articles": 0,
     "top_category": "N/A",
     "top_source": "N/A",
@@ -13,4 +14,203 @@
   "source_counts": [],
   "keyword_counts": [],
   "length_distribution": []
+=======
+    "total_articles": 7,
+    "top_category": "경제",
+    "top_source": "khan",
+    "top_keyword": " 정치적 불확실성",
+    "data_source": "HDFS",
+    "input_path": "webhdfs://namenode:9870/user/realtime/news_*.json"
+  },
+  "category_counts": [
+    {
+      "category": "경제",
+      "count": 2
+    },
+    {
+      "category": "IT_과학",
+      "count": 1
+    },
+    {
+      "category": "산업",
+      "count": 1
+    },
+    {
+      "category": "사회일반",
+      "count": 1
+    },
+    {
+      "category": "여행레저",
+      "count": 1
+    },
+    {
+      "category": "라이프스타일",
+      "count": 1
+    }
+  ],
+  "original_category_counts": [
+    {
+      "category": "경제",
+      "count": 7
+    }
+  ],
+  "source_counts": [
+    {
+      "source": "khan",
+      "count": 7
+    }
+  ],
+  "keyword_counts": [
+    {
+      "keyword": " 정치적 불확실성",
+      "count": 1
+    },
+    {
+      "keyword": " 미국 관세 정책",
+      "count": 1
+    },
+    {
+      "keyword": " 낙관적",
+      "count": 1
+    },
+    {
+      "keyword": "소비자심리",
+      "count": 1
+    },
+    {
+      "keyword": " CCSI",
+      "count": 1
+    },
+    {
+      "keyword": " 옥외영업",
+      "count": 1
+    },
+    {
+      "keyword": "인천시",
+      "count": 1
+    },
+    {
+      "keyword": " 민생경제",
+      "count": 1
+    },
+    {
+      "keyword": " 소상공인",
+      "count": 1
+    },
+    {
+      "keyword": " 자영업자",
+      "count": 1
+    },
+    {
+      "keyword": " 인공지능",
+      "count": 1
+    },
+    {
+      "keyword": " AX 협력",
+      "count": 1
+    },
+    {
+      "keyword": "KT",
+      "count": 1
+    },
+    {
+      "keyword": " 비엣텔 그룹",
+      "count": 1
+    },
+    {
+      "keyword": " 전략적 파트너십",
+      "count": 1
+    },
+    {
+      "keyword": " 마스터 프랜차이즈",
+      "count": 1
+    },
+    {
+      "keyword": " BGF리테일",
+      "count": 1
+    },
+    {
+      "keyword": " 하와이",
+      "count": 1
+    },
+    {
+      "keyword": "CU",
+      "count": 1
+    },
+    {
+      "keyword": " K-먹거리",
+      "count": 1
+    },
+    {
+      "keyword": " 멸종위기종",
+      "count": 1
+    },
+    {
+      "keyword": " 자연복귀",
+      "count": 1
+    },
+    {
+      "keyword": " 영양실조",
+      "count": 1
+    },
+    {
+      "keyword": "삵",
+      "count": 1
+    },
+    {
+      "keyword": " 생물다양성",
+      "count": 1
+    },
+    {
+      "keyword": "대전",
+      "count": 1
+    },
+    {
+      "keyword": " MZ세대",
+      "count": 1
+    },
+    {
+      "keyword": " 관광",
+      "count": 1
+    },
+    {
+      "keyword": " 숙박세일",
+      "count": 1
+    },
+    {
+      "keyword": " 할인쿠폰",
+      "count": 1
+    },
+    {
+      "keyword": " 특화 거리",
+      "count": 1
+    },
+    {
+      "keyword": " 축제",
+      "count": 1
+    },
+    {
+      "keyword": " 반려동물",
+      "count": 1
+    },
+    {
+      "keyword": "부산",
+      "count": 1
+    },
+    {
+      "keyword": " 펫 스테이션",
+      "count": 1
+    }
+  ],
+  "length_distribution": [
+    {
+      "category": "중간 기사",
+      "count": 6
+    },
+    {
+      "category": "짧은 기사",
+      "count": 1
+    }
+  ]
+>>>>>>> gitlab/master
 }

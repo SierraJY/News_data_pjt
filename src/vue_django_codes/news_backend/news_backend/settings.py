@@ -147,7 +147,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # 데이터베이스 기반 세션
 SESSION_COOKIE_AGE = 1209600  # 2주 (초 단위)
 SESSION_SAVE_EVERY_REQUEST = True  # 매 요청마다 세션 저장
-
+MATTERMOST_WEBHOOK_URL = 'https://meeting.ssafy.com/hooks/w8zqmcfrs3fk3c1rt5cswqrkfa'
+FRONTEND_URL = 'http://localhost:3000' # 프론트엔드 URL 설정 
 # 로컬 설정 파일 불러오기
 try:
     from .local_settings import *
