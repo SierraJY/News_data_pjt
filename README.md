@@ -264,6 +264,14 @@ ANTHROPIC_API_KEY=<Anthropic API 키>
 
 # Airflow 설정
 AIRFLOW_UID=1000
+
+# DOCKER_GID : ls -la /var/run/docker.sock로 알아내기
+DOCKER_GID=
+
+# 이메일 관련 환경 변수
+AIRFLOW_SMTP_USER=
+AIRFLOW_SMTP_PASSWORD=
+AIRFLOW_SMTP_MAIL_FROM=
 ```
 
 ## Python 패키지 설정
