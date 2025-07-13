@@ -348,7 +348,8 @@ docker compose up --build
 docker exec -it kafka python /opt/workspace/kafka_producer/news_producer.py
 
 # 플링크 컨테이너에서 컨슈머 실행
-docker exec -it flink python /opt/workspace/flink_consumer/flink_consumer.py
+# docker exec -it flink python /opt/workspace/flink_consumer/flink_consumer.py
+# => optimize-flink 이슈 이후, 해당 명령어 자동화 성공, Task Manger 4로 자동 사용
 ```
 
 ### 3. Airflow Spark 커넥션 설정
