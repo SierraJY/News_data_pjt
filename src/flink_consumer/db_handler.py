@@ -15,17 +15,36 @@ import traceback
 # 환경 변수 로드
 load_dotenv()
 
+# 환경 변수 확인 및 출력
+db_username = os.getenv("DB_USERNAME")
+db_password = os.getenv("DB_PASSWORD")
+print(f"DB_USERNAME 환경 변수: {db_username}")
+print(f"DB_PASSWORD 환경 변수: {db_password}")
+
 def get_db_connection():
     """
     PostgreSQL 데이터베이스 연결을 생성하는 함수
     - 도커 컨테이너 환경에 맞는 연결 설정
     """
     try:
+        # 환경 변수 값 확인
+        db_username = os.getenv("DB_USERNAME")
+        db_password = os.getenv("DB_PASSWORD")
+        
+        # 환경 변수가 없으면 기본값 사용
+        if not db_username:
+            db_username = "juyeon1"
+            print(f"환경 변수 DB_USERNAME이 없어 기본값 사용: {db_username}")
+        
+        if not db_password:
+            db_password = "juyeon1"
+            print(f"환경 변수 DB_PASSWORD가 없어 기본값 사용: {db_password}")
+        
         conn = psycopg2.connect(
             host="postgres",  # 도커 컨테이너 이름
             dbname="news",
-            user=os.getenv("DB_USERNAME"),
-            password=os.getenv("DB_PASSWORD")
+            user=db_username,
+            password=db_password
         )
         return conn
     except Exception as e:
