@@ -1,9 +1,9 @@
-# 뉴스 데이터 통합 파이프라인: 수집-분석-리포팅-시각화 시스템
+# 빅데이터 및 실시간 데이터 기반 AI뉴스 큐레이션 시스템
 
 이 프로젝트는 Docker 기반 데이터 엔지니어링 환경에서 뉴스 기사 데이터를 수집, 처리, 분석하고 자동화된 리포트를 생성하는 통합 파이프라인을 구현합니다.
 
 <div style="display: flex; justify-content: space-between;">
-  <img src="README_img/flow_chart.png" style="width: 80%;">
+  <img src="README_img/flow_chart_clear.png" style="width: 80%;">
 </div>
 
 ## 목차
@@ -31,6 +31,8 @@
    <img src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=vuedotjs&logoColor=white">
    <img src="https://img.shields.io/badge/Django-092E20?style=flat&logo=django&logoColor=white">
    <img src="https://img.shields.io/badge/Elasticsearch-005571?style=flat&logo=elasticsearch&logoColor=white">
+   <img src="https://img.shields.io/badge/Grafana-F46800?style=flat&logo=grafana&logoColor=white">
+   <img src="https://img.shields.io/badge/Prometheus-E6522C?style=flat&logo=prometheus&logoColor=white">
 </div>
 
 ## 데이터 파이프라인 아키텍처
@@ -89,6 +91,18 @@
    - 스케줄링된 워크플로우 관리
    - Spark를 활용한 대용량 데이터 처리 및 분석
    - 분석 결과 시각화 및 저장
+
+<div style="display: flex; justify-content: space-between;">
+  <img src="README_img/grafana_prometheus.png" style="width: 100%;">
+</div>
+
+- **시스템 모니터링 (Grafana + Prometheus)**
+   - Flink 작업 실시간 모니터링 및 성능 분석
+   - 시스템 리소스 사용량 시각화 (CPU, 메모리, 네트워크)
+   - 데이터 파이프라인 성능 지표 대시보드
+   - 이상 징후 감지 및 알림 설정
+   - Prometheus를 통한 시계열 메트릭 수집 및 저장
+   - 직관적인 대시보드로 시스템 상태 한눈에 파악
 
 - **일일 뉴스 리포트 생성**:
      - **HDFS 기반 완전 무파일시스템 파이프라인**:
@@ -250,6 +264,18 @@
    - 뉴스 데이터 분석 및 시각화 도구
    - 사용자 검색 패턴 및 행동 분석
 
+13. **grafana**: 모니터링 및 시각화 서비스
+   - Prometheus 데이터 소스 연동
+   - Flink 작업 성능 모니터링
+   - 실시간 시스템 리소스 사용량 대시보드
+   - 커스텀 알림 설정 및 관리
+
+14. **prometheus**: 시스템 메트릭 수집 서비스
+   - 시스템 및 애플리케이션 메트릭 수집
+   - 시계열 데이터 저장 및 쿼리 기능
+   - 모니터링 데이터 제공
+   - Grafana의 데이터 소스로 활용
+
 ## env 파일 설정
 
 `.env` 파일에 다음 내용을 설정합니다:
@@ -322,7 +348,8 @@ docker compose up --build
 docker exec -it kafka python /opt/workspace/kafka_producer/news_producer.py
 
 # 플링크 컨테이너에서 컨슈머 실행
-docker exec -it flink python /opt/workspace/flink_consumer/flink_consumer.py
+# docker exec -it flink python /opt/workspace/flink_consumer/flink_consumer.py
+# => optimize-flink 이슈 이후, 해당 명령어 자동화 성공, Task Manger 4로 자동 사용
 ```
 
 ### 3. Airflow Spark 커넥션 설정
@@ -385,6 +412,22 @@ docker exec -it airflow-webserver bash -c "airflow connections add webhdfs_defau
   - 검색 패턴 및 사용자 행동 분석
   - 커스텀 시각화 및 리포트 생성
 
+**Grafana**
+- 접속 URL: http://localhost:3001/
+- 기능:
+  - Flink 작업 실시간 모니터링
+  - 시스템 리소스 사용량 시각화
+  - 데이터 파이프라인 성능 대시보드
+  - 커스텀 알림 설정 가능
+  - Prometheus 데이터 소스 기반 시각화
+
+**Prometheus**
+- 접속 URL: http://localhost:9090/
+- 기능:
+  - 시스템 및 애플리케이션 메트릭 수집
+  - 실시간 모니터링 데이터 제공
+  - 시계열 데이터 저장 및 쿼리
+  - Grafana의 데이터 소스로 활용
 
 ## 주의사항
 

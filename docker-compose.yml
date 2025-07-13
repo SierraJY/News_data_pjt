@@ -116,31 +116,86 @@ services:
     networks:
       - airflow
 
-  flink:
-      build: 
-        context: ./
-        dockerfile: ./services/flink/Dockerfile
-      container_name: flink
-      ports:
-        - "8081:8081"
-      working_dir: /opt/workspace
-      volumes:
-        - type: bind
-          source: ./src/flink_consumer
-          target: /opt/workspace/flink_consumer
-        - type: bind
-          source: ./src/batch/data/realtime
-          target: /opt/batch/data/realtime
-      env_file:
-        - ./.env  # 환경 변수 파일로 사용
-      environment:
-        - KAFKA_CONNECTOR_PATH=/opt/flink/lib/flink-sql-connector-kafka-3.3.0-1.20.jar
-      depends_on:
-        - kafka
-        - postgres
-      tty: true
-      networks:
-        - airflow
+  jobmanager:
+    build: 
+      context: ./
+      dockerfile: ./services/flink/Dockerfile
+    container_name: jobmanager
+    ports:
+      - "8081:8081"
+    environment:
+      - FLINK_MODE=jobmanager
+      - "FLINK_PROPERTIES=jobmanager.rpc.address: jobmanager"
+      - PYTHONPATH=/opt/workspace/flink_consumer:/opt/workspace  # 추가
+    volumes:
+      - type: bind
+        source: ./src/flink_consumer
+        target: /opt/workspace/flink_consumer
+      - type: bind
+        source: ./src/batch/data/realtime
+        target: /opt/batch/data/realtime
+    env_file:
+      - ./.env
+    depends_on:
+      - kafka
+      - postgres
+    command: jobmanager
+    networks:
+      - airflow
+
+  taskmanager:
+    build:
+      context: ./
+      dockerfile: ./services/flink/Dockerfile
+    container_name: taskmanager
+    depends_on:
+      - jobmanager
+    environment:
+      - FLINK_MODE=taskmanager
+      - FLINK_JOB_MANAGER_RPC_ADDRESS=jobmanager
+      - FLINK_TASK_MANAGER_NUMBER_OF_TASK_SLOTS=2
+      - LANG=ko_KR.UTF-8
+      - LC_ALL=ko_KR.UTF-8
+      - PYTHONIOENCODING=utf-8
+      - "FLINK_PROPERTIES=jobmanager.rpc.address: jobmanager"
+      - PYFLINK_PYTHON=/root/venvs/flink/bin/python
+      - PYTHONPATH=/opt/workspace/flink_consumer:/opt/workspace  # 추가
+    volumes:
+      - type: bind
+        source: ./src/flink_consumer
+        target: /opt/workspace/flink_consumer
+      - type: bind
+        source: ./src/batch/data/realtime
+        target: /opt/batch/data/realtime
+    env_file:
+      - ./.env
+    command: taskmanager
+    networks:
+      - airflow
+
+  flink-job-submit:
+    build:
+      context: ./
+      dockerfile: ./services/flink/Dockerfile
+    container_name: flink-job-submit
+    depends_on:
+      - jobmanager
+      - taskmanager
+    environment:
+      - PYFLINK_PYTHON=/root/venvs/flink/bin/python
+      - PYTHONPATH=/opt/workspace/flink_consumer:/opt/workspace  # 추가
+    env_file:
+      - ./.env  # 환경 변수 파일로 사용
+    volumes:
+      - type: bind
+        source: ./src/flink_consumer
+        target: /opt/workspace/flink_consumer
+      - type: bind
+        source: ./services/flink/flink-entrypoint.sh
+        target: /flink-entrypoint.sh
+    entrypoint: ["bash", "/flink-entrypoint.sh"]
+    networks:
+      - airflow
   
   django:
     build:
@@ -693,6 +748,29 @@ services:
     networks:
       - airflow
 
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana_data:/var/lib/grafanal
+    networks:
+      - airflow
+    depends_on:
+      - jobmanager
+      - prometheus
+  
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./services/promethus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - airflow
+
 volumes:
   pgdata:
   pg_for_airflow:
@@ -700,6 +778,7 @@ volumes:
   vue_node_modules:
   namenode_data:
   datanode_data:
+  grafana_data:
 
 networks:
   airflow:

@@ -57,7 +57,12 @@ RUN python${PYTHON_VERSION} -m venv ${VENV_PATH} && \
     # export PATH=$JAVA_HOME/bin:$PATH && \
     ${VENV_PATH}/bin/pip install --upgrade pip setuptools wheel && \
     ${VENV_PATH}/bin/pip install apache-flink==${FLINK_VERSION} && \
-    ${VENV_PATH}/bin/pip install -r requirements.txt
+    ${VENV_PATH}/bin/pip install -r requirements.txt && \
+    # 가상환경 디렉토리에 대한 권한을 설정하여 flink 사용자가 접근할 수 있도록 함
+    chmod -R 755 /root && \
+    chmod -R 755 ${VENV_PATH} && \
+    # Python 실행 파일에 실행 권한 부여
+    chmod 755 ${VENV_PATH}/bin/python
 
 # 6. PyFlink 로그 디렉토리 권한 설정
 # VENV_PATH 하위에 직접 생성하는 것이 일반적
